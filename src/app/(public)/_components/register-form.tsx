@@ -75,22 +75,23 @@ const RegisterForm = () => {
     <Form {...registerForm}>
       <form
         onSubmit={registerForm.handleSubmit(onRegisterSubmit)}
-        className="space-y-4"
+        className="space-y-5"
       >
         <FormField
           control={registerForm.control}
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel className="text-sm font-medium">Full Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter your full name"
+                  placeholder="John Doe"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -100,16 +101,17 @@ const RegisterForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-sm font-medium">Email Address</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="john@example.com"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -119,16 +121,17 @@ const RegisterForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="text-sm font-medium">Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="Create a password"
+                  placeholder="••••••••"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -138,16 +141,17 @@ const RegisterForm = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
+              <FormLabel className="text-sm font-medium">Confirm Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="Confirm your password"
+                  placeholder="••••••••"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -157,51 +161,60 @@ const RegisterForm = () => {
           name="role"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Role</FormLabel>
+              <FormLabel className="text-sm font-medium">I want to</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={isLoading}
-                  className="flex flex-row gap-6"
+                  className="grid grid-cols-2 gap-3"
                 >
                   {USER_ROLES.filter((role) => role.value !== "admin").map(
                     (role) => (
                       <div
                         key={role.value}
-                        className="flex items-center space-x-2"
+                        className={`relative flex items-center space-x-3 rounded-lg border-2 p-4 cursor-pointer transition-all ${
+                          field.value === role.value
+                            ? "border-destructive bg-destructive/5"
+                            : "border-border hover:border-destructive/50"
+                        }`}
                       >
                         <RadioGroupItem
                           value={role.value}
                           id={`register-${role.value}`}
+                          className="shrink-0"
                         />
                         <Label
                           htmlFor={`register-${role.value}`}
-                          className="font-normal cursor-pointer"
+                          className="font-medium cursor-pointer text-sm flex-1"
                         >
-                          {role.label}
+                          {role.label === "Donor" ? "Donate Blood" : "Receive Blood"}
                         </Label>
                       </div>
                     )
                   )}
                 </RadioGroup>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button 
+          type="submit" 
+          className="w-full h-11 text-base font-medium mt-6" 
+          disabled={isLoading}
+        >
           {isLoading ? "Creating account..." : "Create Account"}
         </Button>
 
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-xs text-muted-foreground pt-2">
           By creating an account, you agree to our{" "}
-          <a href="#" className="text-primary hover:underline">
-            Terms of Service
+          <a href="#" className="text-destructive hover:underline font-medium">
+            Terms
           </a>{" "}
           and{" "}
-          <a href="#" className="text-primary hover:underline">
+          <a href="#" className="text-destructive hover:underline font-medium">
             Privacy Policy
           </a>
         </p>

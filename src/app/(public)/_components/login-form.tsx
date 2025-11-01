@@ -61,23 +61,24 @@ const LoginForm = () => {
     <Form {...loginForm}>
       <form
         onSubmit={loginForm.handleSubmit(onLoginSubmit)}
-        className="space-y-4"
+        className="space-y-5"
       >
         <FormField
           control={loginForm.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-sm font-medium">Email Address</FormLabel>
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="john@example.com"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -87,16 +88,17 @@ const LoginForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className="text-sm font-medium">Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   disabled={isLoading}
+                  className="h-11"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
@@ -106,26 +108,31 @@ const LoginForm = () => {
           name="role"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Role</FormLabel>
+              <FormLabel className="text-sm font-medium">Login as</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={isLoading}
-                  className="flex flex-row gap-6"
+                  className="grid grid-cols-3 gap-3"
                 >
                   {USER_ROLES.map((role) => (
                     <div
                       key={role.value}
-                      className="flex items-center space-x-2"
+                      className={`relative flex flex-col items-center justify-center space-y-2 rounded-lg border-2 p-3 cursor-pointer transition-all ${
+                        field.value === role.value
+                          ? "border-destructive bg-destructive/5"
+                          : "border-border hover:border-destructive/50"
+                      }`}
                     >
                       <RadioGroupItem
                         value={role.value}
                         id={`login-${role.value}`}
+                        className="absolute top-2 right-2"
                       />
                       <Label
                         htmlFor={`login-${role.value}`}
-                        className="font-normal cursor-pointer"
+                        className="font-medium cursor-pointer text-sm text-center"
                       >
                         {role.label}
                       </Label>
@@ -133,15 +140,15 @@ const LoginForm = () => {
                   ))}
                 </RadioGroup>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end pt-1">
           <a
             href="#"
-            className="text-sm text-primary hover:underline"
+            className="text-xs text-destructive hover:underline font-medium"
             onClick={(e) => {
               e.preventDefault();
               // Add forgot password logic
@@ -151,7 +158,11 @@ const LoginForm = () => {
           </a>
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
+        <Button 
+          type="submit" 
+          className="w-full h-11 text-base font-medium mt-6" 
+          disabled={isLoading}
+        >
           {isLoading ? "Logging in..." : "Login"}
         </Button>
       </form>
