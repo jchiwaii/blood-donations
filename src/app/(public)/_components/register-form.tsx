@@ -101,7 +101,9 @@ const RegisterForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">Email Address</FormLabel>
+              <FormLabel className="text-sm font-medium">
+                Email Address
+              </FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -141,7 +143,9 @@ const RegisterForm = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">Confirm Password</FormLabel>
+              <FormLabel className="text-sm font-medium">
+                Confirm Password
+              </FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -188,7 +192,9 @@ const RegisterForm = () => {
                           htmlFor={`register-${role.value}`}
                           className="font-medium cursor-pointer text-sm flex-1"
                         >
-                          {role.label === "Donor" ? "Donate Blood" : "Receive Blood"}
+                          {role.label === "Donor"
+                            ? "Donate Blood"
+                            : "Receive Blood"}
                         </Label>
                       </div>
                     )
@@ -200,9 +206,9 @@ const RegisterForm = () => {
           )}
         />
 
-        <Button 
-          type="submit" 
-          className="w-full h-11 text-base font-medium mt-6" 
+        <Button
+          type="submit"
+          className="w-full h-11 text-base font-medium mt-6"
           disabled={isLoading}
         >
           {isLoading ? "Creating account..." : "Create Account"}

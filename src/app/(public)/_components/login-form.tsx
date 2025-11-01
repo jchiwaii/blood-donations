@@ -68,7 +68,9 @@ const LoginForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">Email Address</FormLabel>
+              <FormLabel className="text-sm font-medium">
+                Email Address
+              </FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -158,9 +160,9 @@ const LoginForm = () => {
           </a>
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full h-11 text-base font-medium mt-6" 
+        <Button
+          type="submit"
+          className="w-full h-11 text-base font-medium mt-6"
           disabled={isLoading}
         >
           {isLoading ? "Logging in..." : "Login"}
