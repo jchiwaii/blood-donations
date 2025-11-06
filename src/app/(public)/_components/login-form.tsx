@@ -17,6 +17,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { USER_ROLES, type UserRole } from "@/constants";
+import { loginUser } from "@/server-actions/users";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 // Define the form schema with Zod
 const loginFormSchema = z.object({
@@ -33,6 +37,7 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
@@ -47,11 +52,46 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      // Add your login logic here
-      console.log("Login attempt:", values);
-      // Example: await login(values.email, values.password);
-    } catch (error) {
-      console.error("Login error:", error);
+      const response = await loginUser({
+        email: values.email,
+        password: values.password,
+        role: values.role,
+      });
+
+      if (response.success) {
+        Cookies.set("auth_token", response.data!.token, {
+          expires: 7,
+          path: "/",
+          sameSite: "lax",
+        });
+
+        toast.success("Login successful!", {
+          description: `Welcome back, ${response.data!.name}!`,
+          duration: 2000,
+        });
+
+        // Redirect based on role
+        setTimeout(() => {
+          if (response.data!.role === "admin") {
+            router.push("/admin/dashboard");
+          } else if (response.data!.role === "donor") {
+            router.push("/donor/dashboard");
+          } else if (response.data!.role === "recipient") {
+            router.push("/recipient/dashboard");
+          }
+          router.refresh();
+        }, 500);
+      } else {
+        toast.error("Login failed", {
+          description: "Please check your credentials and try again.",
+          duration: 5000,
+        });
+      }
+    } catch (error: any) {
+      toast.error("Login failed", {
+        description: "Please check your credentials and try again.",
+        duration: 5000,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -121,7 +161,7 @@ const LoginForm = () => {
                   {USER_ROLES.map((role) => (
                     <div
                       key={role.value}
-                      className={`relative flex flex-col items-center justify-center space-y-2 rounded-lg border-2 p-3 cursor-pointer transition-all ${
+                      className={`relative flex items-center justify-center rounded-lg border-2 p-4 cursor-pointer transition-all min-h-[60px] ${
                         field.value === role.value
                           ? "border-destructive bg-destructive/5"
                           : "border-border hover:border-destructive/50"
@@ -130,11 +170,11 @@ const LoginForm = () => {
                       <RadioGroupItem
                         value={role.value}
                         id={`login-${role.value}`}
-                        className="absolute top-2 right-2"
+                        className="absolute top-3 right-3 shrink-0"
                       />
                       <Label
                         htmlFor={`login-${role.value}`}
-                        className="font-medium cursor-pointer text-sm text-center"
+                        className="font-medium cursor-pointer text-sm text-center pr-6"
                       >
                         {role.label}
                       </Label>

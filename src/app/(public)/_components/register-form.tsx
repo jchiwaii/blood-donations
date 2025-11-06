@@ -17,6 +17,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { USER_ROLES, type UserRole } from "@/constants";
+import { registerUser } from "@/server-actions/users";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Define the form schema with Zod
 const registerFormSchema = z
@@ -52,20 +55,37 @@ const RegisterForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const onRegisterSubmit = async (values: RegisterFormValues) => {
     setIsLoading(true);
 
     try {
-      // Add your registration logic here
-      console.log("Register attempt:", {
-        fullName: values.fullName,
+      const response = await registerUser({
+        name: values.fullName,
         email: values.email,
         password: values.password,
         role: values.role,
       });
-      // Example: await register(values);
-    } catch (error) {
-      console.error("Register error:", error);
+
+      if (response.success) {
+        toast.success("Account created successfully!", {
+          description: "You can now login with your credentials.",
+          duration: 5000,
+        });
+        // Reset form after successful registration
+        registerForm.reset();
+      } else {
+        toast.error("Registration failed", {
+          description: "Please check your information and try again.",
+          duration: 5000,
+        });
+      }
+    } catch (error: any) {
+      toast.error("Registration failed", {
+        description: "Please check your information and try again.",
+        duration: 5000,
+      });
     } finally {
       setIsLoading(false);
     }
