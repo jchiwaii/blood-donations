@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import CustomLayout from "@/custom-layout";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className} antialiased`}>
-        {children}
+        <CustomLayout>{children}</CustomLayout>
         <Toaster />
       </body>
     </html>
