@@ -20,6 +20,7 @@ import { USER_ROLES, type UserRole } from "@/constants";
 import { registerUser } from "@/server-actions/users";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 // Define the form schema with Zod
 const registerFormSchema = z
@@ -43,6 +44,12 @@ type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [fullNameFocused, setFullNameFocused] = React.useState(false);
+  const [emailFocused, setEmailFocused] = React.useState(false);
+  const [passwordFocused, setPasswordFocused] = React.useState(false);
+  const [confirmPasswordFocused, setConfirmPasswordFocused] = React.useState(false);
 
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
@@ -105,10 +112,15 @@ const RegisterForm = () => {
               <FormLabel className="text-sm font-medium">Full Name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="John Doe"
+                  placeholder={fullNameFocused ? "" : "John Doe"}
                   disabled={isLoading}
                   className="h-11"
+                  onFocus={() => setFullNameFocused(true)}
                   {...field}
+                  onBlur={(e) => {
+                    setFullNameFocused(false);
+                    field.onBlur();
+                  }}
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -127,10 +139,15 @@ const RegisterForm = () => {
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={emailFocused ? "" : "john@example.com"}
                   disabled={isLoading}
                   className="h-11"
+                  onFocus={() => setEmailFocused(true)}
                   {...field}
+                  onBlur={(e) => {
+                    setEmailFocused(false);
+                    field.onBlur();
+                  }}
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -145,13 +162,32 @@ const RegisterForm = () => {
             <FormItem>
               <FormLabel className="text-sm font-medium">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  disabled={isLoading}
-                  className="h-11"
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={passwordFocused ? "" : "••••••••"}
+                    disabled={isLoading}
+                    className="h-11 pr-10"
+                    onFocus={() => setPasswordFocused(true)}
+                    {...field}
+                    onBlur={(e) => {
+                      setPasswordFocused(false);
+                      field.onBlur();
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage className="text-xs" />
             </FormItem>
@@ -167,13 +203,32 @@ const RegisterForm = () => {
                 Confirm Password
               </FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  disabled={isLoading}
-                  className="h-11"
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder={confirmPasswordFocused ? "" : "••••••••"}
+                    disabled={isLoading}
+                    className="h-11 pr-10"
+                    onFocus={() => setConfirmPasswordFocused(true)}
+                    {...field}
+                    onBlur={(e) => {
+                      setConfirmPasswordFocused(false);
+                      field.onBlur();
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    disabled={isLoading}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage className="text-xs" />
             </FormItem>

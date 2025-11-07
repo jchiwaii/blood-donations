@@ -21,6 +21,7 @@ import { loginUser } from "@/server-actions/users";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react";
 
 // Define the form schema with Zod
 const loginFormSchema = z.object({
@@ -37,6 +38,9 @@ type LoginFormValues = z.infer<typeof loginFormSchema>;
 
 const LoginForm = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [emailFocused, setEmailFocused] = React.useState(false);
+  const [passwordFocused, setPasswordFocused] = React.useState(false);
   const router = useRouter();
 
   const loginForm = useForm<LoginFormValues>({
@@ -114,10 +118,15 @@ const LoginForm = () => {
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={emailFocused ? "" : "john@example.com"}
                   disabled={isLoading}
                   className="h-11"
+                  onFocus={() => setEmailFocused(true)}
                   {...field}
+                  onBlur={(e) => {
+                    setEmailFocused(false);
+                    field.onBlur();
+                  }}
                 />
               </FormControl>
               <FormMessage className="text-xs" />
@@ -132,13 +141,32 @@ const LoginForm = () => {
             <FormItem>
               <FormLabel className="text-sm font-medium">Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  disabled={isLoading}
-                  className="h-11"
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder={passwordFocused ? "" : "••••••••"}
+                    disabled={isLoading}
+                    className="h-11 pr-10"
+                    onFocus={() => setPasswordFocused(true)}
+                    {...field}
+                    onBlur={(e) => {
+                      setPasswordFocused(false);
+                      field.onBlur();
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    disabled={isLoading}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
               </FormControl>
               <FormMessage className="text-xs" />
             </FormItem>
