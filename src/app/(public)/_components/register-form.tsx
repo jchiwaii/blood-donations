@@ -49,7 +49,8 @@ const RegisterForm = () => {
   const [fullNameFocused, setFullNameFocused] = React.useState(false);
   const [emailFocused, setEmailFocused] = React.useState(false);
   const [passwordFocused, setPasswordFocused] = React.useState(false);
-  const [confirmPasswordFocused, setConfirmPasswordFocused] = React.useState(false);
+  const [confirmPasswordFocused, setConfirmPasswordFocused] =
+    React.useState(false);
 
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
