@@ -4,12 +4,6 @@ import { Hero } from "./_components/hero";
 import { Button } from "@/components/ui/button";
 import { Droplet, Heart } from "lucide-react";
 
-const navigationItems = [
-  { href: "/auth", label: "Get started" },
-  { href: "#impact", label: "Impact" },
-  { href: "#support", label: "Support" },
-];
-
 const Home = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
@@ -28,28 +22,6 @@ const Home = () => {
               BloodConnect
             </span>
           </Link>
-
-          <nav className="hidden items-center gap-6 text-sm font-medium text-white/70 md:flex">
-            {navigationItems.map((item) =>
-              item.href.startsWith("#") ? (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="transition hover:text-white"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="transition hover:text-white"
-                >
-                  {item.label}
-                </Link>
-              )
-            )}
-          </nav>
 
           <Button
             size="sm"

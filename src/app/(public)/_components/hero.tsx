@@ -25,104 +25,89 @@ const featureItems = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden px-6 pb-24 pt-16 sm:px-8 lg:pb-32 lg:pt-24">
+    <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10">
       <div
-        className="pointer-events-none absolute inset-0 opacity-90"
+        className="pointer-events-none absolute inset-0 opacity-85"
         style={{
           background:
-            "radial-gradient(120% 120% at 15% -10%, rgba(244,114,182,0.55) 0%, rgba(79,70,229,0.4) 45%, rgba(15,23,42,0.98) 80%)",
+            "radial-gradient(120% 120% at 18% -10%, rgba(244,114,182,0.45) 0%, rgba(79,70,229,0.35) 40%, rgba(15,23,42,0.98) 75%)",
         }}
       />
 
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwSDY0VjY0SDBWMFoiIGZpbGw9ImhzbCgwLDAlLDAuMDUpIi8+PHBhdGggZD0iTTE2IDEySDE4VjE2SDE2VjEyWiIgZmlsbD0iI0ZGRiIgb3BhY2l0eT0iMC4wOCIvPjxwYXRoIGQ9Ik0zMiA4SDE0VjE2SDMyVjhMMzIgOFoiIGZpbGw9IiNGRkYiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=')] opacity-[0.08]" />
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwSDY0VjY0SDBWMFoiIGZpbGw9ImhzbCgwLDAlLDAuMDUpIi8+PHBhdGggZD0iTTE2IDEySDE4VjE2SDE2VjEyWiIgZmlsbD0iI0ZGRiIgb3BhY2l0eT0iMC4wOCIvPjxwYXRoIGQ9Ik0zMiA4SDE0VjE2SDMyVjhMMzIgOFoiIGZpbGw9IiNGRkYiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=')] opacity-[0.05]" />
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="mx-auto max-w-4xl space-y-10 text-center text-white">
-          {/* Badge */}
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-12 text-center text-white">
+        <div className="space-y-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
             Give & receive
           </span>
 
-          {/* Main heading */}
-          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="mx-auto max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
             Donate blood, empower
             <span className="block bg-linear-to-r from-rose-200 via-fuchsia-200 to-sky-200 bg-clip-text text-transparent">
               life-saving moments.
             </span>
           </h1>
 
-          {/* Description */}
-          <p className="mx-auto max-w-2xl text-base text-white/80 sm:text-lg md:text-xl">
+          <p className="mx-auto max-w-2xl text-base text-white/80 sm:text-lg">
             BloodConnect brings recipients, donors, and coordinators together
             under one guided experience so every urgent request finds a fast,
             trusted response.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="flex flex-col items-center justify-center">
             <Button
               size="lg"
-              className="bg-rose-500 px-8 py-6 text-base font-semibold text-white transition hover:bg-rose-600"
+              className="h-12 rounded-full bg-rose-500 px-8 text-sm font-semibold text-white transition hover:bg-rose-600"
               asChild
             >
               <Link href="/auth" className="flex items-center gap-2">
-                <Heart className="size-5" />
+                <Heart className="size-4" />
                 Get Started
               </Link>
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/30 bg-white/10 px-8 py-6 text-base font-semibold text-white backdrop-blur transition hover:bg-white/20"
-              asChild
-            >
-              <a href="#impact">Learn More</a>
-            </Button>
           </div>
+        </div>
 
-          {/* Feature items */}
-          <div className="grid gap-4 pt-8 sm:grid-cols-3">
-            {featureItems.map(({ icon: Icon, title, description }) => (
-              <div
-                key={title}
-                className="group flex flex-col items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-6 text-center backdrop-blur transition duration-300 hover:border-white/40 hover:bg-white/15"
-              >
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/15 text-white">
-                  <Icon className="size-6" />
-                </span>
-                <div className="space-y-1">
-                  <p className="text-sm font-semibold uppercase tracking-wide text-white/85">
-                    {title}
-                  </p>
-                  <p className="text-sm text-white/70">{description}</p>
-                </div>
+        <div className="grid w-full gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:grid-cols-3">
+          {featureItems.map(({ icon: Icon, title, description }) => (
+            <div key={title} className="flex flex-col items-center gap-3 text-center">
+              <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-white">
+                <Icon className="size-6" />
+              </span>
+              <div className="space-y-1">
+                <p className="text-sm font-semibold uppercase tracking-wide text-white/85">
+                  {title}
+                </p>
+                <p className="text-sm text-white/70">{description}</p>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="flex w-full flex-wrap items-center justify-center gap-8 border-t border-white/10 pt-8 text-sm text-white/75">
+          <div className="text-center">
+            <p className="text-3xl font-semibold text-white">12K+</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+              active donors
+            </p>
           </div>
 
-          {/* Stats */}
-          <div className="flex flex-wrap items-center justify-center gap-8 border-t border-white/10 pt-8 text-sm text-white/75">
-            <div>
-              <p className="text-3xl font-semibold text-white">12K+</p>
-              <p className="text-xs uppercase tracking-[0.18em] text-white/60">
-                active donors
-              </p>
-            </div>
-            <div>
-              <p className="text-3xl font-semibold text-white">58K+</p>
-              <p className="text-xs uppercase tracking-[0.18em] text-white/60">
-                lives supported
-              </p>
-            </div>
-            <div>
-              <p className="text-3xl font-semibold text-white">
-                <Heart className="mr-2 inline size-6 text-rose-200" />
-                24/7
-              </p>
-              <p className="text-xs uppercase tracking-[0.18em] text-white/60">
-                coordinator care
-              </p>
-            </div>
+          <div className="text-center">
+            <p className="text-3xl font-semibold text-white">58K+</p>
+            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+              lives supported
+            </p>
+          </div>
+
+          <div className="text-center">
+            <p className="text-3xl font-semibold text-white">
+              <Heart className="mr-2 inline size-5 text-rose-200" />
+              24/7
+            </p>
+            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+              coordinator care
+            </p>
           </div>
         </div>
       </div>
