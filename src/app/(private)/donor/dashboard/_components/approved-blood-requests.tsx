@@ -22,10 +22,10 @@ interface ApprovedBloodRequestsProps {
 }
 
 const urgencyStyling: Record<string, string> = {
-  critical: "bg-rose-200 text-rose-900 border-rose-300",
-  high: "bg-orange-200 text-orange-900 border-orange-300",
-  medium: "bg-amber-200 text-amber-900 border-amber-300",
   low: "bg-emerald-200 text-emerald-900 border-emerald-300",
+  medium: "bg-amber-200 text-amber-900 border-amber-300",
+  high: "bg-orange-200 text-orange-900 border-orange-300",
+  critical: "bg-rose-200 text-rose-900 border-rose-300",
 };
 
 export default function ApprovedBloodRequests({
@@ -128,16 +128,10 @@ export default function ApprovedBloodRequests({
               All urgency levels
             </SelectItem>
             <SelectItem
-              value="critical"
+              value="low"
               className="text-white focus:bg-blue-500/20 focus:text-white"
             >
-              Critical
-            </SelectItem>
-            <SelectItem
-              value="high"
-              className="text-white focus:bg-blue-500/20 focus:text-white"
-            >
-              High
+              Low
             </SelectItem>
             <SelectItem
               value="medium"
@@ -146,10 +140,16 @@ export default function ApprovedBloodRequests({
               Medium
             </SelectItem>
             <SelectItem
-              value="low"
+              value="high"
               className="text-white focus:bg-blue-500/20 focus:text-white"
             >
-              Low
+              High
+            </SelectItem>
+            <SelectItem
+              value="critical"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
+              Critical
             </SelectItem>
           </SelectContent>
         </Select>

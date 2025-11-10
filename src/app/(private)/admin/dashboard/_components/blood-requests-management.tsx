@@ -121,12 +121,14 @@ const BloodRequestsManagement = () => {
 
   const getUrgencyBadge = (urgency: string) => {
     switch (urgency) {
+      case "low":
+        return "bg-emerald-500/20 border-emerald-400/40 text-emerald-300";
+      case "medium":
+        return "bg-amber-500/20 border-amber-400/40 text-amber-300";
+      case "high":
+        return "bg-orange-500/20 border-orange-400/40 text-orange-300";
       case "critical":
         return "bg-red-500/20 border-red-400/40 text-red-300";
-      case "urgent":
-        return "bg-orange-500/20 border-orange-400/40 text-orange-300";
-      case "normal":
-        return "bg-sky-500/20 border-sky-400/40 text-sky-300";
       default:
         return "bg-slate-500/20 border-slate-400/40 text-slate-300";
     }

@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import DonationOffers from "./donation-offers";
 
 interface BloodRequestsListProps {
   userId: number;
@@ -63,10 +64,10 @@ const badgeStyles: Record<string, string> = {
 };
 
 const urgencyStyles: Record<string, string> = {
-  critical: "bg-rose-100 text-rose-900 border-rose-200",
-  high: "bg-orange-100 text-orange-900 border-orange-200",
-  medium: "bg-amber-100 text-amber-900 border-amber-200",
   low: "bg-emerald-100 text-emerald-900 border-emerald-200",
+  medium: "bg-amber-100 text-amber-900 border-amber-200",
+  high: "bg-orange-100 text-orange-900 border-orange-200",
+  critical: "bg-rose-100 text-rose-900 border-rose-200",
 };
 
 export default function BloodRequestsList({
@@ -299,6 +300,12 @@ export default function BloodRequestsList({
                 </div>
 
                 <div className="flex flex-col gap-3 lg:min-w-48">
+                  {request.status === "approved" && (
+                    <DonationOffers
+                      requestId={request.id}
+                      requestTitle={request.title}
+                    />
+                  )}
                   <Button
                     variant="ghost"
                     className="w-full gap-2 rounded-full border border-white/20 bg-white/10 text-white transition hover:border-white/30 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50"

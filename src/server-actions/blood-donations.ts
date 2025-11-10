@@ -237,3 +237,31 @@ export const updateBloodDonationStatus = async (
     };
   }
 };
+
+export const getDonationsForRequest = async (requestId: number) => {
+  try {
+    const { data, error } = await supabase
+      .from("blood_donations")
+      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email, role)")
+      .eq("request_id", requestId)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to retrieve donations for this request",
+      };
+    }
+
+    return {
+      success: true,
+      data: data || [],
+      message: "Donations retrieved successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to retrieve donations for this request",
+    };
+  }
+};
