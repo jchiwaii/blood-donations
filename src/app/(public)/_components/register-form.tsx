@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import Cookies from "js-cookie";
+import { cn } from "@/lib/utils";
 
 // Define the form schema with Zod
 const registerFormSchema = z
@@ -43,7 +44,12 @@ const registerFormSchema = z
 
 type RegisterFormValues = z.infer<typeof registerFormSchema>;
 
-const RegisterForm = () => {
+type RegisterFormProps = {
+  variant?: "light" | "dark";
+  className?: string;
+};
+
+const RegisterForm = ({ variant = "light", className }: RegisterFormProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -52,6 +58,7 @@ const RegisterForm = () => {
   const [passwordFocused, setPasswordFocused] = React.useState(false);
   const [confirmPasswordFocused, setConfirmPasswordFocused] =
     React.useState(false);
+  const isDark = variant === "dark";
 
   const registerForm = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
@@ -113,19 +120,35 @@ const RegisterForm = () => {
     <Form {...registerForm}>
       <form
         onSubmit={registerForm.handleSubmit(onRegisterSubmit)}
-        className="space-y-5"
+        className={cn(
+          "space-y-5",
+          isDark ? "text-white" : "text-foreground",
+          className
+        )}
       >
         <FormField
           control={registerForm.control}
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">Full Name</FormLabel>
+              <FormLabel
+                className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-white/90" : "text-foreground"
+                )}
+              >
+                Full Name
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder={fullNameFocused ? "" : "John Doe"}
                   disabled={isLoading}
-                  className="h-11"
+                  className={cn(
+                    "h-11",
+                    isDark
+                      ? "rounded-xl border-white/15 bg-slate-900/60 text-base text-white placeholder:text-white/50 focus-visible:ring-rose-400/60"
+                      : ""
+                  )}
                   onFocus={() => setFullNameFocused(true)}
                   {...field}
                   onBlur={(e) => {
@@ -134,7 +157,12 @@ const RegisterForm = () => {
                   }}
                 />
               </FormControl>
-              <FormMessage className="text-xs" />
+              <FormMessage
+                className={cn(
+                  "text-xs",
+                  isDark ? "text-rose-200" : "text-destructive"
+                )}
+              />
             </FormItem>
           )}
         />
@@ -144,7 +172,12 @@ const RegisterForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
+              <FormLabel
+                className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-white/90" : "text-foreground"
+                )}
+              >
                 Email Address
               </FormLabel>
               <FormControl>
@@ -152,7 +185,12 @@ const RegisterForm = () => {
                   type="email"
                   placeholder={emailFocused ? "" : "john@example.com"}
                   disabled={isLoading}
-                  className="h-11"
+                  className={cn(
+                    "h-11",
+                    isDark
+                      ? "rounded-xl border-white/15 bg-slate-900/60 text-base text-white placeholder:text-white/50 focus-visible:ring-rose-400/60"
+                      : ""
+                  )}
                   onFocus={() => setEmailFocused(true)}
                   {...field}
                   onBlur={(e) => {
@@ -161,7 +199,12 @@ const RegisterForm = () => {
                   }}
                 />
               </FormControl>
-              <FormMessage className="text-xs" />
+              <FormMessage
+                className={cn(
+                  "text-xs",
+                  isDark ? "text-rose-200" : "text-destructive"
+                )}
+              />
             </FormItem>
           )}
         />
@@ -171,14 +214,26 @@ const RegisterForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">Password</FormLabel>
+              <FormLabel
+                className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-white/90" : "text-foreground"
+                )}
+              >
+                Password
+              </FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder={passwordFocused ? "" : "••••••••"}
                     disabled={isLoading}
-                    className="h-11 pr-10"
+                    className={cn(
+                      "h-11 pr-10",
+                      isDark
+                        ? "rounded-xl border-white/15 bg-slate-900/60 text-base text-white placeholder:text-white/50 focus-visible:ring-rose-400/60"
+                        : ""
+                    )}
                     onFocus={() => setPasswordFocused(true)}
                     {...field}
                     onBlur={(e) => {
@@ -189,7 +244,12 @@ const RegisterForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className={cn(
+                      "absolute right-3 top-1/2 -translate-y-1/2 transition-colors",
+                      isDark
+                        ? "text-white/60 hover:text-white"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
                     disabled={isLoading}
                   >
                     {showPassword ? (
@@ -200,7 +260,12 @@ const RegisterForm = () => {
                   </button>
                 </div>
               </FormControl>
-              <FormMessage className="text-xs" />
+              <FormMessage
+                className={cn(
+                  "text-xs",
+                  isDark ? "text-rose-200" : "text-destructive"
+                )}
+              />
             </FormItem>
           )}
         />
@@ -210,7 +275,12 @@ const RegisterForm = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm font-medium">
+              <FormLabel
+                className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-white/90" : "text-foreground"
+                )}
+              >
                 Confirm Password
               </FormLabel>
               <FormControl>
@@ -219,7 +289,12 @@ const RegisterForm = () => {
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder={confirmPasswordFocused ? "" : "••••••••"}
                     disabled={isLoading}
-                    className="h-11 pr-10"
+                    className={cn(
+                      "h-11 pr-10",
+                      isDark
+                        ? "rounded-xl border-white/15 bg-slate-900/60 text-base text-white placeholder:text-white/50 focus-visible:ring-rose-400/60"
+                        : ""
+                    )}
                     onFocus={() => setConfirmPasswordFocused(true)}
                     {...field}
                     onBlur={(e) => {
@@ -230,7 +305,12 @@ const RegisterForm = () => {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    className={cn(
+                      "absolute right-3 top-1/2 -translate-y-1/2 transition-colors",
+                      isDark
+                        ? "text-white/60 hover:text-white"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
                     disabled={isLoading}
                   >
                     {showConfirmPassword ? (
@@ -241,7 +321,12 @@ const RegisterForm = () => {
                   </button>
                 </div>
               </FormControl>
-              <FormMessage className="text-xs" />
+              <FormMessage
+                className={cn(
+                  "text-xs",
+                  isDark ? "text-rose-200" : "text-destructive"
+                )}
+              />
             </FormItem>
           )}
         />
@@ -251,7 +336,14 @@ const RegisterForm = () => {
           name="role"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel className="text-sm font-medium">I want to</FormLabel>
+              <FormLabel
+                className={cn(
+                  "text-sm font-medium",
+                  isDark ? "text-white/90" : "text-foreground"
+                )}
+              >
+                I want to
+              </FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -263,20 +355,31 @@ const RegisterForm = () => {
                     (role) => (
                       <div
                         key={role.value}
-                        className={`relative flex items-center space-x-3 rounded-lg border-2 p-4 cursor-pointer transition-all ${
+                        className={cn(
+                          "relative flex items-center space-x-3 rounded-lg border-2 p-4 transition-all cursor-pointer",
                           field.value === role.value
-                            ? "border-destructive bg-destructive/5"
-                            : "border-border hover:border-destructive/50"
-                        }`}
+                            ? isDark
+                              ? "border-rose-300/70 bg-rose-400/10 shadow-[0_12px_40px_rgba(244,114,182,0.25)]"
+                              : "border-destructive bg-destructive/5"
+                            : isDark
+                              ? "border-white/15 hover:border-rose-300/60 hover:bg-white/5"
+                              : "border-border hover:border-destructive/50"
+                        )}
                       >
                         <RadioGroupItem
                           value={role.value}
                           id={`register-${role.value}`}
-                          className="shrink-0"
+                          className={cn(
+                            "shrink-0",
+                            isDark ? "text-white" : ""
+                          )}
                         />
                         <Label
                           htmlFor={`register-${role.value}`}
-                          className="font-medium cursor-pointer text-sm flex-1"
+                          className={cn(
+                            "font-medium cursor-pointer text-sm flex-1",
+                            isDark ? "text-white" : "text-foreground"
+                          )}
                         >
                           {role.label === "Donor"
                             ? "Donate Blood"
@@ -287,26 +390,53 @@ const RegisterForm = () => {
                   )}
                 </RadioGroup>
               </FormControl>
-              <FormMessage className="text-xs" />
+              <FormMessage
+                className={cn(
+                  "text-xs",
+                  isDark ? "text-rose-200" : "text-destructive"
+                )}
+              />
             </FormItem>
           )}
         />
 
         <Button
           type="submit"
-          className="w-full h-11 text-base font-medium mt-6"
+          className={cn(
+            "w-full h-11 text-base font-medium mt-6",
+            isDark
+              ? "rounded-xl bg-linear-to-r from-rose-500 via-fuchsia-500 to-indigo-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.01] focus-visible:ring-rose-400/60"
+              : ""
+          )}
           disabled={isLoading}
         >
           {isLoading ? "Creating account..." : "Create Account"}
         </Button>
 
-        <p className="text-center text-xs text-muted-foreground pt-2">
+        <p
+          className={cn(
+            "text-center text-xs pt-2",
+            isDark ? "text-white/60" : "text-muted-foreground"
+          )}
+        >
           By creating an account, you agree to our{" "}
-          <a href="#" className="text-destructive hover:underline font-medium">
+          <a
+            href="#"
+            className={cn(
+              "font-medium hover:underline",
+              isDark ? "text-rose-200 hover:text-rose-100" : "text-destructive"
+            )}
+          >
             Terms
           </a>{" "}
           and{" "}
-          <a href="#" className="text-destructive hover:underline font-medium">
+          <a
+            href="#"
+            className={cn(
+              "font-medium hover:underline",
+              isDark ? "text-rose-200 hover:text-rose-100" : "text-destructive"
+            )}
+          >
             Privacy Policy
           </a>
         </p>

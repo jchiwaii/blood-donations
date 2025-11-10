@@ -40,10 +40,7 @@ export default async function DonorProfilePage() {
           </div>
         </section>
 
-        <ProfileSummaryCard
-          user={user}
-          className="border-white/10 bg-slate-950/60 backdrop-blur"
-        />
+        <ProfileSummaryCard user={user} variant="dark" />
       </div>
     </div>
   );
