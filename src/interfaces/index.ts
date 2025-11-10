@@ -18,5 +18,32 @@ export interface IBloodRequest {
   contact_phone: string;
   contact_email: string;
   address: string;
-  proofs_url: string[];
+  proofs_url?: string[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface IBloodDonation {
+  id: number;
+  donor_id: number;
+  request_id?: number;
+  blood_group: string;
+  units_available: number;
+  availability_date: string;
+  contact_phone: string;
+  contact_email: string;
+  address: string;
+  medical_info?: string;
+  notes?: string;
+  status: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface IMedia {
+  id: number;
+  url: string;
+  related_id: number;
+  related_type: string;
+  created_at?: string;
 }

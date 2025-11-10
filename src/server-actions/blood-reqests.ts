@@ -5,24 +5,38 @@ import supabase from "@/config/supabase-config";
 import { IBloodRequest } from "@/interfaces";
 
 export const createBloodRequest = async (payload: Partial<IBloodRequest>) => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .insert([payload])
-    .select()
-    .single();
+  try {
+    console.log("Creating blood request with payload:", payload);
 
-  if (error) {
+    const { data, error } = await supabase
+      .from("blood_requests")
+      .insert([payload])
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Supabase error creating blood request:", error);
+      return {
+        success: false,
+        message: "Failed to create blood request",
+        error: error.message,
+      };
+    }
+
+    console.log("Blood request created successfully:", data);
+    return {
+      success: true,
+      message: "Blood request created successfully",
+      data,
+    };
+  } catch (error: any) {
+    console.error("Exception creating blood request:", error);
     return {
       success: false,
       message: "Failed to create blood request",
+      error: error.message,
     };
   }
-
-  return {
-    success: true,
-    message: "Blood request created successfully",
-    data,
-  };
 };
 
 export const getBloodRequests = async (id: number) => {
@@ -104,6 +118,38 @@ export const updateBloodRequestStatus = async (
     message: "Blood request status updated successfully",
     data,
   };
+};
+
+export const updateBloodRequest = async (
+  id: number,
+  payload: Partial<IBloodRequest>
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("blood_requests")
+      .update(payload)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to update blood request",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Blood request updated successfully",
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to update blood request",
+    };
+  }
 };
 
 export const deleteBloodRequest = async (id: number) => {

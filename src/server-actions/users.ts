@@ -61,6 +61,18 @@ export const registerUser = async (payload: Partial<IUser>) => {
       };
     }
 
+    // Create token for auto-login
+    const token = jwt.sign(
+      {
+        id: data.id,
+        email: data.email,
+        role: data.role,
+        name: data.name,
+      },
+      process.env.JWT_SECRET || "qwdweryrty",
+      { expiresIn: "7d" }
+    );
+
     return {
       success: true,
       message: "User registered successfully",
@@ -69,6 +81,7 @@ export const registerUser = async (payload: Partial<IUser>) => {
         name: data.name,
         email: data.email,
         role: data.role,
+        token,
       },
     };
   } catch (error: any) {

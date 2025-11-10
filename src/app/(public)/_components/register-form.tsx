@@ -21,6 +21,7 @@ import { registerUser } from "@/server-actions/users";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+import Cookies from "js-cookie";
 
 // Define the form schema with Zod
 const registerFormSchema = z
@@ -76,13 +77,22 @@ const RegisterForm = () => {
         role: values.role,
       });
 
-      if (response.success) {
-        toast.success("Account created successfully!", {
-          description: "You can now login with your credentials.",
-          duration: 5000,
+      if (response.success && response.data) {
+        // Set the auth token in cookies
+        Cookies.set("auth_token", response.data.token, {
+          expires: 7,
+          path: "/",
+          sameSite: "lax",
         });
-        // Reset form after successful registration
-        registerForm.reset();
+
+        toast.success("Account created successfully!", {
+          description: "Redirecting to your dashboard...",
+          duration: 3000,
+        });
+
+        // Redirect to appropriate dashboard based on role
+        const dashboardPath = `/${response.data.role}/dashboard`;
+        router.push(dashboardPath);
       } else {
         toast.error("Registration failed", {
           description: "Please check your information and try again.",

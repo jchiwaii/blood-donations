@@ -22,7 +22,11 @@ const CustomLayout = ({ children }: { children: React.ReactNode }) => {
   // Recipient Navigation
   const recipientNavItems: NavItem[] = [
     { label: "Dashboard", path: "/recipient/dashboard", icon: LayoutDashboard },
-    { label: "Requests", path: "/recipient/requests", icon: FileText },
+    {
+      label: "Blood Requests",
+      path: "/recipient/blood-requests",
+      icon: FileText,
+    },
     { label: "Donations Received", path: "/recipient/donations", icon: Heart },
     { label: "Profile", path: "/recipient/profile", icon: UserCircle },
   ];
@@ -30,7 +34,7 @@ const CustomLayout = ({ children }: { children: React.ReactNode }) => {
   // Donor Navigation
   const donorNavItems: NavItem[] = [
     { label: "Dashboard", path: "/donor/dashboard", icon: LayoutDashboard },
-    { label: "My Donations", path: "/donor/donations", icon: Heart },
+    { label: "Donate Blood", path: "/donor/donations", icon: Heart },
     { label: "Profile", path: "/donor/profile", icon: UserCircle },
   ];
 
