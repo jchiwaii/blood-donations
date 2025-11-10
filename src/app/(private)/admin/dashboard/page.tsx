@@ -7,7 +7,9 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-8">
       <PageTitle title="Admin Dashboard" />
-      <p className="text-sm text-white/60">Manage blood requests and view statistics</p>
+      <p className="text-sm text-white/60">
+        Manage blood requests and view statistics
+      </p>
       <DashboardStats />
       <BloodRequestsManagement />
     </div>

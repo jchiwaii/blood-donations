@@ -185,7 +185,9 @@ export const deleteBloodRequest = async (id: number) => {
 export const getAllBloodRequestsForAdmin = async () => {
   const { data, error } = await supabase
     .from("blood_requests")
-    .select("*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)")
+    .select(
+      "*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)"
+    )
     .order("created_at", { ascending: false });
 
   if (error) {

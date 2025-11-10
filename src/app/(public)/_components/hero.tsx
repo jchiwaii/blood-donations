@@ -50,9 +50,9 @@ export function Hero() {
           </h1>
 
           <p className="mx-auto max-w-2xl text-base text-white/80 sm:text-lg">
-            Bloodline brings recipients, donors, and coordinators together
-            under one guided experience so every urgent request finds a fast,
-            trusted response.
+            Bloodline brings recipients, donors, and coordinators together under
+            one guided experience so every urgent request finds a fast, trusted
+            response.
           </p>
 
           <div className="flex flex-col items-center justify-center">

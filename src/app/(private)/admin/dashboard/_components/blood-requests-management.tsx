@@ -7,7 +7,18 @@ import {
 } from "@/server-actions/blood-reqests";
 import { IBloodRequest } from "@/interfaces";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle, Clock, User, Droplet, Phone, Mail, MapPin, Calendar, AlertCircle } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Clock,
+  User,
+  Droplet,
+  Phone,
+  Mail,
+  MapPin,
+  Calendar,
+  AlertCircle,
+} from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -20,10 +31,14 @@ type BloodRequestWithRecipient = IBloodRequest & {
 };
 
 const BloodRequestsManagement = () => {
-  const [requests, setRequests] = React.useState<BloodRequestWithRecipient[]>([]);
+  const [requests, setRequests] = React.useState<BloodRequestWithRecipient[]>(
+    []
+  );
   const [loading, setLoading] = React.useState(true);
   const [updatingId, setUpdatingId] = React.useState<number | null>(null);
-  const [filter, setFilter] = React.useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [filter, setFilter] = React.useState<
+    "all" | "pending" | "approved" | "rejected"
+  >("all");
 
   const fetchRequests = async () => {
     setLoading(true);
@@ -38,7 +53,10 @@ const BloodRequestsManagement = () => {
     fetchRequests();
   }, []);
 
-  const handleStatusUpdate = async (id: number, status: "approved" | "rejected" | "pending") => {
+  const handleStatusUpdate = async (
+    id: number,
+    status: "approved" | "rejected" | "pending"
+  ) => {
     setUpdatingId(id);
     const response = await updateBloodRequestStatus(id, { status });
 
@@ -127,7 +145,9 @@ const BloodRequestsManagement = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-white">Blood Requests</h2>
-          <p className="text-sm text-white/60">Review and manage blood donation requests</p>
+          <p className="text-sm text-white/60">
+            Review and manage blood donation requests
+          </p>
         </div>
 
         <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 p-1">
@@ -166,7 +186,9 @@ const BloodRequestsManagement = () => {
                 <div className="p-6">
                   <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
                     <div className="space-y-2">
-                      <h3 className="text-xl font-semibold text-white">{request.title}</h3>
+                      <h3 className="text-xl font-semibold text-white">
+                        {request.title}
+                      </h3>
                       <div className="flex flex-wrap items-center gap-3">
                         <span
                           className={cn(
@@ -195,7 +217,9 @@ const BloodRequestsManagement = () => {
                       <div className="flex gap-2">
                         <Button
                           size="sm"
-                          onClick={() => handleStatusUpdate(request.id, "approved")}
+                          onClick={() =>
+                            handleStatusUpdate(request.id, "approved")
+                          }
                           disabled={updatingId === request.id}
                           className="rounded-xl border border-emerald-400/40 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30"
                         >
@@ -204,7 +228,9 @@ const BloodRequestsManagement = () => {
                         </Button>
                         <Button
                           size="sm"
-                          onClick={() => handleStatusUpdate(request.id, "rejected")}
+                          onClick={() =>
+                            handleStatusUpdate(request.id, "rejected")
+                          }
                           disabled={updatingId === request.id}
                           className="rounded-xl border border-red-400/40 bg-red-500/20 text-red-300 transition hover:bg-red-500/30"
                         >
@@ -217,7 +243,9 @@ const BloodRequestsManagement = () => {
                     {request.status !== "pending" && (
                       <Button
                         size="sm"
-                        onClick={() => handleStatusUpdate(request.id, "pending")}
+                        onClick={() =>
+                          handleStatusUpdate(request.id, "pending")
+                        }
                         disabled={updatingId === request.id}
                         className="rounded-xl border border-amber-400/40 bg-amber-500/20 text-amber-300 transition hover:bg-amber-500/30"
                       >
@@ -227,7 +255,9 @@ const BloodRequestsManagement = () => {
                     )}
                   </div>
 
-                  <p className="mb-6 text-sm text-white/70">{request.description}</p>
+                  <p className="mb-6 text-sm text-white/70">
+                    {request.description}
+                  </p>
 
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-3">
@@ -235,8 +265,12 @@ const BloodRequestsManagement = () => {
                         <Droplet className="size-5" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-white/60">Blood Group</p>
-                        <p className="font-semibold text-white">{request.blood_group}</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Blood Group
+                        </p>
+                        <p className="font-semibold text-white">
+                          {request.blood_group}
+                        </p>
                       </div>
                     </div>
 
@@ -245,8 +279,12 @@ const BloodRequestsManagement = () => {
                         <Droplet className="size-5" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-white/60">Units Required</p>
-                        <p className="font-semibold text-white">{request.units_required} units</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Units Required
+                        </p>
+                        <p className="font-semibold text-white">
+                          {request.units_required} units
+                        </p>
                       </div>
                     </div>
 
@@ -255,8 +293,12 @@ const BloodRequestsManagement = () => {
                         <User className="size-5" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-white/60">Recipient</p>
-                        <p className="font-semibold text-white">{request.recipient?.name || "Unknown"}</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Recipient
+                        </p>
+                        <p className="font-semibold text-white">
+                          {request.recipient?.name || "Unknown"}
+                        </p>
                       </div>
                     </div>
 
@@ -265,8 +307,12 @@ const BloodRequestsManagement = () => {
                         <Phone className="size-5" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-white/60">Phone</p>
-                        <p className="font-semibold text-white">{request.contact_phone}</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Phone
+                        </p>
+                        <p className="font-semibold text-white">
+                          {request.contact_phone}
+                        </p>
                       </div>
                     </div>
 
@@ -275,8 +321,12 @@ const BloodRequestsManagement = () => {
                         <Mail className="size-5" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-white/60">Email</p>
-                        <p className="truncate font-semibold text-white">{request.contact_email}</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Email
+                        </p>
+                        <p className="truncate font-semibold text-white">
+                          {request.contact_email}
+                        </p>
                       </div>
                     </div>
 
@@ -285,8 +335,12 @@ const BloodRequestsManagement = () => {
                         <MapPin className="size-5" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-xs uppercase tracking-wider text-white/60">Location</p>
-                        <p className="truncate font-semibold text-white">{request.address}</p>
+                        <p className="text-xs uppercase tracking-wider text-white/60">
+                          Location
+                        </p>
+                        <p className="truncate font-semibold text-white">
+                          {request.address}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -295,11 +349,15 @@ const BloodRequestsManagement = () => {
                     <div className="mt-4 flex items-center gap-2 text-xs text-white/60">
                       <Calendar className="size-3.5" />
                       <span>
-                        Created on {new Date(request.created_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
+                        Created on{" "}
+                        {new Date(request.created_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </span>
                     </div>
                   )}
