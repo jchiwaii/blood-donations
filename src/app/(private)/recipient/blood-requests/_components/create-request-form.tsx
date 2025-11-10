@@ -60,7 +60,8 @@ const overviewHighlights: HighlightCard[] = [
   {
     icon: Clock,
     title: "Urgency aware",
-    description: "Critical cases are boosted across donor dashboards instantly.",
+    description:
+      "Critical cases are boosted across donor dashboards instantly.",
   },
   {
     icon: ShieldCheck,
@@ -288,7 +289,8 @@ export default function CreateRequestForm({
                   Request overview
                 </h2>
                 <p className="max-w-2xl text-sm text-white/75 sm:text-base">
-                  Complete each section so we can flag your request to nearby donors and prioritise urgent cases.
+                  Complete each section so we can flag your request to nearby
+                  donors and prioritise urgent cases.
                 </p>
               </div>
             </div>
@@ -304,7 +306,9 @@ export default function CreateRequestForm({
                   </span>
                   <div className="space-y-1">
                     <p className="text-sm font-semibold text-white">{title}</p>
-                    <p className="text-xs leading-relaxed text-white/70">{description}</p>
+                    <p className="text-xs leading-relaxed text-white/70">
+                      {description}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -314,9 +318,12 @@ export default function CreateRequestForm({
           <section className="rounded-2xl border border-white/10 bg-slate-950/60 p-6 backdrop-blur sm:p-8">
             <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h3 className="text-lg font-semibold text-white">Medical need</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  Medical need
+                </h3>
                 <p className="text-sm text-white/70">
-                  Explain what is happening so volunteers understand the urgency and context.
+                  Explain what is happening so volunteers understand the urgency
+                  and context.
                 </p>
               </div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase text-white/70">
@@ -433,7 +440,9 @@ export default function CreateRequestForm({
                         min={1}
                         max={10}
                         {...field}
-                        onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value, 10) || 0)
+                        }
                       />
                     </FormControl>
                     <FormMessage className="text-xs text-rose-200" />
@@ -467,9 +476,12 @@ export default function CreateRequestForm({
           <section className="rounded-2xl border border-white/10 bg-slate-950/60 p-6 backdrop-blur sm:p-8">
             <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h3 className="text-lg font-semibold text-white">Contact & logistics</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  Contact & logistics
+                </h3>
                 <p className="text-sm text-white/70">
-                  Share how donors or hospitals should coordinate with you for the transfusion.
+                  Share how donors or hospitals should coordinate with you for
+                  the transfusion.
                 </p>
               </div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase text-white/70">
@@ -549,9 +561,12 @@ export default function CreateRequestForm({
           <section className="rounded-2xl border border-white/10 bg-slate-950/60 p-6 backdrop-blur sm:p-8">
             <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h3 className="text-lg font-semibold text-white">Supporting documents</h3>
+                <h3 className="text-lg font-semibold text-white">
+                  Supporting documents
+                </h3>
                 <p className="text-sm text-white/70">
-                  Upload prescriptions, hospital letters, or lab reports to verify the need (images only).
+                  Upload prescriptions, hospital letters, or lab reports to
+                  verify the need (images only).
                 </p>
               </div>
               <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium uppercase text-white/70">
@@ -572,7 +587,9 @@ export default function CreateRequestForm({
                             <UploadCloud className="size-5" />
                           </span>
                           <div className="space-y-1">
-                            <p className="font-medium text-white">Drag & drop or click to upload</p>
+                            <p className="font-medium text-white">
+                              Drag & drop or click to upload
+                            </p>
                             <p className="text-xs text-white/60">
                               Accepted formats: JPG, PNG. Maximum 10MB per file.
                             </p>
@@ -615,7 +632,8 @@ export default function CreateRequestForm({
 
           <div className="space-y-4">
             <p className="text-xs text-white/60">
-              By submitting, you confirm the information is accurate and consent to being contacted by verified donors.
+              By submitting, you confirm the information is accurate and consent
+              to being contacted by verified donors.
             </p>
             <Button
               type="submit"

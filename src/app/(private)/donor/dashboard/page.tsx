@@ -31,98 +31,68 @@ async function DonorDashboard() {
   ).size;
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-linear-to-br from-primary/10 via-background to-background" />
-      <div className="absolute -top-40 left-[-15%] -z-10 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+    <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 pb-16">
+      <section className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 text-white shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-90"
+          style={{
+            background:
+              "radial-gradient(120% 180% at 100% -40%, rgba(59,130,246,0.45) 0%, rgba(244,114,182,0.35) 45%, rgba(15,23,42,0.9) 100%)",
+          }}
+        />
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 pb-16 pt-10 lg:px-8">
-        <section className="overflow-hidden rounded-3xl border border-border/50 bg-card/80 shadow-2xl shadow-primary/10 backdrop-blur">
-          <div className="bg-linear-to-br from-primary via-primary/90 to-destructive/80 px-8 py-10 text-white">
-            <p className="text-sm font-medium uppercase tracking-[0.35em] text-white/70">
-              Donor Console
-            </p>
-            <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <h1 className="text-3xl font-semibold sm:text-4xl">
-                  Grateful to have you back, {user.name}
-                </h1>
-                <p className="mt-3 max-w-2xl text-sm text-white/80">
-                  Review approved matches, respond instantly, and keep track of
-                  the communities you support. Your availability turns requests
-                  into recoveries.
-                </p>
-              </div>
-              <div className="grid gap-4 text-center text-sm font-medium text-white sm:grid-cols-2">
-                <div className="rounded-2xl bg-white/10 px-4 py-3 shadow-lg shadow-black/10">
-                  <p className="text-xs uppercase tracking-wide text-white/60">
-                    Active cases
-                  </p>
-                  <p className="mt-1 text-2xl font-semibold">
-                    {totalOpportunities}
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white/10 px-4 py-3 shadow-lg shadow-black/10">
-                  <p className="text-xs uppercase tracking-wide text-white/60">
-                    Critical priority
-                  </p>
-                  <p className="mt-1 text-2xl font-semibold">
-                    {criticalOpportunities}
-                  </p>
-                </div>
-              </div>
+        <div className="relative z-10 flex flex-col gap-8 px-8 py-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+              Donor console
+            </span>
+            <div className="space-y-3">
+              <h1 className="text-3xl font-semibold sm:text-4xl">
+                Grateful to have you back, {user.name}
+              </h1>
+              <p className="max-w-2xl text-sm text-white/80">
+                Review approved matches, respond instantly, and keep track of the communities you support. Your availability turns requests into recoveries.
+              </p>
             </div>
           </div>
 
-          <div className="grid gap-4 bg-card/80 px-8 py-6 text-sm text-muted-foreground sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-border/60 bg-background/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide">
-                Units requested
-              </p>
-              <p className="mt-2 text-2xl font-semibold text-foreground">
-                {highDemandUnits}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Total demand across approved requests.
-              </p>
+          <div className="grid shrink-0 gap-4 text-sm font-medium sm:grid-cols-2">
+            <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
+              <p className="text-xs uppercase tracking-wide text-white/70">Active cases</p>
+              <p className="mt-1 text-2xl font-semibold text-white">{totalOpportunities}</p>
             </div>
-            <div className="rounded-2xl border border-border/60 bg-background/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide">
-                Blood groups needed
-              </p>
-              <p className="mt-2 text-2xl font-semibold text-foreground">
-                {uniqueBloodGroups}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Unique blood types currently requested.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-border/60 bg-background/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide">
-                Critical cases
-              </p>
-              <p className="mt-2 text-2xl font-semibold text-foreground">
-                {criticalOpportunities}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Needs immediate response within 24 hours.
-              </p>
-            </div>
-            <div className="rounded-2xl border border-border/60 bg-background/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wide">
-                Opportunities this week
-              </p>
-              <p className="mt-2 text-2xl font-semibold text-foreground">
-                {totalOpportunities > 8 ? "8+" : totalOpportunities}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Recently approved requests awaiting donors like you.
-              </p>
+            <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
+              <p className="text-xs uppercase tracking-wide text-white/70">Critical priority</p>
+              <p className="mt-1 text-2xl font-semibold text-white">{criticalOpportunities}</p>
             </div>
           </div>
-        </section>
+        </div>
 
-        <ApprovedBloodRequests initialRequests={requests} />
-      </div>
+        <div className="relative z-10 grid gap-4 border-t border-white/10 bg-slate-950/40 px-8 py-6 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Units requested</p>
+            <p className="mt-2 text-2xl font-semibold text-white">{highDemandUnits}</p>
+            <p className="mt-1 text-xs text-white/60">Total demand across approved requests.</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Blood groups needed</p>
+            <p className="mt-2 text-2xl font-semibold text-white">{uniqueBloodGroups}</p>
+            <p className="mt-1 text-xs text-white/60">Unique blood types currently requested.</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Critical cases</p>
+            <p className="mt-2 text-2xl font-semibold text-white">{criticalOpportunities}</p>
+            <p className="mt-1 text-xs text-white/60">Needs immediate response within 24 hours.</p>
+          </div>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Opportunities this week</p>
+            <p className="mt-2 text-2xl font-semibold text-white">{totalOpportunities > 8 ? "8+" : totalOpportunities}</p>
+            <p className="mt-1 text-xs text-white/60">Recently approved requests awaiting donors like you.</p>
+          </div>
+        </div>
+      </section>
+
+      <ApprovedBloodRequests initialRequests={requests} />
     </div>
   );
 }

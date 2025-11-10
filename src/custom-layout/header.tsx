@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, LogOut, User, LucideIcon, Droplet } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export interface NavItem {
   label: string;
@@ -49,23 +50,34 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
 
   const isActive = (path: string) => pathname === path;
 
+  const homePath = users.role === "donor" ? "/donor/dashboard" : "/recipient/dashboard";
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="flex h-16 items-center justify-between px-4 md:px-8 max-w-full">
-        {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-destructive flex items-center justify-center">
-              <Droplet className="h-4 w-4 text-white fill-white" />
-            </div>
-            <h1 className="text-xl font-bold text-foreground">
-              Blood Donations
-            </h1>
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur">
+      <div
+        className="pointer-events-none absolute inset-0 opacity-90"
+        style={{
+          background:
+            "radial-gradient(120% 180% at 0% -20%, rgba(244,114,182,0.22) 0%, rgba(129,140,248,0.18) 38%, rgba(15,23,42,0.85) 100%)",
+        }}
+      />
+      <div className="relative mx-auto flex h-20 max-w-6xl items-center justify-between px-4 md:px-6">
+        <button
+          type="button"
+          onClick={() => router.push(homePath)}
+          className="group flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-left text-white transition hover:border-white/30 hover:bg-white/10"
+        >
+          <span className="flex size-10 items-center justify-center rounded-full bg-rose-500/20 text-rose-200 transition group-hover:bg-rose-400/30 group-hover:text-white">
+            <Droplet className="size-5" />
+          </span>
+          <div className="leading-tight">
+            <p className="text-xs uppercase tracking-[0.22em] text-white/60">
+              Bloodline
+            </p>
+            <p className="text-sm font-semibold text-white">Donations Portal</p>
           </div>
-        </div>
+        </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden items-center gap-2 md:flex">
           {navItems.length > 0 &&
             navItems.map((item) => {
               const Icon = item.icon;
@@ -73,106 +85,109 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
               return (
                 <Button
                   key={item.path}
+                  size="sm"
                   variant="ghost"
                   onClick={() => router.push(item.path)}
-                  className={`text-sm font-medium gap-2 transition-all ${
-                    active
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  }`}
-                  size="sm"
+                  className={cn(
+                    "relative overflow-hidden rounded-full border border-transparent bg-white/5 px-4 py-2 text-sm font-medium text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white",
+                    active &&
+                      "border-white/30 bg-linear-to-r from-rose-500/70 via-fuchsia-500/60 to-indigo-500/70 text-white shadow-lg shadow-rose-500/25"
+                  )}
                 >
-                  <Icon className="h-4 w-4" />
-                  {item.label}
+                  <Icon className="size-4" />
+                  <span>{item.label}</span>
+                  {active && (
+                    <span className="pointer-events-none absolute inset-0 bg-linear-to-r from-white/20 via-white/5 to-transparent" />
+                  )}
                 </Button>
               );
             })}
 
-          <div className="flex items-center gap-3 pl-4 ml-2 border-l border-border">
-            <div className="text-right">
-              <p className="text-sm font-medium text-foreground">
-                {users.name}
-              </p>
-              <p className="text-xs text-muted-foreground capitalize">
-                {users.role}
-              </p>
+          <div className="ml-4 flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-white/80">
+            <div className="text-right leading-tight">
+              <p className="text-sm font-semibold text-white">{users.name}</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">{users.role}</p>
             </div>
-            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <User className="h-5 w-5 text-primary" />
-            </div>
+            <span className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white">
+              <User className="size-5" />
+            </span>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleLogout}
-              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              className="size-9 rounded-full border border-white/10 text-rose-200 transition hover:border-rose-400/40 hover:bg-rose-500/10 hover:text-white"
             >
-              <LogOut className="h-5 w-5" />
+              <LogOut className="size-5" />
             </Button>
           </div>
         </nav>
 
-        {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-10 rounded-xl border border-white/20 bg-white/10 text-white"
+              >
+                <Menu className="size-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:max-w-[400px] px-6">
-              <SheetHeader className="mb-6">
-                <SheetTitle>Menu</SheetTitle>
+            <SheetContent
+              side="right"
+              className="w-full max-w-sm border-l border-white/10 bg-slate-950/95 text-white"
+            >
+              <SheetHeader className="mb-6 text-left">
+                <SheetTitle className="text-lg font-semibold text-white">
+                  Quick actions
+                </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-4">
-                {/* User Info */}
-                <div className="flex items-center gap-3 pb-4 border-b border-border">
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <User className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
-                      {users.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {users.email}
-                    </p>
-                    <p className="text-xs text-muted-foreground capitalize">
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <span className="flex size-12 items-center justify-center rounded-2xl bg-white/10 text-white">
+                    <User className="size-6" />
+                  </span>
+                  <div className="space-y-1 text-sm">
+                    <p className="font-semibold text-white">{users.name}</p>
+                    <p className="text-white/70">{users.email}</p>
+                    <p className="text-xs uppercase tracking-[0.25em] text-white/60">
                       {users.role}
                     </p>
                   </div>
                 </div>
 
-                {/* Navigation */}
-                {navItems.length > 0 &&
-                  navItems.map((item) => {
-                    const Icon = item.icon;
-                    const active = isActive(item.path);
-                    return (
-                      <Button
-                        key={item.path}
-                        variant="ghost"
-                        onClick={() => {
-                          router.push(item.path);
-                          setIsOpen(false);
-                        }}
-                        className={`justify-start gap-2 ${
-                          active
-                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                            : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                        }`}
-                      >
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Button>
-                    );
-                  })}
+                <div className="space-y-3">
+                  {navItems.length > 0 &&
+                    navItems.map((item) => {
+                      const Icon = item.icon;
+                      const active = isActive(item.path);
+                      return (
+                        <Button
+                          key={item.path}
+                          variant="ghost"
+                          onClick={() => {
+                            router.push(item.path);
+                            setIsOpen(false);
+                          }}
+                          className={cn(
+                            "justify-start gap-3 rounded-2xl border border-transparent bg-white/5 px-4 py-3 text-white/70 transition hover:border-white/20 hover:bg-white/10 hover:text-white",
+                            active &&
+                              "border-white/30 bg-linear-to-r from-rose-500/70 via-fuchsia-500/60 to-indigo-500/70 text-white shadow-lg shadow-rose-500/25"
+                          )}
+                        >
+                          <Icon className="size-4" />
+                          {item.label}
+                        </Button>
+                      );
+                    })}
+                </div>
 
                 <Button
                   variant="ghost"
                   onClick={handleLogout}
-                  className="justify-start text-destructive hover:text-destructive hover:bg-destructive/10 mt-4"
+                  className="w-full justify-start gap-3 rounded-2xl border border-rose-500/30 bg-rose-500/10 text-rose-100 transition hover:bg-rose-500/20 hover:text-white"
                 >
-                  <LogOut className="h-4 w-4 mr-2" />
+                  <LogOut className="size-4" />
                   Logout
                 </Button>
               </div>

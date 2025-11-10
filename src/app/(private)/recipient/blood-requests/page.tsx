@@ -22,8 +22,9 @@ const RecipientBloodRequest = () => {
                 Create a life-saving blood request
               </h1>
               <p className="max-w-2xl text-sm text-white/80 sm:text-base">
-                Share critical details so nearby donors can respond quickly. A complete request
-                helps us surface volunteers with the right blood group and availability.
+                Share critical details so nearby donors can respond quickly. A
+                complete request helps us surface volunteers with the right
+                blood group and availability.
               </p>
             </div>
           </div>
@@ -42,7 +43,8 @@ const RecipientBloodRequest = () => {
               </div>
             </div>
             <p className="text-xs text-white/70">
-              Include the urgency and hospital details to prioritise your request in donor feeds.
+              Include the urgency and hospital details to prioritise your
+              request in donor feeds.
             </p>
           </div>
         </div>

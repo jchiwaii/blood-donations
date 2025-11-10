@@ -53,11 +53,11 @@ const STATUS_OPTIONS = [
 ];
 
 const badgeStyles: Record<string, string> = {
-  pending: "bg-amber-100 text-amber-900 border-amber-200",
-  approved: "bg-sky-100 text-sky-900 border-sky-200",
-  fulfilled: "bg-emerald-100 text-emerald-900 border-emerald-200",
-  cancelled: "bg-rose-100 text-rose-900 border-rose-200",
-  in_progress: "bg-purple-100 text-purple-900 border-purple-200",
+  pending: "bg-amber-200 text-amber-900 border-amber-300",
+  approved: "bg-sky-200 text-sky-900 border-sky-300",
+  fulfilled: "bg-emerald-200 text-emerald-900 border-emerald-300",
+  cancelled: "bg-rose-200 text-rose-900 border-rose-300",
+  in_progress: "bg-purple-200 text-purple-900 border-purple-300",
 };
 
 const urgencyStyles: Record<string, string> = {
@@ -149,50 +149,52 @@ export default function BloodRequestsList({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center rounded-2xl border border-border/60 bg-card/60 py-24">
-        <div className="flex items-center gap-3 text-muted-foreground">
-          <Loader2 className="h-5 w-5 animate-spin" />
-          <span>Loading blood requests...</span>
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 py-24 text-white shadow-[0_20px_60px_rgba(15,23,42,0.45)]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,114,182,0.22),transparent_65%)]" />
+        <div className="relative z-10 flex flex-col items-center gap-3 text-sm text-white/70">
+          <Loader2 className="size-5 animate-spin text-white" />
+          <span>Loading blood requests…</span>
         </div>
       </div>
     );
   }
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-card/70 p-5 shadow-lg shadow-primary/5 backdrop-blur-sm md:flex-row md:items-center md:justify-between">
-        <div className="space-y-1">
-          <h3 className="text-xl font-semibold text-foreground">
-            Manage Blood Requests
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            Keep track of every request, update their status, or submit a new
-            one in seconds.
+    <section className="space-y-6 text-white">
+      <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] backdrop-blur md:flex-row md:items-center md:justify-between">
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold text-white">Manage blood requests</h3>
+          <p className="text-sm text-white/70">
+            Track the status of each case, update details, or submit a new request in seconds.
           </p>
         </div>
         <Button
           onClick={() => router.push("/recipient/blood-requests")}
-          className="gap-2"
+          className="gap-2 rounded-full bg-linear-to-r from-rose-500 via-fuchsia-500 to-indigo-500 px-5"
         >
           <Plus className="h-4 w-4" />
-          Create Request
+          Create request
         </Button>
       </div>
 
-      <div className="grid gap-4 rounded-2xl border border-border/60 bg-card/60 p-5 shadow-lg shadow-primary/5 backdrop-blur-sm md:grid-cols-[2fr,1fr]">
+      <div className="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur md:grid-cols-[2fr,1fr]">
         <Input
           placeholder="Search by title, blood group, or contact"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
-          className="bg-background/80"
+          className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-sm text-white placeholder:text-white/50"
         />
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="bg-background/80">
+          <SelectTrigger className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="border-white/10 bg-slate-900 text-white">
             {STATUS_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem
+                key={option.value}
+                value={option.value}
+                className="text-white focus:bg-rose-500/20 focus:text-white"
+              >
                 {option.label}
               </SelectItem>
             ))}
@@ -201,18 +203,17 @@ export default function BloodRequestsList({
       </div>
 
       {filteredRequests.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-border/70 bg-card/50 py-24 text-center">
-          <div className="rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
+        <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-dashed border-white/20 bg-white/5 py-24 text-center">
+          <div className="rounded-full bg-rose-500/10 px-4 py-1 text-sm font-medium text-rose-200">
             No blood requests yet
           </div>
-          <p className="max-w-md text-sm text-muted-foreground">
-            When you create a request, it will appear here. Monitor its status
-            and keep donors updated in real time.
+          <p className="max-w-md text-sm text-white/70">
+            Your requests will appear here as soon as you create them. Keep donors updated with accurate details and urgency levels.
           </p>
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={() => router.push("/recipient/blood-requests")}
-            className="gap-2"
+            className="gap-2 rounded-full border border-white/20 bg-white/10 px-5 text-white transition hover:border-white/30 hover:bg-white/15"
           >
             <Plus className="h-4 w-4" />
             Create your first request
@@ -223,90 +224,88 @@ export default function BloodRequestsList({
           {filteredRequests.map((request) => (
             <article
               key={request.id}
-              className="relative overflow-hidden rounded-2xl border border-border/70 bg-linear-to-br from-background/90 to-background/70 p-6 shadow-lg shadow-primary/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(244,114,182,0.2)]"
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.08),transparent_60%)]" />
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(244,114,182,0.2),transparent_65%)]" />
 
               <div className="relative flex flex-col gap-6 lg:flex-row lg:justify-between">
                 <div className="space-y-4">
                   <div className="flex flex-wrap items-center gap-3">
-                    <h4 className="text-2xl font-semibold text-foreground">
+                    <h4 className="text-2xl font-semibold text-white">
                       {request.title}
                     </h4>
                     <span
-                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
+                      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-900 ${
                         badgeStyles[request.status] ||
-                        "bg-slate-100 text-slate-900 border-slate-200"
+                        "bg-white text-slate-900 border-white/60"
                       }`}
                     >
                       {STATUS_LABELS[request.status] || request.status}
                     </span>
                     <span
-                      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide ${
+                      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate-900 ${
                         urgencyStyles[request.urgency] ||
-                        "bg-slate-100 text-slate-900 border-slate-200"
+                        "bg-white text-slate-900 border-white/60"
                       }`}
                     >
                       {request.urgency} urgency
                     </span>
                   </div>
 
-                  <p className="max-w-2xl text-sm text-muted-foreground">
+                  <p className="max-w-2xl text-sm text-white/70">
                     {request.description}
                   </p>
 
                   <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                    <div className="rounded-xl bg-background/80 p-4">
-                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Blood Group
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-white/60">
+                        Blood group
                       </dt>
-                      <dd className="text-lg font-semibold text-foreground">
+                      <dd className="text-lg font-semibold text-white">
                         {request.blood_group}
                       </dd>
                     </div>
-                    <div className="rounded-xl bg-background/80 p-4">
-                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Units Needed
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-white/60">
+                        Units needed
                       </dt>
-                      <dd className="text-lg font-semibold text-foreground">
+                      <dd className="text-lg font-semibold text-white">
                         {request.units_required}
                       </dd>
                     </div>
-                    <div className="rounded-xl bg-background/80 p-4">
-                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-white/60">
                         Contact
                       </dt>
-                      <dd className="text-sm font-medium text-foreground">
+                      <dd className="text-sm font-medium text-white">
                         {request.contact_phone}
                       </dd>
                     </div>
-                    <div className="rounded-xl bg-background/80 p-4">
-                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-white/60">
                         Location
                       </dt>
-                      <dd className="text-sm font-medium text-foreground">
+                      <dd className="text-sm font-medium text-white">
                         {request.address}
                       </dd>
                     </div>
                   </dl>
                 </div>
 
-                <div className="flex flex-col gap-3 lg:min-w-40">
+                <div className="flex flex-col gap-3 lg:min-w-48">
                   <Button
-                    variant="outline"
-                    className="w-full gap-2"
+                    variant="ghost"
+                    className="w-full gap-2 rounded-full border border-white/20 bg-white/10 text-white transition hover:border-white/30 hover:bg-white/15"
                     onClick={() =>
-                      router.push(
-                        `/recipient/blood-requests/edit/${request.id}`
-                      )
+                      router.push(`/recipient/blood-requests/edit/${request.id}`)
                     }
                   >
                     <Edit className="h-4 w-4" />
                     Edit
                   </Button>
                   <Button
-                    variant="outline"
-                    className="w-full gap-2 text-destructive hover:text-destructive"
+                    variant="ghost"
+                    className="w-full gap-2 rounded-full border border-rose-400/40 bg-rose-500/10 text-rose-100 transition hover:bg-rose-500/20 hover:text-white"
                     onClick={() => setDeleteTarget(request)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -319,24 +318,22 @@ export default function BloodRequestsList({
         </div>
       )}
 
-      <AlertDialog
-        open={!!deleteTarget}
-        onOpenChange={() => setDeleteTarget(null)}
-      >
-        <AlertDialogContent>
+      <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
+        <AlertDialogContent className="border-white/10 bg-slate-950/95 text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete blood request</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. The request will be permanently
-              removed from the platform and donors will no longer see it.
+            <AlertDialogTitle className="text-white">Delete blood request</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/70">
+              This action cannot be undone. The request will be permanently removed from the platform and donors will no longer see it.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleting} className="rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/15">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
               disabled={deleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="rounded-full bg-rose-500 text-white hover:bg-rose-400"
             >
               {deleting ? (
                 <>
