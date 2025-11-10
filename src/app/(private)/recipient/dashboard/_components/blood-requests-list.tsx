@@ -301,20 +301,22 @@ export default function BloodRequestsList({
                 <div className="flex flex-col gap-3 lg:min-w-48">
                   <Button
                     variant="ghost"
-                    className="w-full gap-2 rounded-full border border-white/20 bg-white/10 text-white transition hover:border-white/30 hover:bg-white/15"
+                    className="w-full gap-2 rounded-full border border-white/20 bg-white/10 text-white transition hover:border-white/30 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-50"
                     onClick={() =>
                       router.push(
                         `/recipient/blood-requests/edit/${request.id}`
                       )
                     }
+                    disabled={request.status === "approved"}
                   >
                     <Edit className="h-4 w-4" />
-                    Edit
+                    {request.status === "approved" ? "Approved - Locked" : "Edit"}
                   </Button>
                   <Button
                     variant="ghost"
-                    className="w-full gap-2 rounded-full border border-rose-400/40 bg-rose-500/10 text-rose-100 transition hover:bg-rose-500/20 hover:text-white"
+                    className="w-full gap-2 rounded-full border border-rose-400/40 bg-rose-500/10 text-rose-100 transition hover:bg-rose-500/20 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
                     onClick={() => setDeleteTarget(request)}
+                    disabled={request.status === "approved"}
                   >
                     <Trash2 className="h-4 w-4" />
                     Delete

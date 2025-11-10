@@ -42,7 +42,6 @@ const CustomLayout = ({ children }: { children: React.ReactNode }) => {
   const adminNavItems: NavItem[] = [
     { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Users", path: "/admin/users", icon: Users },
-    { label: "Donations", path: "/admin/donations", icon: Heart },
     { label: "Settings", path: "/admin/settings", icon: Settings },
   ];
 

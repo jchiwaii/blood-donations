@@ -290,3 +290,31 @@ export const getUsersStatistics = async () => {
     };
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .select("id, name, email, role, created_at")
+      .in("role", ["donor", "recipient"])
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to retrieve users",
+      };
+    }
+
+    return {
+      success: true,
+      data: data ?? [],
+      message: "Users retrieved successfully",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to retrieve users",
+    };
+  }
+};

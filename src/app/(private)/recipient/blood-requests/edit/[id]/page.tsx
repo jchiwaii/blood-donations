@@ -38,6 +38,11 @@ export default async function EditBloodRequestPage({
     notFound();
   }
 
+  // Prevent editing approved requests
+  if (bloodRequest.status === "approved") {
+    redirect("/recipient/dashboard");
+  }
+
   return (
     <div className="p-8">
       <div className="max-w-4xl mx-auto">

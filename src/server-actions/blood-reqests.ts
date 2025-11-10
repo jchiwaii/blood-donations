@@ -139,6 +139,28 @@ export const updateBloodRequest = async (
   payload: Partial<IBloodRequest>
 ) => {
   try {
+    // First check if the request is approved
+    const { data: existingRequest, error: fetchError } = await supabase
+      .from("blood_requests")
+      .select("status")
+      .eq("id", id)
+      .single();
+
+    if (fetchError) {
+      return {
+        success: false,
+        message: "Failed to update blood request",
+      };
+    }
+
+    // Prevent updating approved requests (unless updating from admin via updateBloodRequestStatus)
+    if (existingRequest.status === "approved") {
+      return {
+        success: false,
+        message: "Cannot update approved blood request",
+      };
+    }
+
     const { data, error } = await supabase
       .from("blood_requests")
       .update(payload)
@@ -167,19 +189,51 @@ export const updateBloodRequest = async (
 };
 
 export const deleteBloodRequest = async (id: number) => {
-  const { error } = await supabase.from("blood_requests").delete().eq("id", id);
+  try {
+    // First check if the request is approved
+    const { data: existingRequest, error: fetchError } = await supabase
+      .from("blood_requests")
+      .select("status")
+      .eq("id", id)
+      .single();
 
-  if (error) {
+    if (fetchError) {
+      return {
+        success: false,
+        message: "Failed to delete blood request",
+      };
+    }
+
+    // Prevent deleting approved requests
+    if (existingRequest.status === "approved") {
+      return {
+        success: false,
+        message: "Cannot delete approved blood request",
+      };
+    }
+
+    const { error } = await supabase
+      .from("blood_requests")
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to delete blood request",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Blood request deleted successfully",
+    };
+  } catch (error) {
     return {
       success: false,
       message: "Failed to delete blood request",
     };
   }
-
-  return {
-    success: true,
-    message: "Blood request deleted successfully",
-  };
 };
 
 export const getAllBloodRequestsForAdmin = async () => {

@@ -7,6 +7,7 @@ import {
 } from "@/server-actions/blood-reqests";
 import { IBloodRequest } from "@/interfaces";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   CheckCircle,
   XCircle,
@@ -39,6 +40,7 @@ const BloodRequestsManagement = () => {
   const [filter, setFilter] = React.useState<
     "all" | "pending" | "approved" | "rejected"
   >("all");
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   const fetchRequests = async () => {
     setLoading(true);
@@ -74,8 +76,14 @@ const BloodRequestsManagement = () => {
   };
 
   const filteredRequests = requests.filter((req) => {
-    if (filter === "all") return true;
-    return req.status === filter;
+    const matchesStatus = filter === "all" || req.status === filter;
+    const matchesSearch =
+      searchTerm === "" ||
+      req.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      req.blood_group.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      req.recipient?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      req.recipient?.email.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesStatus && matchesSearch;
   });
 
   const getStatusBadge = (status: string) => {
@@ -166,6 +174,15 @@ const BloodRequestsManagement = () => {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+        <Input
+          placeholder="Search by title, blood group, recipient name or email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-sm text-white placeholder:text-white/50"
+        />
       </div>
 
       {filteredRequests.length === 0 ? (

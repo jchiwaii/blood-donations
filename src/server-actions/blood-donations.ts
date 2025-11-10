@@ -5,10 +5,10 @@ import { IBloodDonation } from "@/interfaces";
 
 export const createBloodDonation = async (payload: Partial<IBloodDonation>) => {
   try {
-    // Set default status if not provided
+    // Set default status to pending for admin approval
     const donationData = {
       ...payload,
-      status: payload.status || "available",
+      status: payload.status || "pending",
     };
 
     const { data, error } = await supabase
@@ -20,19 +20,19 @@ export const createBloodDonation = async (payload: Partial<IBloodDonation>) => {
     if (error) {
       return {
         success: false,
-        message: "Failed to create donation response",
+        message: "Failed to create donation offer",
       };
     }
 
     return {
       success: true,
-      message: "Donation response created successfully",
+      message: "Donation offer created successfully and pending admin approval",
       data,
     };
   } catch (error) {
     return {
       success: false,
-      message: "Failed to create donation response",
+      message: "Failed to create donation offer",
     };
   }
 };
@@ -151,30 +151,89 @@ export const deleteBloodDonation = async (id: number) => {
   }
 };
 
-export const getAllAvailableDonations = async () => {
+export const getApprovedDonations = async () => {
   try {
     const { data, error } = await supabase
       .from("blood_donations")
-      .select("*")
-      .eq("status", "available")
+      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)")
+      .eq("status", "approved")
       .order("created_at", { ascending: false });
 
     if (error) {
       return {
         success: false,
-        message: "Failed to retrieve available donations",
+        message: "Failed to retrieve approved donations",
       };
     }
 
     return {
       success: true,
       data: data || [],
-      message: "Available donations retrieved successfully",
+      message: "Approved donations retrieved successfully",
     };
   } catch (error) {
     return {
       success: false,
-      message: "Failed to retrieve available donations",
+      message: "Failed to retrieve approved donations",
+    };
+  }
+};
+
+export const getAllBloodDonationsForAdmin = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("blood_donations")
+      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to retrieve donations",
+      };
+    }
+
+    return {
+      success: true,
+      data: data || [],
+      message: "Donations retrieved successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to retrieve donations",
+    };
+  }
+};
+
+export const updateBloodDonationStatus = async (
+  id: number,
+  payload: Partial<IBloodDonation>
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("blood_donations")
+      .update(payload)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      return {
+        success: false,
+        message: "Failed to update donation status",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Donation status updated successfully",
+      data,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to update donation status",
     };
   }
 };
