@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "seed": "tsx scripts/seed-data.ts"
+    "cleanup": "tsx scripts/cleanup-data.ts",
+    "seed": "tsx scripts/seed-data.ts",
+    "reset": "npm run cleanup && npm run seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -11,7 +11,9 @@ const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
 const supabaseKey = process.env.SUPABASE_API_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.error("Error: SUPABASE_PROJECT_URL and SUPABASE_API_KEY must be set in .env.local");
+  console.error(
+    "Error: SUPABASE_PROJECT_URL and SUPABASE_API_KEY must be set in .env.local"
+  );
   process.exit(1);
 }
 
@@ -117,36 +119,41 @@ async function seedData() {
           .from("blood_requests")
           .insert({
             recipient_id: recipient.id,
-            title: requestTitles[Math.floor(Math.random() * requestTitles.length)],
-            description: `Medical facility requires ${bloodGroups[Math.floor(Math.random() * bloodGroups.length)]} blood for patient treatment. Contact immediately if available.`,
-            blood_group: bloodGroups[Math.floor(Math.random() * bloodGroups.length)],
+            title:
+              requestTitles[Math.floor(Math.random() * requestTitles.length)],
+            description: `Medical facility requires ${
+              bloodGroups[Math.floor(Math.random() * bloodGroups.length)]
+            } blood for patient treatment. Contact immediately if available.`,
+            blood_group:
+              bloodGroups[Math.floor(Math.random() * bloodGroups.length)],
             units_required: Math.floor(Math.random() * 4) + 1, // 1-4 units
             status: statuses[Math.floor(Math.random() * statuses.length)],
             urgency: urgencies[Math.floor(Math.random() * urgencies.length)],
-            contact_phone: `+1-555-${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
+            contact_phone: `+1-555-${Math.floor(Math.random() * 900) + 100}-${
+              Math.floor(Math.random() * 9000) + 1000
+            }`,
             contact_email: recipient.email,
-            address: `${Math.floor(Math.random() * 9000) + 1000} Medical Center Dr, ${cities[Math.floor(Math.random() * cities.length)]}`,
+            address: `${
+              Math.floor(Math.random() * 9000) + 1000
+            } Medical Center Dr, ${
+              cities[Math.floor(Math.random() * cities.length)]
+            }`,
           })
           .select()
           .single();
 
         if (error) {
-          console.error(`Error creating blood request for ${recipient.name}:`, error);
+          console.error(
+            `Error creating blood request for ${recipient.name}:`,
+            error
+          );
           continue;
         }
-        console.log(`Created blood request for ${recipient.name}: ${data.title}`);
+        console.log(
+          `Created blood request for ${recipient.name}: ${data.title}`
+        );
       }
     }
-
-    console.log("\n✓ Database seeding completed successfully!");
-    console.log("\nTest credentials:");
-    console.log("Donors: donor1@example.com to donor5@example.com");
-    console.log("Recipients: recipient1@example.com to recipient5@example.com");
-    console.log("Password for all: password123");
-    console.log("\nSummary:");
-    console.log(`- Created ${donors.length} donor users`);
-    console.log(`- Created ${recipients.length} recipient users`);
-    console.log(`- Created blood requests for each recipient (2-3 per recipient)`);
   } catch (error) {
     console.error("Error during seeding:", error);
   }

@@ -1,18 +1,34 @@
-import React from "react";
-import DonationResponseForm from "./_components/donation-response-form";
+import { currentUser } from "@/server-actions/users";
+import { redirect } from "next/navigation";
+import { getBloodDonations } from "@/server-actions/blood-donations";
+import DonorDonationsList from "./_components/donor-donations-list";
+import PageTitle from "@/components/ui/page-title";
 
-const DonorDonations = () => {
+async function DonorDonations() {
+  const user = await currentUser();
+
+  if (!user) {
+    redirect("/");
+  }
+
+  if (user.role !== "donor") {
+    redirect("/");
+  }
+
+  const response = await getBloodDonations(user.id);
+  const donations =
+    response.success && Array.isArray(response.data) ? response.data : [];
+
   return (
-    <div className="container max-w-3xl mx-auto py-8 px-4">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Respond to Blood Request</h1>
-        <p className="text-muted-foreground">
-          Fill out the form to respond to a blood donation request
-        </p>
-      </div>
-      <DonationResponseForm />
+    <div className="space-y-8">
+      <PageTitle title="My Donation Offers" />
+      <p className="text-sm text-white/60">
+        Create and manage your blood donation offers
+      </p>
+
+      <DonorDonationsList userId={user.id} initialDonations={donations} />
     </div>
   );
-};
+}
 
 export default DonorDonations;
