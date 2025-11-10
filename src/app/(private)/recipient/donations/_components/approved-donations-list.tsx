@@ -202,7 +202,9 @@ export default function ApprovedDonationsList({
                         Available
                       </dt>
                       <dd className="text-sm font-medium text-white">
-                        {new Date(donation.availability_date).toLocaleDateString()}
+                        {new Date(
+                          donation.availability_date
+                        ).toLocaleDateString()}
                       </dd>
                     </div>
                   </dl>

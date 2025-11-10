@@ -1,7 +1,10 @@
 "use client";
 
 import React from "react";
-import { getAllBloodDonationsForAdmin, updateBloodDonationStatus } from "@/server-actions/blood-donations";
+import {
+  getAllBloodDonationsForAdmin,
+  updateBloodDonationStatus,
+} from "@/server-actions/blood-donations";
 import { IBloodDonation } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,10 +32,14 @@ type BloodDonationWithDonor = IBloodDonation & {
 };
 
 const AdminDonationsPage = () => {
-  const [donations, setDonations] = React.useState<BloodDonationWithDonor[]>([]);
+  const [donations, setDonations] = React.useState<BloodDonationWithDonor[]>(
+    []
+  );
   const [loading, setLoading] = React.useState(true);
   const [updatingId, setUpdatingId] = React.useState<number | null>(null);
-  const [filter, setFilter] = React.useState<"all" | "pending" | "approved" | "rejected">("all");
+  const [filter, setFilter] = React.useState<
+    "all" | "pending" | "approved" | "rejected"
+  >("all");
   const [searchTerm, setSearchTerm] = React.useState("");
 
   const fetchDonations = async () => {
@@ -209,7 +216,9 @@ const AdminDonationsPage = () => {
                       <div className="flex gap-2">
                         <Button
                           size="sm"
-                          onClick={() => handleStatusUpdate(donation.id, "approved")}
+                          onClick={() =>
+                            handleStatusUpdate(donation.id, "approved")
+                          }
                           disabled={updatingId === donation.id}
                           className="rounded-xl border border-emerald-400/40 bg-emerald-500/20 text-emerald-300 transition hover:bg-emerald-500/30"
                         >
@@ -218,7 +227,9 @@ const AdminDonationsPage = () => {
                         </Button>
                         <Button
                           size="sm"
-                          onClick={() => handleStatusUpdate(donation.id, "rejected")}
+                          onClick={() =>
+                            handleStatusUpdate(donation.id, "rejected")
+                          }
                           disabled={updatingId === donation.id}
                           className="rounded-xl border border-red-400/40 bg-red-500/20 text-red-300 transition hover:bg-red-500/30"
                         >
@@ -231,7 +242,9 @@ const AdminDonationsPage = () => {
                     {donation.status !== "pending" && (
                       <Button
                         size="sm"
-                        onClick={() => handleStatusUpdate(donation.id, "pending")}
+                        onClick={() =>
+                          handleStatusUpdate(donation.id, "pending")
+                        }
                         disabled={updatingId === donation.id}
                         className="rounded-xl border border-amber-400/40 bg-amber-500/20 text-amber-300 transition hover:bg-amber-500/30"
                       >
@@ -242,7 +255,9 @@ const AdminDonationsPage = () => {
                   </div>
 
                   {donation.notes && (
-                    <p className="mb-6 text-sm text-white/70">{donation.notes}</p>
+                    <p className="mb-6 text-sm text-white/70">
+                      {donation.notes}
+                    </p>
                   )}
 
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -336,11 +351,14 @@ const AdminDonationsPage = () => {
                       <Calendar className="size-3.5" />
                       <span>
                         Created on{" "}
-                        {new Date(donation.created_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
+                        {new Date(donation.created_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
                       </span>
                     </div>
                   )}

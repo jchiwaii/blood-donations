@@ -355,8 +355,7 @@ const AdminSettingsPage = () => {
                   {
                     key: "statusUpdates",
                     label: "Status Updates",
-                    description:
-                      "Get notified when request statuses change",
+                    description: "Get notified when request statuses change",
                   },
                   {
                     key: "dailyReports",

@@ -182,7 +182,7 @@ export default function BloodRequestsList({
         </Button>
       </div>
 
-  <div className="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur md:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
+      <div className="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur md:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
         <Input
           placeholder="Search by title, blood group, or contact"
           value={searchTerm}
@@ -310,7 +310,9 @@ export default function BloodRequestsList({
                     disabled={request.status === "approved"}
                   >
                     <Edit className="h-4 w-4" />
-                    {request.status === "approved" ? "Approved - Locked" : "Edit"}
+                    {request.status === "approved"
+                      ? "Approved - Locked"
+                      : "Edit"}
                   </Button>
                   <Button
                     variant="ghost"

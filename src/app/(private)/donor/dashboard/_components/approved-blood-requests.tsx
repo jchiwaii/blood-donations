@@ -109,7 +109,7 @@ export default function ApprovedBloodRequests({
         </div>
       </div>
 
-  <div className="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur md:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
+      <div className="grid gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.35)] backdrop-blur md:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)]">
         <Input
           placeholder="Search by blood group, location, or contact"
           value={searchTerm}
