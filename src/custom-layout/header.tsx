@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, LogOut, User, LucideIcon } from "lucide-react";
+import { Menu, LogOut, User, LucideIcon, Droplet } from "lucide-react";
 import { toast } from "sonner";
 
 export interface NavItem {
@@ -56,7 +56,7 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-full bg-destructive flex items-center justify-center">
-              <span className="text-white font-bold text-sm">BD</span>
+              <Droplet className="h-4 w-4 text-white fill-white" />
             </div>
             <h1 className="text-xl font-bold text-foreground">
               Blood Donations
@@ -119,11 +119,11 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px]">
-              <SheetHeader>
+            <SheetContent side="right" className="w-full sm:max-w-[400px] px-6">
+              <SheetHeader className="mb-6">
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-4 mt-6">
+              <div className="flex flex-col gap-4">
                 {/* User Info */}
                 <div className="flex items-center gap-3 pb-4 border-b border-border">
                   <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">

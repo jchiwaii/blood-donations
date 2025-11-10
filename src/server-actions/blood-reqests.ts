@@ -67,11 +67,39 @@ export const getBloodRequests = async (id: number) => {
   };
 };
 
-export const getAllBloodRequests = async (id: number) => {
+export const getAllBloodRequests = async (userId: number) => {
   const { data, error } = await supabase
     .from("blood_requests")
     .select("*")
-    .eq("recipient_id", id)
+    .eq("recipient_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return {
+      success: false,
+      message: "Failed to retrieve blood requests",
+    };
+  }
+
+  if (data && data.length === 0) {
+    return {
+      success: false,
+      message: "No blood requests found",
+    };
+  }
+
+  return {
+    success: true,
+    data,
+    message: "Blood requests retrieved successfully",
+  };
+};
+
+export const getApprovedBloodRequests = async () => {
+  const { data, error } = await supabase
+    .from("blood_requests")
+    .select("*, recipient:user_profiles(id, name)")
+    .eq("status", "approved")
     .order("created_at", { ascending: false });
 
   if (error) {

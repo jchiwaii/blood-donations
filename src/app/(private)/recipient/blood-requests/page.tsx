@@ -12,25 +12,6 @@ const RecipientBloodRequest = () => {
       </div>
       {/* Create mode - no editData prop */}
       <CreateRequestForm />
-
-      {/* Edit mode example - pass editData with existing request
-      <CreateRequestForm 
-        editData={{
-          id: 1,
-          title: "Urgent Blood Needed",
-          description: "Patient needs blood for surgery",
-          blood_group: "A+",
-          units_required: 2,
-          urgency: "high",
-          contact_phone: "+1234567890",
-          contact_email: "contact@example.com",
-          address: "123 Hospital St"
-        }}
-        onSuccess={() => {
-          // Handle success (e.g., close modal, redirect)
-        }}
-      />
-      */}
     </div>
   );
 };
