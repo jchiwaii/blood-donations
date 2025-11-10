@@ -46,9 +46,7 @@ export function ProfileSummaryCard({
   );
 
   return (
-    <section
-      className={cn(containerClasses, className)}
-    >
+    <section className={cn(containerClasses, className)}>
       <div className={overlayClasses} />
 
       <div className="relative flex flex-col gap-8 p-8 md:flex-row md:items-start md:justify-between">

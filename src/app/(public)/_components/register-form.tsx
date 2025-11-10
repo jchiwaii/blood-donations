@@ -362,17 +362,14 @@ const RegisterForm = ({ variant = "light", className }: RegisterFormProps) => {
                               ? "border-rose-300/70 bg-rose-400/10 shadow-[0_12px_40px_rgba(244,114,182,0.25)]"
                               : "border-destructive bg-destructive/5"
                             : isDark
-                              ? "border-white/15 hover:border-rose-300/60 hover:bg-white/5"
-                              : "border-border hover:border-destructive/50"
+                            ? "border-white/15 hover:border-rose-300/60 hover:bg-white/5"
+                            : "border-border hover:border-destructive/50"
                         )}
                       >
                         <RadioGroupItem
                           value={role.value}
                           id={`register-${role.value}`}
-                          className={cn(
-                            "shrink-0",
-                            isDark ? "text-white" : ""
-                          )}
+                          className={cn("shrink-0", isDark ? "text-white" : "")}
                         />
                         <Label
                           htmlFor={`register-${role.value}`}

@@ -23,7 +23,8 @@ const featureItems = [
   {
     icon: Users,
     title: "Community first",
-    description: "Coordinators, donors, and recipients stay aligned in real time.",
+    description:
+      "Coordinators, donors, and recipients stay aligned in real time.",
   },
 ];
 
@@ -99,7 +100,10 @@ export function AuthHero() {
               </p>
             </div>
             <div>
-              <p className="text-3xl font-semibold text-white"><Heart className="mr-2 inline size-6 text-rose-200" />24/7</p>
+              <p className="text-3xl font-semibold text-white">
+                <Heart className="mr-2 inline size-6 text-rose-200" />
+                24/7
+              </p>
               <p className="text-xs uppercase tracking-[0.18em] text-white/60">
                 coordinator care
               </p>
@@ -160,8 +164,8 @@ export function AuthHero() {
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-white/70">
                 <p>
                   We use secure protocols to keep your information encrypted.
-                  Coordinators only receive the details necessary to manage
-                  your donation or request.
+                  Coordinators only receive the details necessary to manage your
+                  donation or request.
                 </p>
               </div>
 
