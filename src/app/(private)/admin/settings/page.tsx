@@ -132,7 +132,7 @@ const AdminSettingsPage = () => {
   ] as const;
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
       <PageTitle title="Settings" />
       <p className="text-sm text-white/60">
         Manage your account settings and preferences

@@ -20,7 +20,7 @@ async function RecipientDonations() {
     response.success && Array.isArray(response.data) ? response.data : [];
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
       <PageTitle title="Available Donations" />
       <p className="text-sm text-white/60">
         Browse approved donation offers from donors

@@ -19,7 +19,7 @@ const Home = () => {
               <Droplet className="size-5 text-rose-200" />
             </span>
             <span className="text-lg font-semibold tracking-wide">
-              BloodConnect
+              Bloodline
             </span>
           </Link>
 

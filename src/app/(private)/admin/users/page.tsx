@@ -44,7 +44,7 @@ const AdminUsersPage = () => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="mx-auto w-full max-w-7xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
         <div className="h-12 w-64 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
         <div className="grid gap-4 sm:grid-cols-2">
           {[...Array(2)].map((_, i) => (
@@ -67,7 +67,7 @@ const AdminUsersPage = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
       <PageTitle title="Users Management" />
       <p className="text-sm text-white/60">
         View and manage all donors and recipients
@@ -111,7 +111,7 @@ const AdminUsersPage = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 p-1">
+        <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-white/15 bg-white/5 p-1">
           {["all", "donor", "recipient"].map((f) => (
             <button
               key={f}

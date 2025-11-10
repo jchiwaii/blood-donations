@@ -113,7 +113,7 @@ const AdminDonationsPage = () => {
 
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div className="mx-auto w-full max-w-7xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
         <div className="h-12 w-64 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
         <div className="space-y-4">
           {[...Array(3)].map((_, i) => (
@@ -128,7 +128,7 @@ const AdminDonationsPage = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
       <PageTitle title="Donation Offers Management" />
       <p className="text-sm text-white/60">
         Review and approve blood donation offers from donors
@@ -142,7 +142,7 @@ const AdminDonationsPage = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 p-1">
+        <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-white/15 bg-white/5 p-1">
           {["all", "pending", "approved", "rejected"].map((f) => (
             <button
               key={f}

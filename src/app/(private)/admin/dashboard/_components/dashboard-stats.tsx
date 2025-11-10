@@ -98,7 +98,7 @@ const DashboardStats = () => {
 
   if (loading) {
     return (
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {[...Array(7)].map((_, i) => (
           <div
             key={i}
@@ -110,7 +110,7 @@ const DashboardStats = () => {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+  <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {statCards.map((card) => {
         const Icon = card.icon;
         return (

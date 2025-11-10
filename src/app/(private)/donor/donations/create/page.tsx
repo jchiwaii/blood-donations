@@ -15,7 +15,7 @@ async function CreateDonationOffer() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8">
+    <div className="mx-auto w-full max-w-4xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
       <PageTitle title="Create Donation Offer" />
       <p className="text-sm text-white/60">
         Offer your blood donation to help those in need. Your offer will be reviewed by admin.

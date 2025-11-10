@@ -208,7 +208,7 @@ export default function ApprovedDonationsList({
                   </dl>
                 </div>
 
-                <div className="flex flex-col gap-3 lg:min-w-48">
+                <div className="flex flex-col gap-3 lg:w-full lg:max-w-xs">
                   <Button
                     className="w-full gap-2 rounded-full bg-linear-to-r from-rose-500 via-fuchsia-500 to-indigo-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.01]"
                     onClick={() => handleRequestDonation(donation.id)}
@@ -216,7 +216,7 @@ export default function ApprovedDonationsList({
                     <Heart className="h-4 w-4" />
                     Request Donation
                   </Button>
-                  <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-sm text-white/80">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
                     <p className="font-semibold text-white">
                       Contact information
                     </p>

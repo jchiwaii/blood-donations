@@ -31,8 +31,9 @@ async function DonorDashboard() {
   ).size;
 
   return (
-    <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 pb-16">
-      <section className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 text-white shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
+    <div className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-10 lg:gap-12">
+        <section className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 text-white shadow-[0_25px_80px_rgba(15,23,42,0.45)]">
         <div
           className="pointer-events-none absolute inset-0 opacity-90"
           style={{
@@ -41,7 +42,7 @@ async function DonorDashboard() {
           }}
         />
 
-        <div className="relative z-10 flex flex-col gap-8 px-8 py-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="relative z-10 flex flex-col gap-8 px-6 py-8 sm:px-8 sm:py-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
               Donor console
@@ -78,7 +79,7 @@ async function DonorDashboard() {
           </div>
         </div>
 
-        <div className="relative z-10 grid gap-4 border-t border-white/10 bg-slate-950/40 px-8 py-6 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="relative z-10 grid gap-4 border-t border-white/10 bg-slate-950/40 px-6 py-6 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
               Units requested
@@ -124,9 +125,10 @@ async function DonorDashboard() {
             </p>
           </div>
         </div>
-      </section>
+        </section>
 
-      <ApprovedBloodRequests initialRequests={requests} />
+        <ApprovedBloodRequests initialRequests={requests} />
+      </div>
     </div>
   );
 }
