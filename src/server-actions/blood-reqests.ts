@@ -81,16 +81,9 @@ export const getAllBloodRequests = async (userId: number) => {
     };
   }
 
-  if (data && data.length === 0) {
-    return {
-      success: false,
-      message: "No blood requests found",
-    };
-  }
-
   return {
     success: true,
-    data,
+    data: data ?? [],
     message: "Blood requests retrieved successfully",
   };
 };
@@ -109,16 +102,9 @@ export const getApprovedBloodRequests = async () => {
     };
   }
 
-  if (data && data.length === 0) {
-    return {
-      success: false,
-      message: "No blood requests found",
-    };
-  }
-
   return {
     success: true,
-    data,
+    data: data ?? [],
     message: "Blood requests retrieved successfully",
   };
 };

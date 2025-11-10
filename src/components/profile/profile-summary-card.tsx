@@ -17,7 +17,10 @@ const roleLabels: Record<string, string> = {
   admin: "Administrator",
 };
 
-export function ProfileSummaryCard({ user, className }: ProfileSummaryCardProps) {
+export function ProfileSummaryCard({
+  user,
+  className,
+}: ProfileSummaryCardProps) {
   const roleLabel = roleLabels[user.role] ?? user.role;
   const initials = user.name
     .split(" ")
@@ -32,7 +35,7 @@ export function ProfileSummaryCard({ user, className }: ProfileSummaryCardProps)
         className
       )}
     >
-  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.2),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.2),transparent_55%)]" />
 
       <div className="relative flex flex-col gap-8 p-8 md:flex-row md:items-start md:justify-between">
         <div className="flex flex-col gap-6 md:flex-row md:items-center">

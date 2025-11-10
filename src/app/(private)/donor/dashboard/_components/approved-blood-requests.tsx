@@ -1,178 +1,256 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Heart, Loader2, Mail, MapPin, Phone } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { IBloodRequest } from "@/interfaces";
 import { getApprovedBloodRequests } from "@/server-actions/blood-reqests";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Heart, Loader2, Phone, Mail, MapPin } from "lucide-react";
-import { useRouter } from "next/navigation";
 
-export default function ApprovedBloodRequests() {
-  const [requests, setRequests] = useState<IBloodRequest[]>([]);
-  const [loading, setLoading] = useState(true);
+interface ApprovedBloodRequestsProps {
+  initialRequests?: IBloodRequest[];
+}
+
+const urgencyStyling: Record<string, string> = {
+  critical: "bg-rose-100 text-rose-900 border-rose-200",
+  high: "bg-orange-100 text-orange-900 border-orange-200",
+  medium: "bg-amber-100 text-amber-900 border-amber-200",
+  low: "bg-emerald-100 text-emerald-900 border-emerald-200",
+};
+
+export default function ApprovedBloodRequests({
+  initialRequests = [],
+}: ApprovedBloodRequestsProps) {
   const router = useRouter();
+  const [requests, setRequests] = useState<IBloodRequest[]>(initialRequests);
+  const [loading, setLoading] = useState(initialRequests.length === 0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [urgencyFilter, setUrgencyFilter] = useState("all");
 
   useEffect(() => {
-    loadRequests();
-  }, []);
+    let isMounted = true;
 
-  const loadRequests = async () => {
-    try {
+    const fetchRequests = async () => {
       setLoading(true);
       const response = await getApprovedBloodRequests();
 
-      if (response.success && response.data) {
+      if (!isMounted) return;
+
+      if (response.success && Array.isArray(response.data)) {
         setRequests(response.data);
-      } else {
+      } else if (!response.success) {
+        toast.error(response.message || "Failed to load blood requests");
         setRequests([]);
       }
-    } catch (error) {
-      console.error("Failed to load requests:", error);
-      toast.error("Failed to load blood requests");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const getUrgencyColor = (urgency: string) => {
-    switch (urgency.toLowerCase()) {
-      case "critical":
-        return "bg-red-100 text-red-800 border-red-300";
-      case "high":
-        return "bg-orange-100 text-orange-800 border-orange-300";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800 border-yellow-300";
-      case "low":
-        return "bg-green-100 text-green-800 border-green-300";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-300";
-    }
-  };
+      setLoading(false);
+    };
+
+    fetchRequests();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const filteredRequests = useMemo(() => {
+    return requests.filter((request) => {
+      const matchesSearch = [
+        request.title,
+        request.blood_group,
+        request.address,
+        request.contact_phone,
+      ]
+        .filter(Boolean)
+        .some((value) =>
+          value.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+      const matchesUrgency =
+        urgencyFilter === "all" || request.urgency === urgencyFilter;
+
+      return matchesSearch && matchesUrgency;
+    });
+  }, [requests, searchTerm, urgencyFilter]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="flex items-center justify-center rounded-2xl border border-border/60 bg-card/60 py-24">
+        <div className="flex items-center gap-3 text-muted-foreground">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Loading approved requests...</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold">Available Blood Requests</h2>
-          <p className="text-muted-foreground">
-            Help save lives by donating blood
+    <section className="space-y-6">
+      <div className="flex flex-col gap-4 rounded-2xl border border-border/60 bg-card/70 p-5 shadow-lg shadow-primary/5 backdrop-blur-sm md:flex-row md:items-center md:justify-between">
+        <div className="space-y-1">
+          <h3 className="text-xl font-semibold text-foreground">
+            Opportunities to Donate
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            Browse urgent requests, reach out to recipients, and confirm your
+            availability.
           </p>
         </div>
       </div>
 
-      {requests.length === 0 ? (
-        <div className="text-center py-12 bg-card border border-border rounded-lg">
-          <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-muted-foreground mb-2">
-            No blood requests available at the moment
+      <div className="grid gap-4 rounded-2xl border border-border/60 bg-card/60 p-5 shadow-lg shadow-primary/5 backdrop-blur-sm md:grid-cols-[2fr,1fr]">
+        <Input
+          placeholder="Search by blood group, location, or contact"
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          className="bg-background/80"
+        />
+        <Select value={urgencyFilter} onValueChange={setUrgencyFilter}>
+          <SelectTrigger className="bg-background/80">
+            <SelectValue placeholder="Filter by urgency" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All urgency levels</SelectItem>
+            <SelectItem value="critical">Critical</SelectItem>
+            <SelectItem value="high">High</SelectItem>
+            <SelectItem value="medium">Medium</SelectItem>
+            <SelectItem value="low">Low</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {filteredRequests.length === 0 ? (
+        <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-border/70 bg-card/50 py-24 text-center">
+          <div className="rounded-full bg-primary/10 p-3 text-primary">
+            <Heart className="h-6 w-6" />
+          </div>
+          <p className="text-lg font-semibold text-foreground">
+            No approved requests right now
           </p>
-          <p className="text-sm text-muted-foreground">
-            Check back later for opportunities to donate
+          <p className="max-w-md text-sm text-muted-foreground">
+            All donation requests that are approved by the medical team will
+            appear here. Check back soon or enable notifications to stay
+            updated.
           </p>
         </div>
       ) : (
         <div className="grid gap-4">
-          {requests.map((request) => (
-            <div
+          {filteredRequests.map((request) => (
+            <article
               key={request.id}
-              className="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
+              className="relative overflow-hidden rounded-2xl border border-border/70 bg-linear-to-br from-background/90 to-background/70 p-6 shadow-lg shadow-primary/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold mb-2">
-                    {request.title}
-                  </h3>
-                  <div className="flex gap-2 mb-3">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.08),transparent_60%)]" />
+
+              <div className="relative flex flex-col gap-6 lg:flex-row lg:justify-between">
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h4 className="text-2xl font-semibold text-foreground">
+                      {request.title}
+                    </h4>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium border ${getUrgencyColor(
-                        request.urgency
-                      )}`}
+                      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
+                        urgencyStyling[request.urgency] ||
+                        "bg-slate-100 text-slate-900 border-slate-200"
+                      }`}
                     >
-                      {request.urgency.toUpperCase()} URGENCY
+                      {request.urgency} urgency
                     </span>
                   </div>
-                </div>
-                <Button
-                  onClick={() =>
-                    router.push(`/donor/blood-requests/${request.id}`)
-                  }
-                >
-                  <Heart className="h-4 w-4 mr-2" />
-                  Respond
-                </Button>
-              </div>
 
-              <p className="text-muted-foreground mb-4 line-clamp-2">
-                {request.description}
-              </p>
+                  <p className="max-w-2xl text-sm text-muted-foreground">
+                    {request.description}
+                  </p>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-4">
-                <div>
-                  <p className="text-muted-foreground">Blood Group</p>
-                  <p className="font-semibold text-lg">{request.blood_group}</p>
+                  <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="rounded-xl bg-background/80 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Blood Group
+                      </dt>
+                      <dd className="text-lg font-semibold text-foreground">
+                        {request.blood_group}
+                      </dd>
+                    </div>
+                    <div className="rounded-xl bg-background/80 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Units Needed
+                      </dt>
+                      <dd className="text-lg font-semibold text-foreground">
+                        {request.units_required}
+                      </dd>
+                    </div>
+                    <div className="rounded-xl bg-background/80 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Recipient
+                      </dt>
+                      <dd className="text-sm font-medium text-foreground">
+                        {(request as any).recipient?.name || "Confidential"}
+                      </dd>
+                    </div>
+                    <div className="rounded-xl bg-background/80 p-4">
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Posted
+                      </dt>
+                      <dd className="text-sm font-medium text-foreground">
+                        {request.created_at
+                          ? new Date(request.created_at).toLocaleDateString()
+                          : "Recently"}
+                      </dd>
+                    </div>
+                  </dl>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Units Required</p>
-                  <p className="font-semibold text-lg">
-                    {request.units_required}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Posted By</p>
-                  <p className="font-medium">
-                    {(request as any).recipient?.name || "Anonymous"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">Date</p>
-                  <p className="font-medium">
-                    {request.created_at
-                      ? new Date(request.created_at).toLocaleDateString()
-                      : "N/A"}
-                  </p>
-                </div>
-              </div>
 
-              <div className="border-t pt-4 space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Contact:</span>
-                  <a
-                    href={`tel:${request.contact_phone}`}
-                    className="font-medium hover:text-primary"
+                <div className="flex flex-col gap-3 lg:min-w-40">
+                  <Button
+                    className="w-full gap-2"
+                    onClick={() =>
+                      router.push(`/donor/blood-requests/${request.id}`)
+                    }
                   >
-                    {request.contact_phone}
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Email:</span>
-                  <a
-                    href={`mailto:${request.contact_email}`}
-                    className="font-medium hover:text-primary"
-                  >
-                    {request.contact_email}
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Location:</span>
-                  <span className="font-medium">{request.address}</span>
+                    <Heart className="h-4 w-4" />
+                    Offer Donation
+                  </Button>
+                  <div className="rounded-2xl border border-border/60 bg-background/60 p-4 text-sm text-muted-foreground">
+                    <p className="font-semibold text-foreground">
+                      Contact Information
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      <a
+                        href={`tel:${request.contact_phone}`}
+                        className="flex items-center gap-2 transition-colors hover:text-primary"
+                      >
+                        <Phone className="h-4 w-4" />
+                        {request.contact_phone}
+                      </a>
+                      <a
+                        href={`mailto:${request.contact_email}`}
+                        className="flex items-center gap-2 transition-colors hover:text-primary"
+                      >
+                        <Mail className="h-4 w-4" />
+                        {request.contact_email}
+                      </a>
+                      <p className="flex items-start gap-2">
+                        <MapPin className="mt-0.5 h-4 w-4" />
+                        <span>{request.address}</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
