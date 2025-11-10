@@ -15,9 +15,8 @@ async function DonorDashboard() {
   }
 
   const response = await getApprovedBloodRequests();
-  const requests = response.success && Array.isArray(response.data)
-    ? response.data
-    : [];
+  const requests =
+    response.success && Array.isArray(response.data) ? response.data : [];
 
   const totalOpportunities = requests.length;
   const criticalOpportunities = requests.filter(
@@ -27,7 +26,9 @@ async function DonorDashboard() {
     (total, request) => total + (request.units_required || 0),
     0
   );
-  const uniqueBloodGroups = new Set(requests.map((request) => request.blood_group)).size;
+  const uniqueBloodGroups = new Set(
+    requests.map((request) => request.blood_group)
+  ).size;
 
   return (
     <div className="relative overflow-hidden">

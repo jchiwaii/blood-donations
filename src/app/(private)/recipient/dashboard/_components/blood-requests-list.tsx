@@ -170,8 +170,10 @@ export default function BloodRequestsList({
             one in seconds.
           </p>
         </div>
-        <Button onClick={() => router.push("/recipient/blood-requests")}
- className="gap-2">
+        <Button
+          onClick={() => router.push("/recipient/blood-requests")}
+          className="gap-2"
+        >
           <Plus className="h-4 w-4" />
           Create Request
         </Button>
@@ -233,14 +235,16 @@ export default function BloodRequestsList({
                     </h4>
                     <span
                       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
-                        badgeStyles[request.status] || "bg-slate-100 text-slate-900 border-slate-200"
+                        badgeStyles[request.status] ||
+                        "bg-slate-100 text-slate-900 border-slate-200"
                       }`}
                     >
                       {STATUS_LABELS[request.status] || request.status}
                     </span>
                     <span
                       className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide ${
-                        urgencyStyles[request.urgency] || "bg-slate-100 text-slate-900 border-slate-200"
+                        urgencyStyles[request.urgency] ||
+                        "bg-slate-100 text-slate-900 border-slate-200"
                       }`}
                     >
                       {request.urgency} urgency
@@ -292,7 +296,9 @@ export default function BloodRequestsList({
                     variant="outline"
                     className="w-full gap-2"
                     onClick={() =>
-                      router.push(`/recipient/blood-requests/edit/${request.id}`)
+                      router.push(
+                        `/recipient/blood-requests/edit/${request.id}`
+                      )
                     }
                   >
                     <Edit className="h-4 w-4" />
@@ -313,13 +319,16 @@ export default function BloodRequestsList({
         </div>
       )}
 
-      <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
+      <AlertDialog
+        open={!!deleteTarget}
+        onOpenChange={() => setDeleteTarget(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete blood request</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. The request will be permanently removed
-              from the platform and donors will no longer see it.
+              This action cannot be undone. The request will be permanently
+              removed from the platform and donors will no longer see it.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

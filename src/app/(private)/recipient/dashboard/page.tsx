@@ -15,9 +15,8 @@ async function RecipientDashboard() {
   }
 
   const response = await getAllBloodRequests(user.id);
-  const requests = response.success && Array.isArray(response.data)
-    ? response.data
-    : [];
+  const requests =
+    response.success && Array.isArray(response.data) ? response.data : [];
 
   const totalRequests = requests.length;
   const pendingRequests = requests.filter(
@@ -54,9 +53,9 @@ async function RecipientDashboard() {
                   Welcome back, {user.name}
                 </h1>
                 <p className="mt-3 max-w-2xl text-sm text-white/80">
-                  Centralize every blood request, monitor approvals in real time, and
-                  keep donors informed. Your dashboard gives you full visibility over
-                  the lifesaving help you need.
+                  Centralize every blood request, monitor approvals in real
+                  time, and keep donors informed. Your dashboard gives you full
+                  visibility over the lifesaving help you need.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4 text-center text-sm font-medium text-white">
@@ -64,13 +63,17 @@ async function RecipientDashboard() {
                   <p className="text-xs uppercase tracking-wide text-white/60">
                     Active Requests
                   </p>
-                  <p className="mt-1 text-2xl font-semibold">{activeRequests}</p>
+                  <p className="mt-1 text-2xl font-semibold">
+                    {activeRequests}
+                  </p>
                 </div>
                 <div className="rounded-2xl bg-white/10 px-4 py-3 shadow-lg shadow-black/10">
                   <p className="text-xs uppercase tracking-wide text-white/60">
                     Critical Alerts
                   </p>
-                  <p className="mt-1 text-2xl font-semibold">{criticalRequests}</p>
+                  <p className="mt-1 text-2xl font-semibold">
+                    {criticalRequests}
+                  </p>
                 </div>
               </div>
             </div>
