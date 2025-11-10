@@ -50,7 +50,8 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
 
   const isActive = (path: string) => pathname === path;
 
-  const homePath = users.role === "donor" ? "/donor/dashboard" : "/recipient/dashboard";
+  const homePath =
+    users.role === "donor" ? "/donor/dashboard" : "/recipient/dashboard";
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/80 backdrop-blur">
       <div
@@ -106,7 +107,9 @@ const PrivateLayoutHeader = ({ navItems = [] }: PrivateLayoutHeaderProps) => {
           <div className="ml-4 flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-white/80">
             <div className="text-right leading-tight">
               <p className="text-sm font-semibold text-white">{users.name}</p>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">{users.role}</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/60">
+                {users.role}
+              </p>
             </div>
             <span className="flex size-10 items-center justify-center rounded-full bg-white/10 text-white">
               <User className="size-5" />

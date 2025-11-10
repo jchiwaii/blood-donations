@@ -163,9 +163,12 @@ export default function BloodRequestsList({
     <section className="space-y-6 text-white">
       <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] backdrop-blur md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-white">Manage blood requests</h3>
+          <h3 className="text-xl font-semibold text-white">
+            Manage blood requests
+          </h3>
           <p className="text-sm text-white/70">
-            Track the status of each case, update details, or submit a new request in seconds.
+            Track the status of each case, update details, or submit a new
+            request in seconds.
           </p>
         </div>
         <Button
@@ -208,7 +211,8 @@ export default function BloodRequestsList({
             No blood requests yet
           </div>
           <p className="max-w-md text-sm text-white/70">
-            Your requests will appear here as soon as you create them. Keep donors updated with accurate details and urgency levels.
+            Your requests will appear here as soon as you create them. Keep
+            donors updated with accurate details and urgency levels.
           </p>
           <Button
             variant="ghost"
@@ -297,7 +301,9 @@ export default function BloodRequestsList({
                     variant="ghost"
                     className="w-full gap-2 rounded-full border border-white/20 bg-white/10 text-white transition hover:border-white/30 hover:bg-white/15"
                     onClick={() =>
-                      router.push(`/recipient/blood-requests/edit/${request.id}`)
+                      router.push(
+                        `/recipient/blood-requests/edit/${request.id}`
+                      )
                     }
                   >
                     <Edit className="h-4 w-4" />
@@ -318,16 +324,25 @@ export default function BloodRequestsList({
         </div>
       )}
 
-      <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
+      <AlertDialog
+        open={!!deleteTarget}
+        onOpenChange={() => setDeleteTarget(null)}
+      >
         <AlertDialogContent className="border-white/10 bg-slate-950/95 text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Delete blood request</AlertDialogTitle>
+            <AlertDialogTitle className="text-white">
+              Delete blood request
+            </AlertDialogTitle>
             <AlertDialogDescription className="text-white/70">
-              This action cannot be undone. The request will be permanently removed from the platform and donors will no longer see it.
+              This action cannot be undone. The request will be permanently
+              removed from the platform and donors will no longer see it.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleting} className="rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/15">
+            <AlertDialogCancel
+              disabled={deleting}
+              className="rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/15"
+            >
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction

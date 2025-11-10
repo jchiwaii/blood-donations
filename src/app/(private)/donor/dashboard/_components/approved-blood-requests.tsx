@@ -99,9 +99,12 @@ export default function ApprovedBloodRequests({
     <section className="space-y-6 text-white">
       <div className="flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] backdrop-blur">
         <div className="space-y-2">
-          <h3 className="text-xl font-semibold text-white">Opportunities to donate</h3>
+          <h3 className="text-xl font-semibold text-white">
+            Opportunities to donate
+          </h3>
           <p className="text-sm text-white/70">
-            Browse urgent requests, reach out to recipients, and confirm your availability.
+            Browse urgent requests, reach out to recipients, and confirm your
+            availability.
           </p>
         </div>
       </div>
@@ -118,19 +121,34 @@ export default function ApprovedBloodRequests({
             <SelectValue placeholder="Filter by urgency" />
           </SelectTrigger>
           <SelectContent className="border-white/10 bg-slate-900 text-white">
-            <SelectItem value="all" className="text-white focus:bg-blue-500/20 focus:text-white">
+            <SelectItem
+              value="all"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
               All urgency levels
             </SelectItem>
-            <SelectItem value="critical" className="text-white focus:bg-blue-500/20 focus:text-white">
+            <SelectItem
+              value="critical"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
               Critical
             </SelectItem>
-            <SelectItem value="high" className="text-white focus:bg-blue-500/20 focus:text-white">
+            <SelectItem
+              value="high"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
               High
             </SelectItem>
-            <SelectItem value="medium" className="text-white focus:bg-blue-500/20 focus:text-white">
+            <SelectItem
+              value="medium"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
               Medium
             </SelectItem>
-            <SelectItem value="low" className="text-white focus:bg-blue-500/20 focus:text-white">
+            <SelectItem
+              value="low"
+              className="text-white focus:bg-blue-500/20 focus:text-white"
+            >
               Low
             </SelectItem>
           </SelectContent>
@@ -146,7 +164,9 @@ export default function ApprovedBloodRequests({
             No approved requests right now
           </p>
           <p className="max-w-md text-sm text-white/70">
-            All donation requests that are approved by the medical team will appear here. Check back soon or enable notifications to stay updated.
+            All donation requests that are approved by the medical team will
+            appear here. Check back soon or enable notifications to stay
+            updated.
           </p>
         </div>
       ) : (
@@ -219,13 +239,17 @@ export default function ApprovedBloodRequests({
                 <div className="flex flex-col gap-3 lg:min-w-48">
                   <Button
                     className="w-full gap-2 rounded-full bg-linear-to-r from-blue-500 via-indigo-500 to-rose-500 text-white shadow-lg shadow-blue-500/20 transition hover:scale-[1.01]"
-                    onClick={() => router.push(`/donor/blood-requests/${request.id}`)}
+                    onClick={() =>
+                      router.push(`/donor/blood-requests/${request.id}`)
+                    }
                   >
                     <Heart className="h-4 w-4" />
                     Offer donation
                   </Button>
                   <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-sm text-white/80">
-                    <p className="font-semibold text-white">Contact information</p>
+                    <p className="font-semibold text-white">
+                      Contact information
+                    </p>
                     <div className="mt-3 space-y-2">
                       <a
                         href={`tel:${request.contact_phone}`}

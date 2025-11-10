@@ -57,43 +57,77 @@ async function RecipientDashboard() {
                 Welcome back, {user.name}
               </h1>
               <p className="max-w-2xl text-sm text-white/80">
-                Centralise every blood request, monitor approvals in real time, and keep donors informed. Your dashboard gives you full visibility over the lifesaving help you need.
+                Centralise every blood request, monitor approvals in real time,
+                and keep donors informed. Your dashboard gives you full
+                visibility over the lifesaving help you need.
               </p>
             </div>
           </div>
 
           <div className="grid shrink-0 gap-4 text-sm font-medium sm:grid-cols-2">
             <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/70">Active requests</p>
-              <p className="mt-1 text-2xl font-semibold text-white">{activeRequests}</p>
+              <p className="text-xs uppercase tracking-wide text-white/70">
+                Active requests
+              </p>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                {activeRequests}
+              </p>
             </div>
             <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/70">Critical alerts</p>
-              <p className="mt-1 text-2xl font-semibold text-white">{criticalRequests}</p>
+              <p className="text-xs uppercase tracking-wide text-white/70">
+                Critical alerts
+              </p>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                {criticalRequests}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="relative z-10 grid gap-4 border-t border-white/10 bg-slate-950/40 px-8 py-6 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Total requests</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{totalRequests}</p>
-            <p className="mt-1 text-xs text-white/60">All requests submitted under your account.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Total requests
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {totalRequests}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              All requests submitted under your account.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Awaiting approval</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{pendingRequests}</p>
-            <p className="mt-1 text-xs text-white/60">Requests currently pending hospital review.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Awaiting approval
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {pendingRequests}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Requests currently pending hospital review.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Fulfilled requests</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{fulfilledRequests}</p>
-            <p className="mt-1 text-xs text-white/60">Completed and successfully supplied cases.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Fulfilled requests
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {fulfilledRequests}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Completed and successfully supplied cases.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Units requested</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{totalUnitsRequested}</p>
-            <p className="mt-1 text-xs text-white/60">Aggregate blood units required across all requests.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Units requested
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {totalUnitsRequested}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Aggregate blood units required across all requests.
+            </p>
           </div>
         </div>
       </section>

@@ -51,43 +51,77 @@ async function DonorDashboard() {
                 Grateful to have you back, {user.name}
               </h1>
               <p className="max-w-2xl text-sm text-white/80">
-                Review approved matches, respond instantly, and keep track of the communities you support. Your availability turns requests into recoveries.
+                Review approved matches, respond instantly, and keep track of
+                the communities you support. Your availability turns requests
+                into recoveries.
               </p>
             </div>
           </div>
 
           <div className="grid shrink-0 gap-4 text-sm font-medium sm:grid-cols-2">
             <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/70">Active cases</p>
-              <p className="mt-1 text-2xl font-semibold text-white">{totalOpportunities}</p>
+              <p className="text-xs uppercase tracking-wide text-white/70">
+                Active cases
+              </p>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                {totalOpportunities}
+              </p>
             </div>
             <div className="rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-center">
-              <p className="text-xs uppercase tracking-wide text-white/70">Critical priority</p>
-              <p className="mt-1 text-2xl font-semibold text-white">{criticalOpportunities}</p>
+              <p className="text-xs uppercase tracking-wide text-white/70">
+                Critical priority
+              </p>
+              <p className="mt-1 text-2xl font-semibold text-white">
+                {criticalOpportunities}
+              </p>
             </div>
           </div>
         </div>
 
         <div className="relative z-10 grid gap-4 border-t border-white/10 bg-slate-950/40 px-8 py-6 text-sm text-white/70 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Units requested</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{highDemandUnits}</p>
-            <p className="mt-1 text-xs text-white/60">Total demand across approved requests.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Units requested
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {highDemandUnits}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Total demand across approved requests.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Blood groups needed</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{uniqueBloodGroups}</p>
-            <p className="mt-1 text-xs text-white/60">Unique blood types currently requested.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Blood groups needed
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {uniqueBloodGroups}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Unique blood types currently requested.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Critical cases</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{criticalOpportunities}</p>
-            <p className="mt-1 text-xs text-white/60">Needs immediate response within 24 hours.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Critical cases
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {criticalOpportunities}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Needs immediate response within 24 hours.
+            </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">Opportunities this week</p>
-            <p className="mt-2 text-2xl font-semibold text-white">{totalOpportunities > 8 ? "8+" : totalOpportunities}</p>
-            <p className="mt-1 text-xs text-white/60">Recently approved requests awaiting donors like you.</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-white/60">
+              Opportunities this week
+            </p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              {totalOpportunities > 8 ? "8+" : totalOpportunities}
+            </p>
+            <p className="mt-1 text-xs text-white/60">
+              Recently approved requests awaiting donors like you.
+            </p>
           </div>
         </div>
       </section>
