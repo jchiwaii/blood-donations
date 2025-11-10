@@ -71,7 +71,10 @@ export function Hero() {
 
         <div className="grid w-full gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:grid-cols-3">
           {featureItems.map(({ icon: Icon, title, description }) => (
-            <div key={title} className="flex flex-col items-center gap-3 text-center">
+            <div
+              key={title}
+              className="flex flex-col items-center gap-3 text-center"
+            >
               <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-white">
                 <Icon className="size-6" />
               </span>
