@@ -129,9 +129,7 @@ export default function DonationOfferForm({
               <h2 className="text-2xl font-semibold text-white">
                 {request.title}
               </h2>
-              <p className="text-sm text-white/70">
-                {request.description}
-              </p>
+              <p className="text-sm text-white/70">{request.description}</p>
             </div>
             <span
               className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${

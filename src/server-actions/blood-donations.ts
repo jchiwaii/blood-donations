@@ -155,7 +155,9 @@ export const getApprovedDonations = async () => {
   try {
     const { data, error } = await supabase
       .from("blood_donations")
-      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)")
+      .select(
+        "*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)"
+      )
       .eq("status", "approved")
       .order("created_at", { ascending: false });
 
@@ -183,7 +185,9 @@ export const getAllBloodDonationsForAdmin = async () => {
   try {
     const { data, error } = await supabase
       .from("blood_donations")
-      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)")
+      .select(
+        "*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email)"
+      )
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -242,7 +246,9 @@ export const getDonationsForRequest = async (requestId: number) => {
   try {
     const { data, error } = await supabase
       .from("blood_donations")
-      .select("*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email, role)")
+      .select(
+        "*, donor:user_profiles!blood_donations_donor_id_fkey(id, name, email, role)"
+      )
       .eq("request_id", requestId)
       .order("created_at", { ascending: false });
 

@@ -5,10 +5,12 @@ import DonationOfferForm from "./_components/donation-offer-form";
 
 async function getBloodRequestById(id: number) {
   const supabase = (await import("@/config/supabase-config")).default;
-  
+
   const { data, error } = await supabase
     .from("blood_requests")
-    .select("*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)")
+    .select(
+      "*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)"
+    )
     .eq("id", id)
     .eq("status", "approved")
     .single();
@@ -20,7 +22,11 @@ async function getBloodRequestById(id: number) {
   return data;
 }
 
-export default async function OfferDonationPage({ params }: { params: { id: string } }) {
+export default async function OfferDonationPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const user = await currentUser();
 
   if (!user || user.role !== "donor") {

@@ -3,7 +3,15 @@
 import { useEffect, useState } from "react";
 import { getDonationsForRequest } from "@/server-actions/blood-donations";
 import { IBloodDonation } from "@/interfaces";
-import { User, Heart, Calendar, Phone, Mail, MapPin, Loader2 } from "lucide-react";
+import {
+  User,
+  Heart,
+  Calendar,
+  Phone,
+  Mail,
+  MapPin,
+  Loader2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -27,7 +35,10 @@ type DonationWithDonor = IBloodDonation & {
   };
 };
 
-export default function DonationOffers({ requestId, requestTitle }: DonationOffersProps) {
+export default function DonationOffers({
+  requestId,
+  requestTitle,
+}: DonationOffersProps) {
   const [donations, setDonations] = useState<DonationWithDonor[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +92,8 @@ export default function DonationOffers({ requestId, requestTitle }: DonationOffe
             </div>
             <p className="font-semibold text-white">No offers yet</p>
             <p className="max-w-md text-sm text-white/60">
-              When donors offer to help with this request, they will appear here.
+              When donors offer to help with this request, they will appear
+              here.
             </p>
           </div>
         ) : (
@@ -134,7 +146,9 @@ export default function DonationOffers({ requestId, requestTitle }: DonationOffe
                   </div>
 
                   <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4 text-sm">
-                    <p className="font-semibold text-white">Contact Information</p>
+                    <p className="font-semibold text-white">
+                      Contact Information
+                    </p>
                     <div className="space-y-2 text-white/80">
                       <a
                         href={`tel:${donation.contact_phone}`}
@@ -158,7 +172,9 @@ export default function DonationOffers({ requestId, requestTitle }: DonationOffe
                         <Calendar className="size-4" />
                         <span>
                           Available:{" "}
-                          {new Date(donation.availability_date).toLocaleDateString()}
+                          {new Date(
+                            donation.availability_date
+                          ).toLocaleDateString()}
                         </span>
                       </div>
                     </div>
@@ -169,7 +185,9 @@ export default function DonationOffers({ requestId, requestTitle }: DonationOffe
                       <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
                         Notes from Donor
                       </p>
-                      <p className="mt-2 text-sm text-white/80">{donation.notes}</p>
+                      <p className="mt-2 text-sm text-white/80">
+                        {donation.notes}
+                      </p>
                     </div>
                   )}
 
@@ -178,7 +196,9 @@ export default function DonationOffers({ requestId, requestTitle }: DonationOffe
                       <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
                         Medical Information
                       </p>
-                      <p className="mt-2 text-sm text-white/80">{donation.medical_info}</p>
+                      <p className="mt-2 text-sm text-white/80">
+                        {donation.medical_info}
+                      </p>
                     </div>
                   )}
                 </div>
