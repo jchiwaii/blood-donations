@@ -33,7 +33,7 @@ export default function AuthPage() {
             <Droplet className="size-5 text-rose-200" />
           </span>
           <span className="text-base font-semibold tracking-wide">
-            BloodConnect
+            Bloodline
           </span>
         </Link>
         <Link
@@ -54,7 +54,7 @@ export default function AuthPage() {
                   Account access
                 </p>
                 <h1 className="text-3xl font-semibold">
-                  {mode === "login" ? "Welcome back" : "Join BloodConnect"}
+                  {mode === "login" ? "Welcome back" : "Join Bloodline"}
                 </h1>
                 <p className="text-sm text-white/65">
                   {mode === "login"

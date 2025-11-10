@@ -286,24 +286,6 @@ const LoginForm = ({ variant = "light", className }: LoginFormProps) => {
           )}
         />
 
-        <div className="flex items-center justify-end pt-1">
-          <a
-            href="#"
-            className={cn(
-              "text-xs font-medium",
-              isDark
-                ? "text-rose-200 transition hover:text-rose-100"
-                : "text-destructive hover:underline"
-            )}
-            onClick={(e) => {
-              e.preventDefault();
-              // Add forgot password logic
-            }}
-          >
-            Forgot password?
-          </a>
-        </div>
-
         <Button
           type="submit"
           className={cn(

@@ -209,3 +209,84 @@ export const currentUser = async (token?: string) => {
     return null;
   }
 };
+
+export const getUsersStatistics = async () => {
+  try {
+    // Get total users by role
+    const { data: donors, error: donorsError } = await supabase
+      .from("user_profiles")
+      .select("id", { count: "exact" })
+      .eq("role", "donor");
+
+    const { data: recipients, error: recipientsError } = await supabase
+      .from("user_profiles")
+      .select("id", { count: "exact" })
+      .eq("role", "recipient");
+
+    const { data: admins, error: adminsError } = await supabase
+      .from("user_profiles")
+      .select("id", { count: "exact" })
+      .eq("role", "admin");
+
+    // Get blood donation statistics
+    const { data: donations, error: donationsError } = await supabase
+      .from("blood_donations")
+      .select("id", { count: "exact" });
+
+    // Get blood request statistics
+    const { data: requests, error: requestsError } = await supabase
+      .from("blood_requests")
+      .select("id", { count: "exact" });
+
+    const { data: pendingRequests, error: pendingError } = await supabase
+      .from("blood_requests")
+      .select("id", { count: "exact" })
+      .eq("status", "pending");
+
+    const { data: approvedRequests, error: approvedError } = await supabase
+      .from("blood_requests")
+      .select("id", { count: "exact" })
+      .eq("status", "approved");
+
+    const { data: rejectedRequests, error: rejectedError } = await supabase
+      .from("blood_requests")
+      .select("id", { count: "exact" })
+      .eq("status", "rejected");
+
+    if (
+      donorsError ||
+      recipientsError ||
+      adminsError ||
+      donationsError ||
+      requestsError ||
+      pendingError ||
+      approvedError ||
+      rejectedError
+    ) {
+      return {
+        success: false,
+        message: "Failed to retrieve statistics",
+      };
+    }
+
+    return {
+      success: true,
+      data: {
+        totalDonors: donors?.length ?? 0,
+        totalRecipients: recipients?.length ?? 0,
+        totalAdmins: admins?.length ?? 0,
+        totalDonations: donations?.length ?? 0,
+        totalRequests: requests?.length ?? 0,
+        pendingRequests: pendingRequests?.length ?? 0,
+        approvedRequests: approvedRequests?.length ?? 0,
+        rejectedRequests: rejectedRequests?.length ?? 0,
+      },
+      message: "Statistics retrieved successfully",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: "Failed to retrieve statistics",
+    };
+  }
+};

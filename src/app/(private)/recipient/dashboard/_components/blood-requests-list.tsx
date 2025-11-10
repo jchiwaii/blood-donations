@@ -46,17 +46,19 @@ const STATUS_LABELS: Record<string, string> = {
 const STATUS_OPTIONS = [
   { value: "all", label: "All statuses" },
   { value: "pending", label: "Pending" },
-  { value: "in_progress", label: "In Progress" },
   { value: "approved", label: "Approved" },
+  { value: "rejected", label: "Rejected" },
+  { value: "in_progress", label: "In Progress" },
   { value: "fulfilled", label: "Fulfilled" },
   { value: "cancelled", label: "Cancelled" },
 ];
 
 const badgeStyles: Record<string, string> = {
   pending: "bg-amber-200 text-amber-900 border-amber-300",
-  approved: "bg-sky-200 text-sky-900 border-sky-300",
-  fulfilled: "bg-emerald-200 text-emerald-900 border-emerald-300",
-  cancelled: "bg-rose-200 text-rose-900 border-rose-300",
+  approved: "bg-emerald-200 text-emerald-900 border-emerald-300",
+  rejected: "bg-rose-200 text-rose-900 border-rose-300",
+  fulfilled: "bg-sky-200 text-sky-900 border-sky-300",
+  cancelled: "bg-slate-200 text-slate-900 border-slate-300",
   in_progress: "bg-purple-200 text-purple-900 border-purple-300",
 };
 
