@@ -27,88 +27,87 @@ export function Hero() {
   return (
     <section className="relative isolate overflow-hidden px-6 py-24 sm:px-10">
       <div
-        className="pointer-events-none absolute inset-0 opacity-85"
+        className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           background:
-            "radial-gradient(120% 120% at 18% -10%, rgba(244,114,182,0.45) 0%, rgba(79,70,229,0.35) 40%, rgba(15,23,42,0.98) 75%)",
+            "radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.15) 0%, rgba(15, 23, 42, 0) 50%)",
         }}
       />
 
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMCAwSDY0VjY0SDBWMFoiIGZpbGw9ImhzbCgwLDAlLDAuMDUpIi8+PHBhdGggZD0iTTE2IDEySDE4VjE2SDE2VjEyWiIgZmlsbD0iI0ZGRiIgb3BhY2l0eT0iMC4wOCIvPjxwYXRoIGQ9Ik0zMiA4SDE0VjE2SDMyVjhMMzIgOFoiIGZpbGw9IiNGRkYiIG9wYWNpdHk9IjAuMDQiLz48L3N2Zz4=')] opacity-[0.05]" />
-
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-12 text-center text-white">
-        <div className="space-y-6">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white/70">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-12 text-center text-foreground">
+        <div className="space-y-8 animate-fade-in">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.25em] text-primary shadow-glow">
             Give & receive
           </span>
 
-          <h1 className="mx-auto max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+          <h1 className="mx-auto max-w-4xl text-5xl font-bold leading-tight sm:text-6xl md:text-7xl font-heading tracking-tight">
             Donate blood, empower
-            <span className="block bg-linear-to-r from-rose-200 via-fuchsia-200 to-sky-200 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-primary via-red-400 to-orange-400 bg-clip-text text-transparent pb-2">
               life-saving moments.
             </span>
           </h1>
 
-          <p className="mx-auto max-w-2xl text-base text-white/80 sm:text-lg">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed">
             Bloodline brings recipients, donors, and coordinators together under
             one guided experience so every urgent request finds a fast, trusted
             response.
           </p>
 
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center pt-4">
             <Button
               size="lg"
-              className="h-12 rounded-full bg-rose-500 px-8 text-sm font-semibold text-white transition hover:bg-rose-600"
+              variant="premium"
+              className="h-14 rounded-full px-10 text-base font-semibold transition-all hover:scale-105 bg-gradient-to-r from-primary to-red-600 shadow-glow"
               asChild
             >
               <Link href="/auth" className="flex items-center gap-2">
-                <Heart className="size-4" />
-                Get Started
+                <Heart className="size-5 fill-white/20" />
+                Get Started Now
               </Link>
             </Button>
           </div>
         </div>
 
-        <div className="grid w-full gap-4 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:grid-cols-3">
+        <div className="grid w-full gap-6 rounded-3xl border border-border/50 bg-card/30 p-8 backdrop-blur-md sm:grid-cols-3 shadow-2xl animate-slide-up">
           {featureItems.map(({ icon: Icon, title, description }) => (
             <div
               key={title}
-              className="flex flex-col items-center gap-3 text-center"
+              className="flex flex-col items-center gap-4 text-center group"
             >
-              <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-white">
-                <Icon className="size-6" />
+              <span className="flex size-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-glow">
+                <Icon className="size-7" />
               </span>
-              <div className="space-y-1">
-                <p className="text-sm font-semibold uppercase tracking-wide text-white/85">
+              <div className="space-y-2">
+                <p className="text-base font-semibold uppercase tracking-wide text-foreground font-heading">
                   {title}
                 </p>
-                <p className="text-sm text-white/70">{description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="flex w-full flex-wrap items-center justify-center gap-8 border-t border-white/10 pt-8 text-sm text-white/75">
+        <div className="flex w-full flex-wrap items-center justify-center gap-12 border-t border-border/40 pt-12">
           <div className="text-center">
-            <p className="text-3xl font-semibold text-white">12K+</p>
-            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+            <p className="text-4xl font-bold text-foreground font-heading">12K+</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-1">
               active donors
             </p>
           </div>
 
           <div className="text-center">
-            <p className="text-3xl font-semibold text-white">58K+</p>
-            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+            <p className="text-4xl font-bold text-foreground font-heading">58K+</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-1">
               lives supported
             </p>
           </div>
 
           <div className="text-center">
-            <p className="text-3xl font-semibold text-white">
-              <Heart className="mr-2 inline size-5 text-rose-200" />
+            <p className="text-4xl font-bold text-foreground font-heading flex items-center justify-center gap-2">
+              <Heart className="size-6 text-primary fill-primary/20" />
               24/7
             </p>
-            <p className="text-xs uppercase tracking-[0.18em] text-white/60">
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-1">
               coordinator care
             </p>
           </div>
