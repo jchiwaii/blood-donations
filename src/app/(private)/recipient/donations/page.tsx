@@ -1,30 +1,27 @@
-import { currentUser } from "@/server-actions/users";
 import { redirect } from "next/navigation";
+
 import { getApprovedDonations } from "@/server-actions/blood-donations";
-import ApprovedDonationsList from "./_components/approved-donations-list";
+import { currentUser } from "@/server-actions/users";
 import PageTitle from "@/components/ui/page-title";
+import ApprovedDonationsList from "./_components/approved-donations-list";
 
 async function RecipientDonations() {
   const user = await currentUser();
 
-  if (!user) {
-    redirect("/");
-  }
-
-  if (user.role !== "recipient") {
+  if (!user || user.role !== "recipient") {
     redirect("/");
   }
 
   const response = await getApprovedDonations();
-  const donations =
-    response.success && Array.isArray(response.data) ? response.data : [];
+  const donations = response.success && Array.isArray(response.data) ? response.data : [];
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
-      <PageTitle title="Available Donations" />
-      <p className="text-sm text-white/60">
-        Browse approved donation offers from donors
-      </p>
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
+      <PageTitle
+        eyebrow="Recipient"
+        title="Available Donations"
+        subtitle="Browse approved donor offers and connect quickly for your active needs."
+      />
 
       <ApprovedDonationsList initialDonations={donations} />
     </div>

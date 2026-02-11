@@ -1,17 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Calendar, Heart, Loader2, Mail, MapPin, Phone, User } from "lucide-react";
+
 import { getDonationsForRequest } from "@/server-actions/blood-donations";
 import { IBloodDonation } from "@/interfaces";
-import {
-  User,
-  Heart,
-  Calendar,
-  Phone,
-  Mail,
-  MapPin,
-  Loader2,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -35,177 +28,138 @@ type DonationWithDonor = IBloodDonation & {
   };
 };
 
-export default function DonationOffers({
-  requestId,
-  requestTitle,
-}: DonationOffersProps) {
+export default function DonationOffers({ requestId, requestTitle }: DonationOffersProps) {
   const [donations, setDonations] = useState<DonationWithDonor[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      fetchDonations();
-    }
-  }, [isOpen, requestId]);
+    if (!isOpen) return;
 
-  const fetchDonations = async () => {
-    setLoading(true);
-    const response = await getDonationsForRequest(requestId);
-    if (response.success && response.data) {
-      setDonations(response.data as DonationWithDonor[]);
-    }
-    setLoading(false);
-  };
+    const fetchDonations = async () => {
+      setLoading(true);
+      const response = await getDonationsForRequest(requestId);
+      if (response.success && response.data) {
+        setDonations(response.data as DonationWithDonor[]);
+      }
+      setLoading(false);
+    };
+
+    fetchDonations();
+  }, [isOpen, requestId]);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          className="w-full gap-2 rounded-full border border-blue-400/40 bg-blue-500/10 text-blue-100 transition hover:bg-blue-500/20 hover:text-white"
-        >
-          <Heart className="h-4 w-4" />
-          View Donation Offers
+        <Button variant="outline" className="w-full rounded-xl border-primary/30 text-primary hover:bg-primary/10">
+          <Heart className="size-4" />
+          View donation offers
         </Button>
       </SheetTrigger>
-      <SheetContent
-        side="right"
-        className="w-full max-w-2xl overflow-y-auto border-l border-white/10 bg-slate-950/95 text-white sm:max-w-2xl"
-      >
-        <SheetHeader className="mb-6 text-left">
-          <SheetTitle className="text-xl font-semibold text-white">
-            Donation Offers
+
+      <SheetContent side="right" className="w-full max-w-2xl overflow-y-auto">
+        <SheetHeader className="text-left">
+          <SheetTitle className="font-heading text-2xl font-semibold tracking-tight text-foreground">
+            Donation offers
           </SheetTitle>
-          <p className="text-sm text-white/60">{requestTitle}</p>
+          <p className="text-sm text-muted-foreground">{requestTitle}</p>
         </SheetHeader>
 
-        {loading ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-12">
-            <Loader2 className="size-5 animate-spin text-white" />
-            <span className="text-sm text-white/70">Loading offers...</span>
-          </div>
-        ) : donations.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-white/20 bg-white/5 py-12 text-center">
-            <div className="rounded-full bg-blue-500/10 p-3 text-blue-200">
-              <Heart className="h-6 w-6" />
+        <div className="mt-6">
+          {loading ? (
+            <div className="py-12 text-center">
+              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="size-4 animate-spin" />
+                Loading offers...
+              </span>
             </div>
-            <p className="font-semibold text-white">No offers yet</p>
-            <p className="max-w-md text-sm text-white/60">
-              When donors offer to help with this request, they will appear
-              here.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {donations.map((donation) => (
-              <div
-                key={donation.id}
-                className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-6 shadow-[0_12px_40px_rgba(15,23,42,0.4)] backdrop-blur transition hover:border-white/25"
-              >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.15),transparent_65%)]" />
-
-                <div className="relative space-y-4">
-                  <div className="flex items-start justify-between gap-4">
+          ) : donations.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-border bg-card/70 py-12 text-center">
+              <p className="font-medium text-foreground">No offers yet</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Donor offers for this request will appear here.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {donations.map((donation) => (
+                <article
+                  key={donation.id}
+                  className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex size-12 items-center justify-center rounded-xl bg-blue-500/20 text-blue-200">
-                        <User className="size-6" />
-                      </div>
+                      <span className="inline-flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <User className="size-4" />
+                      </span>
                       <div>
-                        <h4 className="font-semibold text-white">
-                          {donation.donor?.name || "Anonymous Donor"}
-                        </h4>
-                        <p className="text-xs text-white/60">
+                        <p className="font-medium text-foreground">
+                          {donation.donor?.name || "Anonymous donor"}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
                           {donation.donor?.email || "Email not provided"}
                         </p>
                       </div>
                     </div>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-300">
-                      <Heart className="size-3" />
+                    <span className="rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-800">
                       Committed
                     </span>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border border-white/10 bg-white/10 p-3">
-                      <p className="text-xs uppercase tracking-wider text-white/60">
-                        Units Offered
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-border/70 bg-background/70 p-3">
+                      <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                        Units offered
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-white">
-                        {donation.units_available} units
-                      </p>
+                      <p className="text-sm font-semibold text-foreground">{donation.units_available} units</p>
                     </div>
-                    <div className="rounded-xl border border-white/10 bg-white/10 p-3">
-                      <p className="text-xs uppercase tracking-wider text-white/60">
-                        Blood Group
+                    <div className="rounded-xl border border-border/70 bg-background/70 p-3">
+                      <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                        Blood group
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-white">
-                        {donation.blood_group}
-                      </p>
+                      <p className="text-sm font-semibold text-foreground">{donation.blood_group}</p>
                     </div>
                   </div>
 
-                  <div className="space-y-2 rounded-xl border border-white/10 bg-white/5 p-4 text-sm">
-                    <p className="font-semibold text-white">
-                      Contact Information
+                  <div className="mt-4 space-y-2 rounded-xl border border-border/70 bg-background/70 p-3 text-sm text-muted-foreground">
+                    <a href={`tel:${donation.contact_phone}`} className="inline-flex items-center gap-2 hover:text-foreground">
+                      <Phone className="size-4 text-primary" />
+                      {donation.contact_phone}
+                    </a>
+                    <a href={`mailto:${donation.contact_email}`} className="inline-flex items-center gap-2 hover:text-foreground">
+                      <Mail className="size-4 text-primary" />
+                      {donation.contact_email}
+                    </a>
+                    <p className="inline-flex items-start gap-2">
+                      <MapPin className="mt-0.5 size-4 text-primary" />
+                      {donation.address}
                     </p>
-                    <div className="space-y-2 text-white/80">
-                      <a
-                        href={`tel:${donation.contact_phone}`}
-                        className="flex items-center gap-2 transition hover:text-white"
-                      >
-                        <Phone className="size-4" />
-                        {donation.contact_phone}
-                      </a>
-                      <a
-                        href={`mailto:${donation.contact_email}`}
-                        className="flex items-center gap-2 transition hover:text-white"
-                      >
-                        <Mail className="size-4" />
-                        {donation.contact_email}
-                      </a>
-                      <div className="flex items-start gap-2">
-                        <MapPin className="mt-0.5 size-4" />
-                        <span>{donation.address}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="size-4" />
-                        <span>
-                          Available:{" "}
-                          {new Date(
-                            donation.availability_date
-                          ).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </div>
+                    <p className="inline-flex items-center gap-2">
+                      <Calendar className="size-4 text-primary" />
+                      Available on {new Date(donation.availability_date).toLocaleDateString()}
+                    </p>
                   </div>
 
-                  {donation.notes && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
-                        Notes from Donor
-                      </p>
-                      <p className="mt-2 text-sm text-white/80">
-                        {donation.notes}
-                      </p>
+                  {donation.notes ? (
+                    <div className="mt-3 rounded-xl border border-border/70 bg-background/70 p-3">
+                      <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">Notes</p>
+                      <p className="mt-1 text-sm text-foreground">{donation.notes}</p>
                     </div>
-                  )}
+                  ) : null}
 
-                  {donation.medical_info && (
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
-                        Medical Information
+                  {donation.medical_info ? (
+                    <div className="mt-3 rounded-xl border border-border/70 bg-background/70 p-3">
+                      <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                        Medical info
                       </p>
-                      <p className="mt-2 text-sm text-white/80">
-                        {donation.medical_info}
-                      </p>
+                      <p className="mt-1 text-sm text-foreground">{donation.medical_info}</p>
                     </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </SheetContent>
     </Sheet>
   );

@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import { Calendar, Mail, User, Users as UsersIcon } from "lucide-react";
+
 import { getAllUsers } from "@/server-actions/users";
-import { User, Mail, Calendar, Users as UsersIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PageTitle from "@/components/ui/page-title";
 
@@ -14,12 +15,12 @@ type UserData = {
   created_at: string;
 };
 
+const tabs = ["all", "donor", "recipient"] as const;
+
 const AdminUsersPage = () => {
   const [users, setUsers] = React.useState<UserData[]>([]);
   const [loading, setLoading] = React.useState(true);
-  const [filter, setFilter] = React.useState<"all" | "donor" | "recipient">(
-    "all"
-  );
+  const [filter, setFilter] = React.useState<(typeof tabs)[number]>("all");
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -45,20 +46,20 @@ const AdminUsersPage = () => {
   if (loading) {
     return (
       <div className="mx-auto w-full max-w-7xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
-        <div className="h-12 w-64 animate-pulse rounded-2xl border border-white/10 bg-white/5" />
+        <div className="h-12 w-56 animate-pulse rounded-2xl border border-border/70 bg-card/70" />
         <div className="grid gap-4 sm:grid-cols-2">
-          {[...Array(2)].map((_, i) => (
+          {Array.from({ length: 2 }).map((_, i) => (
             <div
               key={i}
-              className="h-32 animate-pulse rounded-2xl border border-white/10 bg-white/5"
+              className="h-32 animate-pulse rounded-2xl border border-border/70 bg-card/70"
             />
           ))}
         </div>
-        <div className="space-y-4">
-          {[...Array(5)].map((_, i) => (
+        <div className="space-y-3">
+          {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
-              className="h-24 animate-pulse rounded-2xl border border-white/10 bg-white/5"
+              className="h-24 animate-pulse rounded-2xl border border-border/70 bg-card/70"
             />
           ))}
         </div>
@@ -67,125 +68,120 @@ const AdminUsersPage = () => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
-      <PageTitle title="Users Management" />
-      <p className="text-sm text-white/60">
-        View and manage all donors and recipients
-      </p>
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
+      <PageTitle
+        eyebrow="Admin"
+        title="Users"
+        subtitle="Review registered donor and recipient accounts."
+      />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/20 hover:bg-white/10">
-          <div className="flex items-center gap-4">
-            <div className="flex size-14 items-center justify-center rounded-xl bg-rose-500/20 text-rose-300">
-              <UsersIcon className="size-7" />
-            </div>
+        <article className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <UsersIcon className="size-5" />
+            </span>
             <div>
-              <p className="text-sm uppercase tracking-wider text-white/60">
-                Total Donors
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Donors
               </p>
-              <p className="text-3xl font-bold text-white">{donorCount}</p>
+              <p className="text-3xl font-semibold tracking-tight text-foreground">
+                {donorCount}
+              </p>
             </div>
+          </div>
+        </article>
+
+        <article className="rounded-2xl border border-border/70 bg-card/80 p-5 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <UsersIcon className="size-5" />
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Recipients
+              </p>
+              <p className="text-3xl font-semibold tracking-tight text-foreground">
+                {recipientCount}
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section className="rounded-3xl border border-border/70 bg-card/80 p-5 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="font-heading text-xl font-semibold tracking-tight text-foreground">
+            Registered users
+          </h2>
+
+          <div className="flex items-center gap-1 rounded-xl border border-border/80 bg-background/70 p-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setFilter(tab)}
+                className={cn(
+                  "rounded-lg px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition",
+                  filter === tab
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:border-white/20 hover:bg-white/10">
-          <div className="flex items-center gap-4">
-            <div className="flex size-14 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-300">
-              <UsersIcon className="size-7" />
-            </div>
-            <div>
-              <p className="text-sm uppercase tracking-wider text-white/60">
-                Total Recipients
-              </p>
-              <p className="text-3xl font-bold text-white">{recipientCount}</p>
-            </div>
+        {filteredUsers.length === 0 ? (
+          <div className="mt-5 rounded-2xl border border-dashed border-border bg-background/70 p-10 text-center text-sm text-muted-foreground">
+            No users found.
           </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-white">All Users</h2>
-          <p className="text-sm text-white/60">
-            Browse all registered donors and recipients
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-white/15 bg-white/5 p-1">
-          {["all", "donor", "recipient"].map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f as typeof filter)}
-              className={cn(
-                "rounded-lg px-4 py-2 text-xs font-semibold uppercase tracking-wider transition",
-                filter === f
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-white/70 hover:text-white"
-              )}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {filteredUsers.length === 0 ? (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
-          <p className="text-white/60">No users found</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {filteredUsers.map((user) => (
-            <div
-              key={user.id}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur transition hover:border-white/20 hover:bg-white/10"
-            >
-              <div className="p-6">
+        ) : (
+          <div className="mt-5 space-y-3">
+            {filteredUsers.map((user) => (
+              <article
+                key={user.id}
+                className="rounded-2xl border border-border/70 bg-background/70 p-4"
+              >
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex size-12 items-center justify-center rounded-full bg-white/10 text-white">
-                      <User className="size-6" />
-                    </div>
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex size-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
+                      <User className="size-4" />
+                    </span>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">
-                        {user.name}
-                      </h3>
-                      <div className="flex items-center gap-2 text-sm text-white/70">
+                      <p className="font-medium text-foreground">{user.name}</p>
+                      <p className="inline-flex items-center gap-1 text-sm text-muted-foreground">
                         <Mail className="size-3.5" />
-                        <span>{user.email}</span>
-                      </div>
+                        {user.email}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span
                       className={cn(
-                        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider",
+                        "rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em]",
                         user.role === "donor"
-                          ? "border-rose-400/40 bg-rose-500/20 text-rose-300"
-                          : "border-indigo-400/40 bg-indigo-500/20 text-indigo-300"
+                          ? "border-emerald-300 bg-emerald-100 text-emerald-800"
+                          : "border-primary/25 bg-primary/10 text-primary"
                       )}
                     >
                       {user.role}
                     </span>
-                    {user.created_at && (
-                      <span className="flex items-center gap-1.5 text-xs text-white/60">
+                    {user.created_at ? (
+                      <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                         <Calendar className="size-3.5" />
-                        Joined{" "}
-                        {new Date(user.created_at).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
+                        {new Date(user.created_at).toLocaleDateString()}
                       </span>
-                    )}
+                    ) : null}
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+              </article>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 };

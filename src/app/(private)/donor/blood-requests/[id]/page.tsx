@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+
 import { currentUser } from "@/server-actions/users";
 import PageTitle from "@/components/ui/page-title";
 import DonationOfferForm from "./_components/donation-offer-form";
@@ -11,7 +12,7 @@ async function getBloodRequestById(id: number) {
      FROM blood_requests br
      LEFT JOIN user_profiles up ON br.recipient_id = up.id
      WHERE br.id = $1 AND br.status = 'approved'`,
-    [id],
+    [id]
   );
 
   if (result.rows.length === 0) {
@@ -39,13 +40,12 @@ export default async function OfferDonationPage({
   }
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-8 px-4 pb-16 sm:px-6 lg:px-8">
-      <div>
-        <PageTitle title="Offer Donation" />
-        <p className="mt-2 text-sm text-white/60">
-          Review the request details and submit your donation offer
-        </p>
-      </div>
+    <div className="mx-auto w-full max-w-5xl space-y-6 px-4 pb-16 sm:px-6 lg:px-8">
+      <PageTitle
+        eyebrow="Donor"
+        title="Submit Donation Offer"
+        subtitle="Review the request details and send your offer to the recipient."
+      />
 
       <DonationOfferForm request={request} donorId={user.id} />
     </div>

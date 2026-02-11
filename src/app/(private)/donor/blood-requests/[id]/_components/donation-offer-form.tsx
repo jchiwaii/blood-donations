@@ -1,21 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { Calendar, Droplet, Heart, Loader2, MapPin, User } from "lucide-react";
 import { toast } from "sonner";
-import {
-  Calendar,
-  Droplet,
-  Heart,
-  Loader2,
-  MapPin,
-  Phone,
-  User,
-} from "lucide-react";
 
+import { createBloodDonation } from "@/server-actions/blood-donations";
+import { IBloodRequest } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,8 +21,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { createBloodDonation } from "@/server-actions/blood-donations";
-import { IBloodRequest } from "@/interfaces";
 
 const donationOfferSchema = z.object({
   units_available: z
@@ -53,10 +45,7 @@ interface DonationOfferFormProps {
   donorId: number;
 }
 
-export default function DonationOfferForm({
-  request,
-  donorId,
-}: DonationOfferFormProps) {
+export default function DonationOfferForm({ request, donorId }: DonationOfferFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -88,29 +77,26 @@ export default function DonationOfferForm({
         address: data.address,
         medical_info: data.medical_info,
         notes: data.notes,
-        status: "committed", // Set as committed when offering for a specific request
+        status: "committed",
       });
 
       if (response.success) {
-        toast.success("Donation offer submitted!", {
+        toast.success("Donation offer submitted", {
           description: "Your offer has been sent to the recipient.",
-          duration: 3000,
         });
 
         setTimeout(() => {
           router.push("/donor/donations");
           router.refresh();
-        }, 500);
+        }, 400);
       } else {
         toast.error("Failed to submit offer", {
           description: response.message,
-          duration: 5000,
         });
       }
     } catch (error) {
-      toast.error("An error occurred", {
-        description: "Please try again later.",
-        duration: 5000,
+      toast.error("Something went wrong", {
+        description: "Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -118,111 +104,87 @@ export default function DonationOfferForm({
   };
 
   return (
-    <div className="space-y-8">
-      {/* Request Details Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] backdrop-blur">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.2),transparent_65%)]" />
-
-        <div className="relative space-y-4">
+    <div className="space-y-5">
+      <section className="rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm">
+        <div className="space-y-4">
           <div className="flex items-start justify-between gap-4">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-semibold text-white">
+            <div>
+              <h2 className="font-heading text-2xl font-semibold tracking-tight text-foreground">
                 {request.title}
               </h2>
-              <p className="text-sm text-white/70">{request.description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {request.description}
+              </p>
             </div>
-            <span
-              className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
-                request.urgency === "critical"
-                  ? "border-rose-300 bg-rose-200 text-rose-900"
-                  : request.urgency === "high"
-                  ? "border-orange-300 bg-orange-200 text-orange-900"
-                  : request.urgency === "medium"
-                  ? "border-amber-300 bg-amber-200 text-amber-900"
-                  : "border-emerald-300 bg-emerald-200 text-emerald-900"
-              }`}
-            >
-              {request.urgency} urgency
+            <span className="rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+              {request.urgency}
             </span>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/60">
-                <Droplet className="size-4" />
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-2xl border border-border/70 bg-background/70 p-3">
+              <p className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                <Droplet className="size-3.5 text-primary" />
                 Blood group
-              </div>
-              <div className="mt-1 text-lg font-semibold text-white">
-                {request.blood_group}
-              </div>
+              </p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{request.blood_group}</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/60">
-                <Droplet className="size-4" />
+            <div className="rounded-2xl border border-border/70 bg-background/70 p-3">
+              <p className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                <Droplet className="size-3.5 text-primary" />
                 Units needed
-              </div>
-              <div className="mt-1 text-lg font-semibold text-white">
-                {request.units_required}
-              </div>
+              </p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{request.units_required}</p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/60">
-                <User className="size-4" />
+            <div className="rounded-2xl border border-border/70 bg-background/70 p-3">
+              <p className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                <User className="size-3.5 text-primary" />
                 Recipient
-              </div>
-              <div className="mt-1 text-sm font-medium text-white">
+              </p>
+              <p className="mt-1 text-sm font-semibold text-foreground">
                 {request.recipient?.name || "Confidential"}
-              </div>
+              </p>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/10 p-4">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/60">
-                <MapPin className="size-4" />
+            <div className="rounded-2xl border border-border/70 bg-background/70 p-3">
+              <p className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                <MapPin className="size-3.5 text-primary" />
                 Location
-              </div>
-              <div className="mt-1 text-sm font-medium text-white">
-                {request.address}
-              </div>
+              </p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{request.address}</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Donation Offer Form */}
-      <div className="rounded-3xl border border-white/15 bg-white/5 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.4)] backdrop-blur">
-        <div className="mb-6 space-y-2">
-          <h3 className="text-xl font-semibold text-white">
-            Offer your donation
-          </h3>
-          <p className="text-sm text-white/70">
-            Fill in your details to offer a donation for this request
-          </p>
-        </div>
+      <section className="rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm">
+        <h3 className="font-heading text-xl font-semibold tracking-tight text-foreground">
+          Donation offer details
+        </h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Share your availability and contact details to complete the offer.
+        </p>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-5">
+            <div className="grid gap-5 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="units_available"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-white/90">
-                      Units you can donate
-                    </FormLabel>
+                    <FormLabel>Units available</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
                         min="1"
                         max="10"
                         disabled={isSubmitting}
-                        className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                        className="h-11 rounded-xl"
                         {...field}
-                        onChange={(e) =>
-                          field.onChange(parseInt(e.target.value))
-                        }
+                        onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)}
                       />
                     </FormControl>
-                    <FormMessage className="text-xs text-rose-200" />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -232,19 +194,17 @@ export default function DonationOfferForm({
                 name="availability_date"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-white/90">
-                      When can you donate?
-                    </FormLabel>
+                    <FormLabel>Availability date</FormLabel>
                     <FormControl>
                       <Input
                         type="date"
                         disabled={isSubmitting}
                         min={new Date().toISOString().split("T")[0]}
-                        className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                        className="h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-xs text-rose-200" />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -254,19 +214,17 @@ export default function DonationOfferForm({
                 name="contact_phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-white/90">
-                      Contact phone
-                    </FormLabel>
+                    <FormLabel>Contact phone</FormLabel>
                     <FormControl>
                       <Input
                         type="tel"
                         placeholder="+1 (555) 000-0000"
                         disabled={isSubmitting}
-                        className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                        className="h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-xs text-rose-200" />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -276,19 +234,17 @@ export default function DonationOfferForm({
                 name="contact_email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-medium text-white/90">
-                      Contact email
-                    </FormLabel>
+                    <FormLabel>Contact email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
                         placeholder="your@email.com"
                         disabled={isSubmitting}
-                        className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                        className="h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-xs text-rose-200" />
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
@@ -299,18 +255,16 @@ export default function DonationOfferForm({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-white/90">
-                    Your location
-                  </FormLabel>
+                  <FormLabel>Your address</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="City, State or full address"
+                      placeholder="City, state, or full address"
                       disabled={isSubmitting}
-                      className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                      className="h-11 rounded-xl"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs text-rose-200" />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -320,18 +274,16 @@ export default function DonationOfferForm({
               name="medical_info"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-white/90">
-                    Medical information (optional)
-                  </FormLabel>
+                  <FormLabel>Medical information (optional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Any relevant medical information..."
+                      placeholder="Any relevant medical information"
                       disabled={isSubmitting}
-                      className="min-h-24 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                      className="min-h-24 rounded-xl"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs text-rose-200" />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
@@ -341,37 +293,31 @@ export default function DonationOfferForm({
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm font-medium text-white/90">
-                    Additional notes (optional)
-                  </FormLabel>
+                  <FormLabel>Additional notes (optional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Any additional information you'd like to share..."
+                      placeholder="Anything else you'd like to share"
                       disabled={isSubmitting}
-                      className="min-h-24 rounded-xl border-white/10 bg-slate-900/60 text-white placeholder:text-white/50"
+                      className="min-h-24 rounded-xl"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs text-rose-200" />
+                  <FormMessage className="text-xs" />
                 </FormItem>
               )}
             />
 
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 type="button"
-                variant="ghost"
+                variant="outline"
                 onClick={() => router.back()}
                 disabled={isSubmitting}
-                className="w-full rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/15"
+                className="w-full rounded-xl"
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full gap-2 rounded-full bg-linear-to-r from-rose-500 via-fuchsia-500 to-indigo-500 text-white shadow-lg shadow-rose-500/20 transition hover:scale-[1.01]"
-              >
+              <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="size-4 animate-spin" />
@@ -380,14 +326,14 @@ export default function DonationOfferForm({
                 ) : (
                   <>
                     <Heart className="size-4" />
-                    Submit Donation Offer
+                    Submit donation offer
                   </>
                 )}
               </Button>
             </div>
           </form>
         </Form>
-      </div>
+      </section>
     </div>
   );
 }

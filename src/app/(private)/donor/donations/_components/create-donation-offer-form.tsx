@@ -3,7 +3,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+
+import { createBloodDonation } from "@/server-actions/blood-donations";
+import { IBloodDonation } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,17 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createBloodDonation } from "@/server-actions/blood-donations";
-import { IBloodDonation } from "@/interfaces";
-import { Loader2 } from "lucide-react";
 
 interface CreateDonationOfferFormProps {
   userId: number;
 }
 
-export default function CreateDonationOfferForm({
-  userId,
-}: CreateDonationOfferFormProps) {
+export default function CreateDonationOfferForm({ userId }: CreateDonationOfferFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const {
@@ -52,17 +51,11 @@ export default function CreateDonationOfferForm({
   const onSubmit = async (data: Partial<IBloodDonation>) => {
     try {
       setIsSubmitting(true);
-
-      const payload = {
-        ...data,
-        donor_id: userId,
-      };
-
-      const response = await createBloodDonation(payload);
+      const response = await createBloodDonation({ ...data, donor_id: userId });
 
       if (response.success) {
-        toast.success("Donation offer created!", {
-          description: "Your offer is pending admin approval.",
+        toast.success("Donation offer created", {
+          description: "Your offer is pending admin review.",
         });
         router.push("/donor/donations");
       } else {
@@ -71,8 +64,8 @@ export default function CreateDonationOfferForm({
         });
       }
     } catch (error) {
-      toast.error("An error occurred", {
-        description: "Please try again later.",
+      toast.error("Something went wrong", {
+        description: "Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -82,106 +75,78 @@ export default function CreateDonationOfferForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur lg:p-8"
+      className="space-y-5 rounded-3xl border border-border/70 bg-card/80 p-6 shadow-sm sm:p-8"
     >
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="blood_group" className="text-white">
-            Blood Group <span className="text-rose-400">*</span>
-          </Label>
-          <Select
-            value={bloodGroup}
-            onValueChange={(value) => setValue("blood_group", value)}
-          >
-            <SelectTrigger className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white">
+          <Label htmlFor="blood_group">Blood group</Label>
+          <Select value={bloodGroup} onValueChange={(value) => setValue("blood_group", value)}>
+            <SelectTrigger className="h-11 w-full rounded-xl">
               <SelectValue placeholder="Select blood group" />
             </SelectTrigger>
-            <SelectContent className="border-white/10 bg-slate-900 text-white">
+            <SelectContent>
               {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((bg) => (
-                <SelectItem
-                  key={bg}
-                  value={bg}
-                  className="text-white focus:bg-rose-500/20 focus:text-white"
-                >
+                <SelectItem key={bg} value={bg}>
                   {bg}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          {errors.blood_group && (
-            <p className="text-sm text-rose-400">{errors.blood_group.message}</p>
-          )}
+          {errors.blood_group ? <p className="text-xs text-destructive">{errors.blood_group.message}</p> : null}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="units_available" className="text-white">
-            Units Available <span className="text-rose-400">*</span>
-          </Label>
+          <Label htmlFor="units_available">Units available</Label>
           <Input
             id="units_available"
             type="number"
             min="1"
+            className="h-11 rounded-xl"
             {...register("units_available", {
               required: "Units available is required",
               min: { value: 1, message: "Must be at least 1 unit" },
             })}
-            className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white"
           />
-          {errors.units_available && (
-            <p className="text-sm text-rose-400">
-              {errors.units_available.message}
-            </p>
-          )}
+          {errors.units_available ? (
+            <p className="text-xs text-destructive">{errors.units_available.message}</p>
+          ) : null}
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="availability_date" className="text-white">
-          Availability Date <span className="text-rose-400">*</span>
-        </Label>
+        <Label htmlFor="availability_date">Availability date</Label>
         <Input
           id="availability_date"
           type="date"
-          {...register("availability_date", {
-            required: "Availability date is required",
-          })}
           min={new Date().toISOString().split("T")[0]}
-          className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white"
+          className="h-11 rounded-xl"
+          {...register("availability_date", { required: "Availability date is required" })}
         />
-        {errors.availability_date && (
-          <p className="text-sm text-rose-400">
-            {errors.availability_date.message}
-          </p>
-        )}
+        {errors.availability_date ? (
+          <p className="text-xs text-destructive">{errors.availability_date.message}</p>
+        ) : null}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="contact_phone" className="text-white">
-            Contact Phone <span className="text-rose-400">*</span>
-          </Label>
+          <Label htmlFor="contact_phone">Contact phone</Label>
           <Input
             id="contact_phone"
             type="tel"
-            {...register("contact_phone", {
-              required: "Contact phone is required",
-            })}
-            className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white"
+            className="h-11 rounded-xl"
+            {...register("contact_phone", { required: "Contact phone is required" })}
           />
-          {errors.contact_phone && (
-            <p className="text-sm text-rose-400">
-              {errors.contact_phone.message}
-            </p>
-          )}
+          {errors.contact_phone ? (
+            <p className="text-xs text-destructive">{errors.contact_phone.message}</p>
+          ) : null}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact_email" className="text-white">
-            Contact Email <span className="text-rose-400">*</span>
-          </Label>
+          <Label htmlFor="contact_email">Contact email</Label>
           <Input
             id="contact_email"
             type="email"
+            className="h-11 rounded-xl"
             {...register("contact_email", {
               required: "Contact email is required",
               pattern: {
@@ -189,78 +154,62 @@ export default function CreateDonationOfferForm({
                 message: "Invalid email address",
               },
             })}
-            className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white"
           />
-          {errors.contact_email && (
-            <p className="text-sm text-rose-400">
-              {errors.contact_email.message}
-            </p>
-          )}
+          {errors.contact_email ? (
+            <p className="text-xs text-destructive">{errors.contact_email.message}</p>
+          ) : null}
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="address" className="text-white">
-          Address / Location <span className="text-rose-400">*</span>
-        </Label>
+        <Label htmlFor="address">Address or location</Label>
         <Input
           id="address"
-          {...register("address", {
-            required: "Address is required",
-          })}
-          className="h-12 rounded-xl border-white/10 bg-slate-900/60 text-white"
+          className="h-11 rounded-xl"
+          {...register("address", { required: "Address is required" })}
         />
-        {errors.address && (
-          <p className="text-sm text-rose-400">{errors.address.message}</p>
-        )}
+        {errors.address ? <p className="text-xs text-destructive">{errors.address.message}</p> : null}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="medical_info" className="text-white">
-          Medical Information
-        </Label>
+        <Label htmlFor="medical_info">Medical information</Label>
         <textarea
           id="medical_info"
-          {...register("medical_info")}
           rows={3}
-          placeholder="Any relevant medical information (optional)"
-          className="w-full rounded-xl border border-white/10 bg-slate-900/60 p-3 text-white placeholder:text-white/50"
+          placeholder="Any relevant information (optional)"
+          className="w-full rounded-xl border border-border bg-background/70 p-3 text-sm"
+          {...register("medical_info")}
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="notes" className="text-white">
-          Additional Notes
-        </Label>
+        <Label htmlFor="notes">Additional notes</Label>
         <textarea
           id="notes"
-          {...register("notes")}
           rows={3}
-          placeholder="Any additional notes or instructions (optional)"
-          className="w-full rounded-xl border border-white/10 bg-slate-900/60 p-3 text-white placeholder:text-white/50"
+          placeholder="Any extra notes (optional)"
+          className="w-full rounded-xl border border-border bg-background/70 p-3 text-sm"
+          {...register("notes")}
         />
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="gap-2 rounded-xl bg-linear-to-r from-rose-500 via-fuchsia-500 to-indigo-500 px-6"
-        >
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl sm:w-auto">
           {isSubmitting ? (
             <>
               <Loader2 className="size-4 animate-spin" />
               Creating...
             </>
           ) : (
-            "Create Donation Offer"
+            "Create donation offer"
           )}
         </Button>
+
         <Button
           type="button"
-          variant="ghost"
+          variant="outline"
           onClick={() => router.back()}
-          className="rounded-xl border border-white/20 bg-white/10 text-white hover:bg-white/15"
+          className="w-full rounded-xl sm:w-auto"
         >
           Cancel
         </Button>
