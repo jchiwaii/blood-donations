@@ -3,31 +3,26 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Midnight Red Theme - Light Mode */
-  --background: rgb(250, 250, 252);
-  --foreground: rgb(15, 23, 42);
-  /* Slate 900 */
+  /* Clay Red Theme - Light Mode */
+  --background: rgb(250, 248, 245);
+  --foreground: rgb(24, 28, 35);
   --card: rgb(255, 255, 255);
-  --card-foreground: rgb(15, 23, 42);
+  --card-foreground: rgb(24, 28, 35);
   --popover: rgb(255, 255, 255);
-  --popover-foreground: rgb(15, 23, 42);
-  --primary: rgb(220, 38, 38);
-  /* Red 600 */
+  --popover-foreground: rgb(24, 28, 35);
+  --primary: rgb(196, 44, 43);
   --primary-foreground: rgb(255, 255, 255);
-  --secondary: rgb(241, 245, 249);
-  /* Slate 100 */
-  --secondary-foreground: rgb(15, 23, 42);
-  --muted: rgb(241, 245, 249);
-  --muted-foreground: rgb(100, 116, 139);
-  /* Slate 500 */
-  --accent: rgb(226, 232, 240);
-  /* Slate 200 */
-  --accent-foreground: rgb(220, 38, 38);
+  --secondary: rgb(243, 239, 234);
+  --secondary-foreground: rgb(24, 28, 35);
+  --muted: rgb(245, 241, 237);
+  --muted-foreground: rgb(104, 109, 120);
+  --accent: rgb(237, 231, 224);
+  --accent-foreground: rgb(196, 44, 43);
   --destructive: rgb(239, 68, 68);
   --destructive-foreground: rgb(255, 255, 255);
-  --border: rgb(226, 232, 240);
-  --input: rgb(226, 232, 240);
-  --ring: rgb(220, 38, 38);
+  --border: rgb(228, 221, 214);
+  --input: rgb(228, 221, 214);
+  --ring: rgb(196, 44, 43);
 
   --radius: 0.75rem;
 
@@ -37,43 +32,36 @@
   --font-mono: "JetBrains Mono", monospace;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --shadow-glow: 0 0 20px rgb(220 38 38 / 0.15);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow: 0 4px 8px -2px rgb(16 24 40 / 0.08), 0 2px 4px -2px rgb(16 24 40 / 0.05);
+  --shadow-md: 0 12px 24px -6px rgb(16 24 40 / 0.12), 0 4px 12px -8px rgb(16 24 40 / 0.08);
+  --shadow-lg: 0 30px 60px -24px rgb(16 24 40 / 0.18);
+  --shadow-glow: 0 0 24px rgb(196 44 43 / 0.22);
 }
 
 .dark {
-  /* Midnight Red Theme - Dark Mode */
+  /* Clay Red Theme - Dark Mode */
   --background: rgb(2, 6, 23);
-  /* Slate 950 */
   --foreground: rgb(248, 250, 252);
-  /* Slate 50 */
   --card: rgb(15, 23, 42);
-  /* Slate 900 */
   --card-foreground: rgb(248, 250, 252);
   --popover: rgb(15, 23, 42);
   --popover-foreground: rgb(248, 250, 252);
-  --primary: rgb(239, 68, 68);
-  /* Red 500 */
+  --primary: rgb(235, 78, 76);
   --primary-foreground: rgb(255, 255, 255);
   --secondary: rgb(30, 41, 59);
-  /* Slate 800 */
   --secondary-foreground: rgb(248, 250, 252);
   --muted: rgb(30, 41, 59);
-  --muted-foreground: rgb(148, 163, 184);
-  /* Slate 400 */
+  --muted-foreground: rgb(143, 156, 175);
   --accent: rgb(30, 41, 59);
-  --accent-foreground: rgb(239, 68, 68);
+  --accent-foreground: rgb(235, 78, 76);
   --destructive: rgb(127, 29, 29);
-  /* Red 900 */
   --destructive-foreground: rgb(255, 255, 255);
   --border: rgb(30, 41, 59);
   --input: rgb(30, 41, 59);
-  --ring: rgb(239, 68, 68);
+  --ring: rgb(235, 78, 76);
 
-  --shadow-glow: 0 0 30px rgb(239 68 68 / 0.25);
+  --shadow-glow: 0 0 28px rgb(235 78 76 / 0.3);
 }
 
 @theme inline {
@@ -112,7 +100,9 @@
   /* Animations */
   --animate-fade-in: fade-in 0.5s ease-out;
   --animate-slide-up: slide-up 0.5s ease-out;
-  --animate-pulse-glow: pulse-glow 2s infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-drift: drift 14s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2.5s infinite;
 
   @keyframes fade-in {
     from {
@@ -136,6 +126,29 @@
     }
   }
 
+  @keyframes fade-up {
+    from {
+      transform: translateY(26px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(10px, -12px);
+    }
+  }
+
   @keyframes pulse-glow {
 
     0%,
@@ -151,6 +164,11 @@
 
 body {
   letter-spacing: var(--tracking-normal);
+  text-rendering: optimizeLegibility;
+  background-image:
+    radial-gradient(circle at 4% -8%, rgb(196 44 43 / 0.12), transparent 28%),
+    radial-gradient(circle at 92% 12%, rgb(180 83 9 / 0.09), transparent 22%);
+  background-attachment: fixed;
 }
 
 @layer base {
@@ -160,5 +178,14 @@ body {
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .grid-faint {
+    background-image:
+      linear-gradient(to right, rgb(24 28 35 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(24 28 35 / 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 }

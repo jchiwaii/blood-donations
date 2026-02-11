@@ -1,66 +1,107 @@
-import React from "react";
-import { Droplet, Github, Twitter, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Droplet, Mail, Phone } from "lucide-react";
+import { Button } from "../ui/button";
 
 const PublicFooter = () => {
-    return (
-        <footer className="border-t border-border/40 bg-background/50 backdrop-blur-sm">
-            <div className="container mx-auto px-4 py-12 md:px-6">
-                <div className="grid gap-8 md:grid-cols-4">
-                    <div className="space-y-4">
-                        <div className="flex items-center gap-2 font-heading font-bold text-xl tracking-tight">
-                            <span className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-glow">
-                                <Droplet className="size-4 fill-current" />
-                            </span>
-                            Bloodline
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                            Connecting donors with those in need. Join our community and save lives today.
-                        </p>
-                    </div>
+  return (
+    <footer className="border-t border-border/70 bg-background/80 backdrop-blur-sm">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.1fr_0.9fr] md:px-8">
+        <div className="space-y-5">
+          <Link href="/" className="inline-flex items-center gap-3">
+            <span className="flex size-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Droplet className="size-4 fill-current" />
+            </span>
+            <span className="font-heading text-xl font-semibold tracking-tight">
+              Bloodline
+            </span>
+          </Link>
+          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+            A focused platform that helps donors, recipients, and coordinators
+            act faster with less noise and clearer accountability.
+          </p>
 
-                    <div>
-                        <h3 className="font-heading font-semibold mb-4">Platform</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><a href="#" className="hover:text-foreground transition-colors">How it Works</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Campaigns</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Hospitals</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Donors</a></li>
-                        </ul>
-                    </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full border-border/80 bg-card/70"
+            >
+              <Link href="/campaigns" className="gap-2">
+                View campaigns
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button asChild className="rounded-full">
+              <Link href="/auth">Join now</Link>
+            </Button>
+          </div>
+        </div>
 
-                    <div>
-                        <h3 className="font-heading font-semibold mb-4">Company</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><a href="#" className="hover:text-foreground transition-colors">About Us</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Careers</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Blog</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Contact</a></li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 className="font-heading font-semibold mb-4">Legal</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Terms of Service</a></li>
-                            <li><a href="#" className="hover:text-foreground transition-colors">Cookie Policy</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="mt-12 pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} Bloodline. All rights reserved.
-                    </p>
-                    <div className="flex items-center gap-4 text-muted-foreground">
-                        <a href="#" className="hover:text-primary transition-colors"><Github className="size-5" /></a>
-                        <a href="#" className="hover:text-primary transition-colors"><Twitter className="size-5" /></a>
-                        <a href="#" className="hover:text-primary transition-colors"><Linkedin className="size-5" /></a>
-                    </div>
-                </div>
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+              Navigate
+            </p>
+            <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
+              <Link href="/" className="transition-colors hover:text-foreground">
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="transition-colors hover:text-foreground"
+              >
+                About
+              </Link>
+              <Link
+                href="/campaigns"
+                className="transition-colors hover:text-foreground"
+              >
+                Campaigns
+              </Link>
+              <Link
+                href="/auth"
+                className="transition-colors hover:text-foreground"
+              >
+                Sign in
+              </Link>
             </div>
-        </footer>
-    );
+          </div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+              Contact
+            </p>
+            <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
+              <a
+                href="mailto:support@bloodline.app"
+                className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+              >
+                <Mail className="size-4" />
+                support@bloodline.app
+              </a>
+              <a
+                href="tel:+18001234567"
+                className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
+              >
+                <Phone className="size-4" />
+                +1 (800) 123-4567
+              </a>
+              <p className="pt-2 text-xs leading-relaxed">
+                Emergency coordination desk available 24/7.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-border/70">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-6 py-4 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
+          <p>© {new Date().getFullYear()} Bloodline. All rights reserved.</p>
+          <p>Built for donor-first community response.</p>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
 export default PublicFooter;
