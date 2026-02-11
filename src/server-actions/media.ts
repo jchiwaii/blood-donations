@@ -1,11 +1,21 @@
 "use server";
 
-import supabase from "@/config/supabase-config";
+import { db } from "@/config/db";
+import path from "path";
+import fs from "fs/promises";
 
 interface FileData {
   buffer: string; // base64 encoded
   fileName: string;
   fileType: string;
+}
+
+const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
+
+async function ensureUploadDir(subDir: string) {
+  const dir = path.join(UPLOAD_DIR, subDir);
+  await fs.mkdir(dir, { recursive: true });
+  return dir;
 }
 
 export const uploadMedia = async (
@@ -14,66 +24,30 @@ export const uploadMedia = async (
   relatedId: number
 ) => {
   try {
-    // Convert base64 back to buffer
     const buffer = Buffer.from(fileData.buffer, "base64");
 
-    // Create unique filename with timestamp
     const timestamp = Date.now();
-    const fileName = `${timestamp}-${fileData.fileName.replace(
-      /[^a-zA-Z0-9.-]/g,
-      "_"
-    )}`;
-    const filePath = `${relatedType}/${relatedId}/${fileName}`;
+    const safeName = fileData.fileName.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const fileName = `${timestamp}-${safeName}`;
+    const subDir = `${relatedType}/${relatedId}`;
+    const dir = await ensureUploadDir(subDir);
+    const filePath = path.join(dir, fileName);
 
-    // Upload file to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("media")
-      .upload(filePath, buffer, {
-        contentType: fileData.fileType,
-        cacheControl: "3600",
-        upsert: false,
-      });
+    await fs.writeFile(filePath, buffer);
 
-    if (uploadError || !uploadData) {
-      console.error("Upload error:", uploadError);
-      return {
-        success: false,
-        message: "Media upload failed",
-        error: uploadError?.message,
-      };
-    }
+    const publicUrl = `/uploads/${subDir}/${fileName}`;
 
-    // Get public URL of the uploaded file
-    const { data: urlData } = supabase.storage
-      .from("media")
-      .getPublicUrl(uploadData.path);
+    const result = await db.query(
+      "INSERT INTO media (url, related_id, related_type) VALUES ($1, $2, $3) RETURNING *",
+      [publicUrl, relatedId, relatedType]
+    );
 
-    if (!urlData?.publicUrl) {
-      return {
-        success: false,
-        message: "Failed to retrieve media URL",
-      };
-    }
+    const data = result.rows[0];
 
-    // Insert media record into the database
-    const { data, error: dbError } = await supabase
-      .from("media")
-      .insert([
-        {
-          url: urlData.publicUrl,
-          related_id: relatedId,
-          related_type: relatedType,
-        },
-      ])
-      .select()
-      .single();
-
-    if (dbError) {
-      console.error("Database error:", dbError);
+    if (!data) {
       return {
         success: false,
         message: "Failed to save media record",
-        error: dbError.message,
       };
     }
 
@@ -82,7 +56,7 @@ export const uploadMedia = async (
       message: "Media uploaded successfully",
       data: {
         ...data,
-        url: urlData.publicUrl,
+        url: publicUrl,
       },
     };
   } catch (error: any) {
@@ -134,46 +108,29 @@ export const uploadMultipleMedia = async (
 
 export const deleteMedia = async (mediaId: number) => {
   try {
-    // Get media record to find the file path
-    const { data: media, error: fetchError } = await supabase
-      .from("media")
-      .select("*")
-      .eq("id", mediaId)
-      .single();
+    const mediaResult = await db.query(
+      "SELECT * FROM media WHERE id = $1",
+      [mediaId]
+    );
 
-    if (fetchError || !media) {
+    const media = mediaResult.rows[0];
+
+    if (!media) {
       return {
         success: false,
         message: "Media not found",
       };
     }
 
-    // Extract file path from URL
-    const url = new URL(media.url);
-    const pathParts = url.pathname.split("/media/");
-    const filePath = pathParts[1];
-
-    // Delete from storage
-    const { error: storageError } = await supabase.storage
-      .from("media")
-      .remove([filePath]);
-
-    if (storageError) {
-      console.error("Storage delete error:", storageError);
+    // Try to delete the file from disk
+    try {
+      const filePath = path.join(process.cwd(), "public", media.url);
+      await fs.unlink(filePath);
+    } catch {
+      console.error("File not found on disk, continuing with DB cleanup");
     }
 
-    // Delete from database
-    const { error: dbError } = await supabase
-      .from("media")
-      .delete()
-      .eq("id", mediaId);
-
-    if (dbError) {
-      return {
-        success: false,
-        message: "Failed to delete media record",
-      };
-    }
+    await db.query("DELETE FROM media WHERE id = $1", [mediaId]);
 
     return {
       success: true,
@@ -194,23 +151,14 @@ export const getMediaByRelated = async (
   relatedId: number
 ) => {
   try {
-    const { data, error } = await supabase
-      .from("media")
-      .select("*")
-      .eq("related_type", relatedType)
-      .eq("related_id", relatedId)
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      return {
-        success: false,
-        message: "Failed to retrieve media",
-      };
-    }
+    const result = await db.query(
+      "SELECT * FROM media WHERE related_type = $1 AND related_id = $2 ORDER BY created_at DESC",
+      [relatedType, relatedId]
+    );
 
     return {
       success: true,
-      data: data || [],
+      data: result.rows || [],
       message: "Media retrieved successfully",
     };
   } catch (error: any) {

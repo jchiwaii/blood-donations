@@ -1,23 +1,24 @@
 import dotenv from "dotenv";
 import { resolve } from "path";
-import { createClient } from "@supabase/supabase-js";
+import { Pool } from "pg";
 import bcrypt from "bcryptjs";
 
 // Load environment variables from .env.local
 dotenv.config({ path: resolve(__dirname, "../.env.local") });
 
-// Create Supabase client after loading env vars
-const supabaseUrl = process.env.SUPABASE_PROJECT_URL;
-const supabaseKey = process.env.SUPABASE_API_KEY;
+const connectionString = process.env.DATABASE_URL;
 
-if (!supabaseUrl || !supabaseKey) {
+if (!connectionString) {
   console.error(
-    "Error: SUPABASE_PROJECT_URL and SUPABASE_API_KEY must be set in .env.local"
+    "Error: DATABASE_URL must be set in .env.local"
   );
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const pool = new Pool({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
+});
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const urgencies = ["critical", "urgent", "normal"];
@@ -68,19 +69,14 @@ async function seedData() {
     console.log("Creating donor users...");
     const donors = [];
     for (let i = 0; i < 5; i++) {
-      const { data, error } = await supabase
-        .from("user_profiles")
-        .insert({
-          name: donorNames[i],
-          email: `donor${i + 1}@example.com`,
-          password: hashedPassword,
-          role: "donor",
-        })
-        .select()
-        .single();
+      const result = await pool.query(
+        "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
+        [donorNames[i], `donor${i + 1}@example.com`, hashedPassword, "donor"]
+      );
 
-      if (error) {
-        console.error(`Error creating donor ${i + 1}:`, error);
+      const data = result.rows[0];
+      if (!data) {
+        console.error(`Error creating donor ${i + 1}`);
         continue;
       }
       donors.push(data);
@@ -91,19 +87,14 @@ async function seedData() {
     console.log("\nCreating recipient users...");
     const recipients = [];
     for (let i = 0; i < 5; i++) {
-      const { data, error } = await supabase
-        .from("user_profiles")
-        .insert({
-          name: recipientNames[i],
-          email: `recipient${i + 1}@example.com`,
-          password: hashedPassword,
-          role: "recipient",
-        })
-        .select()
-        .single();
+      const result = await pool.query(
+        "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
+        [recipientNames[i], `recipient${i + 1}@example.com`, hashedPassword, "recipient"]
+      );
 
-      if (error) {
-        console.error(`Error creating recipient ${i + 1}:`, error);
+      const data = result.rows[0];
+      if (!data) {
+        console.error(`Error creating recipient ${i + 1}`);
         continue;
       }
       recipients.push(data);
@@ -115,38 +106,33 @@ async function seedData() {
     for (const recipient of recipients) {
       const numRequests = Math.floor(Math.random() * 2) + 2; // 2-3 requests
       for (let i = 0; i < numRequests; i++) {
-        const { data, error } = await supabase
-          .from("blood_requests")
-          .insert({
-            recipient_id: recipient.id,
-            title:
-              requestTitles[Math.floor(Math.random() * requestTitles.length)],
-            description: `Medical facility requires ${
+        const result = await pool.query(
+          `INSERT INTO blood_requests
+            (recipient_id, title, description, blood_group, units_required, status, urgency, contact_phone, contact_email, address)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+          [
+            recipient.id,
+            requestTitles[Math.floor(Math.random() * requestTitles.length)],
+            `Medical facility requires ${
               bloodGroups[Math.floor(Math.random() * bloodGroups.length)]
             } blood for patient treatment. Contact immediately if available.`,
-            blood_group:
-              bloodGroups[Math.floor(Math.random() * bloodGroups.length)],
-            units_required: Math.floor(Math.random() * 4) + 1, // 1-4 units
-            status: statuses[Math.floor(Math.random() * statuses.length)],
-            urgency: urgencies[Math.floor(Math.random() * urgencies.length)],
-            contact_phone: `+1-555-${Math.floor(Math.random() * 900) + 100}-${
+            bloodGroups[Math.floor(Math.random() * bloodGroups.length)],
+            Math.floor(Math.random() * 4) + 1,
+            statuses[Math.floor(Math.random() * statuses.length)],
+            urgencies[Math.floor(Math.random() * urgencies.length)],
+            `+1-555-${Math.floor(Math.random() * 900) + 100}-${
               Math.floor(Math.random() * 9000) + 1000
             }`,
-            contact_email: recipient.email,
-            address: `${
-              Math.floor(Math.random() * 9000) + 1000
-            } Medical Center Dr, ${
+            recipient.email,
+            `${Math.floor(Math.random() * 9000) + 1000} Medical Center Dr, ${
               cities[Math.floor(Math.random() * cities.length)]
             }`,
-          })
-          .select()
-          .single();
+          ]
+        );
 
-        if (error) {
-          console.error(
-            `Error creating blood request for ${recipient.name}:`,
-            error
-          );
+        const data = result.rows[0];
+        if (!data) {
+          console.error(`Error creating blood request for ${recipient.name}`);
           continue;
         }
         console.log(
@@ -156,6 +142,8 @@ async function seedData() {
     }
   } catch (error) {
     console.error("Error during seeding:", error);
+  } finally {
+    await pool.end();
   }
 }
 

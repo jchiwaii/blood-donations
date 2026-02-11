@@ -1,6 +1,6 @@
 "use server";
 
-import supabase from "@/config/supabase-config";
+import { db } from "@/config/db";
 import { IUser } from "@/interfaces";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 
 export const registerUser = async (payload: Partial<IUser>) => {
   try {
-    // Validate required fields
     if (!payload.email || !payload.password || !payload.name || !payload.role) {
       return {
         success: false,
@@ -16,52 +15,34 @@ export const registerUser = async (payload: Partial<IUser>) => {
       };
     }
 
-    // Check if user already exists
-    const { data: existingUser, error: fetchError } = await supabase
-      .from("user_profiles")
-      .select("*")
-      .eq("email", payload.email)
-      .single();
+    const existingUserResult = await db.query(
+      "SELECT id FROM user_profiles WHERE email = $1 LIMIT 1",
+      [payload.email]
+    );
 
-    if (fetchError && fetchError.code !== "PGRST116") {
+    if (existingUserResult.rows.length > 0) {
       return {
         success: false,
         message: "Registration failed",
       };
     }
 
-    if (existingUser) {
-      return {
-        success: false,
-        message: "Registration failed",
-      };
-    }
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(payload.password, 10);
 
-    // Insert new user into the database
-    const { data, error: insertError } = await supabase
-      .from("user_profiles")
-      .insert([
-        {
-          name: payload.name,
-          email: payload.email,
-          password: hashedPassword,
-          role: payload.role,
-        },
-      ])
-      .select()
-      .single();
+    const insertResult = await db.query(
+      "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role",
+      [payload.name, payload.email, hashedPassword, payload.role]
+    );
 
-    if (insertError) {
+    const data = insertResult.rows[0];
+
+    if (!data) {
       return {
         success: false,
         message: "Registration failed",
       };
     }
 
-    // Create token for auto-login
     const token = jwt.sign(
       {
         id: data.id,
@@ -98,7 +79,6 @@ export const loginUser = async (payload: {
   role: string;
 }) => {
   try {
-    // Validate required fields
     if (!payload.email || !payload.password || !payload.role) {
       return {
         success: false,
@@ -106,21 +86,20 @@ export const loginUser = async (payload: {
       };
     }
 
-    // Fetch user from database
-    const { data: user, error: fetchError } = await supabase
-      .from("user_profiles")
-      .select("*")
-      .eq("email", payload.email)
-      .single();
+    const userResult = await db.query(
+      "SELECT * FROM user_profiles WHERE email = $1 LIMIT 1",
+      [payload.email]
+    );
 
-    if (fetchError || !user) {
+    const user = userResult.rows[0];
+
+    if (!user) {
       return {
         success: false,
         message: "Login failed",
       };
     }
 
-    // Verify role matches
     if (user.role !== payload.role) {
       return {
         success: false,
@@ -128,7 +107,6 @@ export const loginUser = async (payload: {
       };
     }
 
-    // Check the password
     const isPasswordValid = await bcrypt.compare(
       payload.password,
       user.password
@@ -141,7 +119,6 @@ export const loginUser = async (payload: {
       };
     }
 
-    // Create token
     const token = jwt.sign(
       {
         id: user.id,
@@ -182,20 +159,19 @@ export const currentUser = async (token?: string) => {
       return null;
     }
 
-    // Verify and decode the token
     const decoded: any = jwt.verify(
       authToken,
       process.env.JWT_SECRET || "your-secret-key"
     );
 
-    // Fetch user from database
-    const { data, error } = await supabase
-      .from("user_profiles")
-      .select("id, name, email, role")
-      .eq("id", decoded.id)
-      .single();
+    const userResult = await db.query(
+      "SELECT id, name, email, role FROM user_profiles WHERE id = $1",
+      [decoded.id]
+    );
 
-    if (error || !data) {
+    const data = userResult.rows[0];
+
+    if (!data) {
       return null;
     }
 
@@ -212,74 +188,41 @@ export const currentUser = async (token?: string) => {
 
 export const getUsersStatistics = async () => {
   try {
-    // Get total users by role
-    const { data: donors, error: donorsError } = await supabase
-      .from("user_profiles")
-      .select("id", { count: "exact" })
-      .eq("role", "donor");
-
-    const { data: recipients, error: recipientsError } = await supabase
-      .from("user_profiles")
-      .select("id", { count: "exact" })
-      .eq("role", "recipient");
-
-    const { data: admins, error: adminsError } = await supabase
-      .from("user_profiles")
-      .select("id", { count: "exact" })
-      .eq("role", "admin");
-
-    // Get blood donation statistics
-    const { data: donations, error: donationsError } = await supabase
-      .from("blood_donations")
-      .select("id", { count: "exact" });
-
-    // Get blood request statistics
-    const { data: requests, error: requestsError } = await supabase
-      .from("blood_requests")
-      .select("id", { count: "exact" });
-
-    const { data: pendingRequests, error: pendingError } = await supabase
-      .from("blood_requests")
-      .select("id", { count: "exact" })
-      .eq("status", "pending");
-
-    const { data: approvedRequests, error: approvedError } = await supabase
-      .from("blood_requests")
-      .select("id", { count: "exact" })
-      .eq("status", "approved");
-
-    const { data: rejectedRequests, error: rejectedError } = await supabase
-      .from("blood_requests")
-      .select("id", { count: "exact" })
-      .eq("status", "rejected");
-
-    if (
-      donorsError ||
-      recipientsError ||
-      adminsError ||
-      donationsError ||
-      requestsError ||
-      pendingError ||
-      approvedError ||
-      rejectedError
-    ) {
-      return {
-        success: false,
-        message: "Failed to retrieve statistics",
-      };
-    }
+    const [donorsResult, recipientsResult, adminsResult, donationsResult, requestsResult, pendingResult, approvedResult, rejectedResult] =
+      await Promise.all([
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'donor'"
+        ),
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'recipient'"
+        ),
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'admin'"
+        ),
+        db.query("SELECT COUNT(*)::int AS count FROM blood_donations"),
+        db.query("SELECT COUNT(*)::int AS count FROM blood_requests"),
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'pending'"
+        ),
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'approved'"
+        ),
+        db.query(
+          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'rejected'"
+        ),
+      ]);
 
     return {
       success: true,
       data: {
-        totalDonors: donors?.length ?? 0,
-        totalRecipients: recipients?.length ?? 0,
-        totalAdmins: admins?.length ?? 0,
-        totalDonations: donations?.length ?? 0,
-        totalRequests: requests?.length ?? 0,
-        pendingRequests: pendingRequests?.length ?? 0,
-        approvedRequests: approvedRequests?.length ?? 0,
-        rejectedRequests: rejectedRequests?.length ?? 0,
+        totalDonors: donorsResult.rows[0]?.count ?? 0,
+        totalRecipients: recipientsResult.rows[0]?.count ?? 0,
+        totalAdmins: adminsResult.rows[0]?.count ?? 0,
+        totalDonations: donationsResult.rows[0]?.count ?? 0,
+        totalRequests: requestsResult.rows[0]?.count ?? 0,
+        pendingRequests: pendingResult.rows[0]?.count ?? 0,
+        approvedRequests: approvedResult.rows[0]?.count ?? 0,
+        rejectedRequests: rejectedResult.rows[0]?.count ?? 0,
       },
       message: "Statistics retrieved successfully",
     };
@@ -293,22 +236,13 @@ export const getUsersStatistics = async () => {
 
 export const getAllUsers = async () => {
   try {
-    const { data, error } = await supabase
-      .from("user_profiles")
-      .select("id, name, email, role, created_at")
-      .in("role", ["donor", "recipient"])
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      return {
-        success: false,
-        message: "Failed to retrieve users",
-      };
-    }
+    const result = await db.query(
+      "SELECT id, name, email, role, created_at FROM user_profiles WHERE role IN ('donor', 'recipient') ORDER BY created_at DESC"
+    );
 
     return {
       success: true,
-      data: data ?? [],
+      data: result.rows ?? [],
       message: "Users retrieved successfully",
     };
   } catch (error: any) {

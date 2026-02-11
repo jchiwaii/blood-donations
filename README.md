@@ -29,7 +29,7 @@ A comprehensive blood donation management system connecting donors with recipien
 
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
-- **Database:** Supabase (PostgreSQL)
+- **Database:** Neon (PostgreSQL)
 - **Authentication:** JWT + bcrypt
 - **Styling:** Tailwind CSS
 - **UI Components:** Radix UI

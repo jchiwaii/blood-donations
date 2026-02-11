@@ -4,22 +4,21 @@ import PageTitle from "@/components/ui/page-title";
 import DonationOfferForm from "./_components/donation-offer-form";
 
 async function getBloodRequestById(id: number) {
-  const supabase = (await import("@/config/supabase-config")).default;
+  const { db } = await import("@/config/db");
 
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .select(
-      "*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)"
-    )
-    .eq("id", id)
-    .eq("status", "approved")
-    .single();
+  const result = await db.query(
+    `SELECT br.*, json_build_object('id', up.id, 'name', up.name, 'email', up.email) AS recipient
+     FROM blood_requests br
+     LEFT JOIN user_profiles up ON br.recipient_id = up.id
+     WHERE br.id = $1 AND br.status = 'approved'`,
+    [id]
+  );
 
-  if (error || !data) {
+  if (result.rows.length === 0) {
     return null;
   }
 
-  return data;
+  return result.rows[0];
 }
 
 export default async function OfferDonationPage({

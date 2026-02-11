@@ -1,25 +1,38 @@
 "use server";
 
-import supabase from "@/config/supabase-config";
-
+import { db } from "@/config/db";
 import { IBloodRequest } from "@/interfaces";
 
 export const createBloodRequest = async (payload: Partial<IBloodRequest>) => {
   try {
     console.log("Creating blood request with payload:", payload);
 
-    const { data, error } = await supabase
-      .from("blood_requests")
-      .insert([payload])
-      .select()
-      .single();
+    const result = await db.query(
+      `INSERT INTO blood_requests
+        (recipient_id, title, description, blood_group, units_required, status, urgency, contact_phone, contact_email, address)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING *`,
+      [
+        payload.recipient_id,
+        payload.title,
+        payload.description,
+        payload.blood_group,
+        payload.units_required,
+        payload.status || "pending",
+        payload.urgency,
+        payload.contact_phone,
+        payload.contact_email,
+        payload.address,
+      ]
+    );
 
-    if (error) {
-      console.error("Supabase error creating blood request:", error);
+    const data = result.rows[0];
+
+    if (!data) {
       return {
         success: false,
         message: "Failed to create blood request",
-        error: error.message,
+        error: "No data returned",
       };
     }
 
@@ -40,98 +53,119 @@ export const createBloodRequest = async (payload: Partial<IBloodRequest>) => {
 };
 
 export const getBloodRequests = async (id: number) => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .select("*")
-    .eq("recipient_id", id)
-    .order("created_at", { ascending: false });
+  try {
+    const result = await db.query(
+      "SELECT * FROM blood_requests WHERE recipient_id = $1 ORDER BY created_at DESC",
+      [id]
+    );
 
-  if (error) {
+    if (result.rows.length === 0) {
+      return {
+        success: false,
+        message: "No blood requests found",
+      };
+    }
+
+    return {
+      success: true,
+      data: result.rows[0],
+      message: "Blood requests retrieved successfully",
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to retrieve blood requests",
     };
   }
-
-  if (data && data.length === 0) {
-    return {
-      success: false,
-      message: "No blood requests found",
-    };
-  }
-
-  return {
-    success: true,
-    data: data[0],
-    message: "Blood requests retrieved successfully",
-  };
 };
 
 export const getAllBloodRequests = async (userId: number) => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .select("*")
-    .eq("recipient_id", userId)
-    .order("created_at", { ascending: false });
+  try {
+    const result = await db.query(
+      "SELECT * FROM blood_requests WHERE recipient_id = $1 ORDER BY created_at DESC",
+      [userId]
+    );
 
-  if (error) {
+    return {
+      success: true,
+      data: result.rows ?? [],
+      message: "Blood requests retrieved successfully",
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to retrieve blood requests",
     };
   }
-
-  return {
-    success: true,
-    data: data ?? [],
-    message: "Blood requests retrieved successfully",
-  };
 };
 
 export const getApprovedBloodRequests = async () => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .select("*, recipient:user_profiles(id, name)")
-    .eq("status", "approved")
-    .order("created_at", { ascending: false });
+  try {
+    const result = await db.query(
+      `SELECT br.*, json_build_object('id', up.id, 'name', up.name) AS recipient
+       FROM blood_requests br
+       LEFT JOIN user_profiles up ON br.recipient_id = up.id
+       WHERE br.status = 'approved'
+       ORDER BY br.created_at DESC`
+    );
 
-  if (error) {
+    return {
+      success: true,
+      data: result.rows ?? [],
+      message: "Blood requests retrieved successfully",
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to retrieve blood requests",
     };
   }
-
-  return {
-    success: true,
-    data: data ?? [],
-    message: "Blood requests retrieved successfully",
-  };
 };
 
 export const updateBloodRequestStatus = async (
   id: number,
   payload: Partial<IBloodRequest>
 ) => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .update(payload)
-    .eq("id", id)
-    .select()
-    .single();
+  try {
+    const setClauses: string[] = [];
+    const values: unknown[] = [];
+    let paramIndex = 1;
 
-  if (error) {
+    if (payload.status !== undefined) {
+      setClauses.push(`status = $${paramIndex++}`);
+      values.push(payload.status);
+    }
+
+    if (setClauses.length === 0) {
+      return { success: false, message: "No fields to update" };
+    }
+
+    values.push(id);
+    const result = await db.query(
+      `UPDATE blood_requests SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
+      values
+    );
+
+    const data = result.rows[0];
+
+    if (!data) {
+      return {
+        success: false,
+        message: "Failed to update blood request status",
+      };
+    }
+
+    return {
+      success: true,
+      message: "Blood request status updated successfully",
+      data,
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to update blood request status",
     };
   }
-
-  return {
-    success: true,
-    message: "Blood request status updated successfully",
-    data,
-  };
 };
 
 export const updateBloodRequest = async (
@@ -139,21 +173,20 @@ export const updateBloodRequest = async (
   payload: Partial<IBloodRequest>
 ) => {
   try {
-    // First check if the request is approved
-    const { data: existingRequest, error: fetchError } = await supabase
-      .from("blood_requests")
-      .select("status")
-      .eq("id", id)
-      .single();
+    const existingResult = await db.query(
+      "SELECT status FROM blood_requests WHERE id = $1",
+      [id]
+    );
 
-    if (fetchError) {
+    const existingRequest = existingResult.rows[0];
+
+    if (!existingRequest) {
       return {
         success: false,
         message: "Failed to update blood request",
       };
     }
 
-    // Prevent updating approved requests (unless updating from admin via updateBloodRequestStatus)
     if (existingRequest.status === "approved") {
       return {
         success: false,
@@ -161,14 +194,42 @@ export const updateBloodRequest = async (
       };
     }
 
-    const { data, error } = await supabase
-      .from("blood_requests")
-      .update(payload)
-      .eq("id", id)
-      .select()
-      .single();
+    const setClauses: string[] = [];
+    const values: unknown[] = [];
+    let paramIndex = 1;
 
-    if (error) {
+    const fields: (keyof IBloodRequest)[] = [
+      "title",
+      "description",
+      "blood_group",
+      "units_required",
+      "urgency",
+      "contact_phone",
+      "contact_email",
+      "address",
+      "status",
+    ];
+
+    for (const field of fields) {
+      if (payload[field] !== undefined) {
+        setClauses.push(`${field} = $${paramIndex++}`);
+        values.push(payload[field]);
+      }
+    }
+
+    if (setClauses.length === 0) {
+      return { success: false, message: "No fields to update" };
+    }
+
+    values.push(id);
+    const result = await db.query(
+      `UPDATE blood_requests SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
+      values
+    );
+
+    const data = result.rows[0];
+
+    if (!data) {
       return {
         success: false,
         message: "Failed to update blood request",
@@ -190,21 +251,20 @@ export const updateBloodRequest = async (
 
 export const deleteBloodRequest = async (id: number) => {
   try {
-    // First check if the request is approved
-    const { data: existingRequest, error: fetchError } = await supabase
-      .from("blood_requests")
-      .select("status")
-      .eq("id", id)
-      .single();
+    const existingResult = await db.query(
+      "SELECT status FROM blood_requests WHERE id = $1",
+      [id]
+    );
 
-    if (fetchError) {
+    const existingRequest = existingResult.rows[0];
+
+    if (!existingRequest) {
       return {
         success: false,
         message: "Failed to delete blood request",
       };
     }
 
-    // Prevent deleting approved requests
     if (existingRequest.status === "approved") {
       return {
         success: false,
@@ -212,17 +272,7 @@ export const deleteBloodRequest = async (id: number) => {
       };
     }
 
-    const { error } = await supabase
-      .from("blood_requests")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      return {
-        success: false,
-        message: "Failed to delete blood request",
-      };
-    }
+    await db.query("DELETE FROM blood_requests WHERE id = $1", [id]);
 
     return {
       success: true,
@@ -237,23 +287,23 @@ export const deleteBloodRequest = async (id: number) => {
 };
 
 export const getAllBloodRequestsForAdmin = async () => {
-  const { data, error } = await supabase
-    .from("blood_requests")
-    .select(
-      "*, recipient:user_profiles!blood_requests_recipient_id_fkey(id, name, email)"
-    )
-    .order("created_at", { ascending: false });
+  try {
+    const result = await db.query(
+      `SELECT br.*, json_build_object('id', up.id, 'name', up.name, 'email', up.email) AS recipient
+       FROM blood_requests br
+       LEFT JOIN user_profiles up ON br.recipient_id = up.id
+       ORDER BY br.created_at DESC`
+    );
 
-  if (error) {
+    return {
+      success: true,
+      data: result.rows ?? [],
+      message: "Blood requests retrieved successfully",
+    };
+  } catch (error: any) {
     return {
       success: false,
       message: "Failed to retrieve blood requests",
     };
   }
-
-  return {
-    success: true,
-    data: data ?? [],
-    message: "Blood requests retrieved successfully",
-  };
 };
