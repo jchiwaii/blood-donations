@@ -13,16 +13,56 @@ export type TestAccount = {
 
 const testAccounts: TestAccount[] = [
   // Admins
-  { label: "Admin User", email: "admin@test.com", password: "password123", role: "admin" },
-  { label: "Super Admin", email: "superadmin@test.com", password: "password123", role: "admin" },
+  {
+    label: "Admin User",
+    email: "admin@test.com",
+    password: "password123",
+    role: "admin",
+  },
+  {
+    label: "Super Admin",
+    email: "superadmin@test.com",
+    password: "password123",
+    role: "admin",
+  },
   // Donors
-  { label: "John Smith", email: "donor1@test.com", password: "password123", role: "donor" },
-  { label: "Emma Johnson", email: "donor2@test.com", password: "password123", role: "donor" },
-  { label: "Michael Brown", email: "donor3@test.com", password: "password123", role: "donor" },
+  {
+    label: "John Smith",
+    email: "donor1@test.com",
+    password: "password123",
+    role: "donor",
+  },
+  {
+    label: "Emma Johnson",
+    email: "donor2@test.com",
+    password: "password123",
+    role: "donor",
+  },
+  {
+    label: "Michael Brown",
+    email: "donor3@test.com",
+    password: "password123",
+    role: "donor",
+  },
   // Recipients
-  { label: "Olivia Martinez", email: "recipient1@test.com", password: "password123", role: "recipient" },
-  { label: "William Anderson", email: "recipient2@test.com", password: "password123", role: "recipient" },
-  { label: "Ava Taylor", email: "recipient3@test.com", password: "password123", role: "recipient" },
+  {
+    label: "Olivia Martinez",
+    email: "recipient1@test.com",
+    password: "password123",
+    role: "recipient",
+  },
+  {
+    label: "William Anderson",
+    email: "recipient2@test.com",
+    password: "password123",
+    role: "recipient",
+  },
+  {
+    label: "Ava Taylor",
+    email: "recipient3@test.com",
+    password: "password123",
+    role: "recipient",
+  },
 ];
 
 const roleColors: Record<string, string> = {
@@ -71,7 +111,7 @@ export default function TestCredentials({ onSelect }: TestCredentialsProps) {
         <ChevronDown
           className={cn(
             "h-4 w-4 transition-transform duration-200",
-            open && "rotate-180"
+            open && "rotate-180",
           )}
         />
       </button>
@@ -89,7 +129,10 @@ export default function TestCredentials({ onSelect }: TestCredentialsProps) {
             <div key={role} className="space-y-1.5">
               <div className="flex items-center gap-1.5">
                 <span
-                  className={cn("h-1.5 w-1.5 rounded-full", roleDotColors[role])}
+                  className={cn(
+                    "h-1.5 w-1.5 rounded-full",
+                    roleDotColors[role],
+                  )}
                 />
                 <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                   {role}s
@@ -112,7 +155,8 @@ export default function TestCredentials({ onSelect }: TestCredentialsProps) {
                       className={cn(
                         "group flex items-center justify-between rounded-lg border px-3 py-2 text-left text-xs transition-all",
                         "border-border/40 bg-background/40 hover:bg-background/80 hover:border-border",
-                        copiedIdx === globalIdx && "border-primary/50 bg-primary/5"
+                        copiedIdx === globalIdx &&
+                          "border-primary/50 bg-primary/5",
                       )}
                     >
                       <div className="flex flex-col gap-0.5 min-w-0">
@@ -127,7 +171,7 @@ export default function TestCredentials({ onSelect }: TestCredentialsProps) {
                         <span
                           className={cn(
                             "rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
-                            roleColors[role]
+                            roleColors[role],
                           )}
                         >
                           {role}

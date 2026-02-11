@@ -125,7 +125,10 @@ async function seedData() {
         [u.name, u.email, hashedPassword, u.role],
       );
       const data = result.rows[0];
-      if (!data) { console.error(`  ✗ Failed: ${u.email}`); continue; }
+      if (!data) {
+        console.error(`  ✗ Failed: ${u.email}`);
+        continue;
+      }
       admins.push(data);
       console.log(`  ✓ ${data.name} — ${data.email} (${data.role})`);
     }
@@ -139,7 +142,10 @@ async function seedData() {
         [u.name, u.email, hashedPassword, u.role],
       );
       const data = result.rows[0];
-      if (!data) { console.error(`  ✗ Failed: ${u.email}`); continue; }
+      if (!data) {
+        console.error(`  ✗ Failed: ${u.email}`);
+        continue;
+      }
       donors.push(data);
       console.log(`  ✓ ${data.name} — ${data.email} (${data.role})`);
     }
@@ -153,7 +159,10 @@ async function seedData() {
         [u.name, u.email, hashedPassword, u.role],
       );
       const data = result.rows[0];
-      if (!data) { console.error(`  ✗ Failed: ${u.email}`); continue; }
+      if (!data) {
+        console.error(`  ✗ Failed: ${u.email}`);
+        continue;
+      }
       recipients.push(data);
       console.log(`  ✓ ${data.name} — ${data.email} (${data.role})`);
     }
@@ -191,7 +200,10 @@ async function seedData() {
         );
 
         const data = result.rows[0];
-        if (!data) { console.error(`  ✗ Failed request for ${recipient.name}`); continue; }
+        if (!data) {
+          console.error(`  ✗ Failed request for ${recipient.name}`);
+          continue;
+        }
         allRequests.push(data);
         console.log(
           `  ✓ [${status.toUpperCase()}] ${data.title} — ${bg} (${urgency}) for ${recipient.name}`,
@@ -224,8 +236,11 @@ async function seedData() {
     for (const donor of donors) {
       const numDonations = Math.floor(Math.random() * 2) + 1;
       for (let i = 0; i < numDonations; i++) {
-        const linkedRequest = finalApproved.length > 0 ? pick(finalApproved) : null;
-        const bg = linkedRequest ? linkedRequest.blood_group : pick(bloodGroups);
+        const linkedRequest =
+          finalApproved.length > 0 ? pick(finalApproved) : null;
+        const bg = linkedRequest
+          ? linkedRequest.blood_group
+          : pick(bloodGroups);
         const donationStatus = pick(donationStatuses);
 
         const result = await pool.query(
@@ -260,7 +275,10 @@ async function seedData() {
         );
 
         const data = result.rows[0];
-        if (!data) { console.error(`  ✗ Failed donation for ${donor.name}`); continue; }
+        if (!data) {
+          console.error(`  ✗ Failed donation for ${donor.name}`);
+          continue;
+        }
         console.log(
           `  ✓ [${donationStatus.toUpperCase()}] ${donor.name} — ${bg}, ${data.units_available} unit(s)${
             linkedRequest ? ` → Request #${linkedRequest.id}` : ""

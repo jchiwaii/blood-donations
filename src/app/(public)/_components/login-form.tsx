@@ -198,7 +198,7 @@ const LoginForm = ({ className }: LoginFormProps) => {
                         "relative flex items-center justify-center rounded-lg border-2 p-4 transition-all min-h-[60px] cursor-pointer",
                         field.value === role.value
                           ? "border-primary/50 bg-primary/10 shadow-glow"
-                          : "border-border hover:border-primary/30 hover:bg-background/50"
+                          : "border-border hover:border-primary/30 hover:bg-background/50",
                       )}
                     >
                       <RadioGroupItem
