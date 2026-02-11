@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
+import TestCredentials, { type TestAccount } from "./test-credentials";
 
 // Define the form schema with Zod
 const loginFormSchema = z.object({
@@ -55,6 +56,12 @@ const LoginForm = ({ className }: LoginFormProps) => {
       role: undefined,
     },
   });
+
+  const handleTestAccountSelect = (account: TestAccount) => {
+    loginForm.setValue("email", account.email);
+    loginForm.setValue("password", account.password);
+    loginForm.setValue("role", account.role);
+  };
 
   const onLoginSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
@@ -221,6 +228,8 @@ const LoginForm = ({ className }: LoginFormProps) => {
         >
           {isLoading ? "Logging in..." : "Login"}
         </Button>
+
+        <TestCredentials onSelect={handleTestAccountSelect} />
       </form>
     </Form>
   );

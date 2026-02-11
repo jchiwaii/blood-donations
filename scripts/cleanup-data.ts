@@ -44,30 +44,26 @@ async function cleanupData() {
       }
     }
 
-    // Step 3: Delete all non-admin users
-    console.log("\n3. Deleting all non-admin users...");
+    // Step 3: Delete all users (including test admins)
+    console.log("\n3. Deleting all users...");
     try {
-      await pool.query(
-        "DELETE FROM user_profiles WHERE role IN ('donor', 'recipient')",
-      );
-      console.log("✓ All non-admin users deleted");
+      await pool.query("DELETE FROM user_profiles");
+      console.log("✓ All users deleted");
     } catch (err) {
       console.error("Error deleting users:", err);
     }
 
-    // Step 4: Get count of remaining admin users
-    console.log("\n4. Checking remaining admin users...");
+    // Step 4: Delete all media
+    console.log("\n4. Deleting all media...");
     try {
-      const result = await pool.query(
-        "SELECT id, name, email, role FROM user_profiles WHERE role = 'admin'",
-      );
-      const admins = result.rows;
-      console.log(`✓ ${admins.length || 0} admin user(s) preserved:`);
-      admins.forEach((admin) => {
-        console.log(`   - ${admin.name} (${admin.email})`);
-      });
-    } catch (err) {
-      console.error("Error checking admin users:", err);
+      await pool.query("DELETE FROM media");
+      console.log("✓ All media deleted");
+    } catch (err: any) {
+      if (err.code === "42P01") {
+        console.log("⚠️  media table does not exist (skipping)");
+      } else {
+        console.error("Error deleting media:", err);
+      }
     }
 
     console.log("\n✅ Database cleanup completed successfully!");
