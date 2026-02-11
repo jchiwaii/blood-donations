@@ -24,7 +24,7 @@ export const createBloodDonation = async (payload: Partial<IBloodDonation>) => {
         payload.medical_info || null,
         payload.notes || null,
         status,
-      ]
+      ],
     );
 
     const data = result.rows[0];
@@ -53,7 +53,7 @@ export const getBloodDonations = async (donorId: number) => {
   try {
     const result = await db.query(
       "SELECT * FROM blood_donations WHERE donor_id = $1 ORDER BY created_at DESC",
-      [donorId]
+      [donorId],
     );
 
     return {
@@ -73,7 +73,7 @@ export const getBloodDonationById = async (id: number) => {
   try {
     const result = await db.query(
       "SELECT * FROM blood_donations WHERE id = $1",
-      [id]
+      [id],
     );
 
     const data = result.rows[0];
@@ -100,7 +100,7 @@ export const getBloodDonationById = async (id: number) => {
 
 export const updateBloodDonation = async (
   id: number,
-  payload: Partial<IBloodDonation>
+  payload: Partial<IBloodDonation>,
 ) => {
   try {
     const setClauses: string[] = [];
@@ -133,7 +133,7 @@ export const updateBloodDonation = async (
     values.push(id);
     const result = await db.query(
       `UPDATE blood_donations SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
-      values
+      values,
     );
 
     const data = result.rows[0];
@@ -181,7 +181,7 @@ export const getApprovedDonations = async () => {
        FROM blood_donations bd
        LEFT JOIN user_profiles up ON bd.donor_id = up.id
        WHERE bd.status = 'approved'
-       ORDER BY bd.created_at DESC`
+       ORDER BY bd.created_at DESC`,
     );
 
     return {
@@ -203,7 +203,7 @@ export const getAllBloodDonationsForAdmin = async () => {
       `SELECT bd.*, json_build_object('id', up.id, 'name', up.name, 'email', up.email) AS donor
        FROM blood_donations bd
        LEFT JOIN user_profiles up ON bd.donor_id = up.id
-       ORDER BY bd.created_at DESC`
+       ORDER BY bd.created_at DESC`,
     );
 
     return {
@@ -221,7 +221,7 @@ export const getAllBloodDonationsForAdmin = async () => {
 
 export const updateBloodDonationStatus = async (
   id: number,
-  payload: Partial<IBloodDonation>
+  payload: Partial<IBloodDonation>,
 ) => {
   try {
     const setClauses: string[] = [];
@@ -240,7 +240,7 @@ export const updateBloodDonationStatus = async (
     values.push(id);
     const result = await db.query(
       `UPDATE blood_donations SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
-      values
+      values,
     );
 
     const data = result.rows[0];
@@ -273,7 +273,7 @@ export const getDonationsForRequest = async (requestId: number) => {
        LEFT JOIN user_profiles up ON bd.donor_id = up.id
        WHERE bd.request_id = $1
        ORDER BY bd.created_at DESC`,
-      [requestId]
+      [requestId],
     );
 
     return {

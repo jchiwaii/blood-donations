@@ -21,7 +21,7 @@ async function ensureUploadDir(subDir: string) {
 export const uploadMedia = async (
   fileData: FileData,
   relatedType: string,
-  relatedId: number
+  relatedId: number,
 ) => {
   try {
     const buffer = Buffer.from(fileData.buffer, "base64");
@@ -39,7 +39,7 @@ export const uploadMedia = async (
 
     const result = await db.query(
       "INSERT INTO media (url, related_id, related_type) VALUES ($1, $2, $3) RETURNING *",
-      [publicUrl, relatedId, relatedType]
+      [publicUrl, relatedId, relatedType],
     );
 
     const data = result.rows[0];
@@ -72,11 +72,13 @@ export const uploadMedia = async (
 export const uploadMultipleMedia = async (
   filesData: FileData[],
   relatedType: string,
-  relatedId: number
+  relatedId: number,
 ) => {
   try {
     const results = await Promise.all(
-      filesData.map((fileData) => uploadMedia(fileData, relatedType, relatedId))
+      filesData.map((fileData) =>
+        uploadMedia(fileData, relatedType, relatedId),
+      ),
     );
 
     const successfulUploads = results.filter((r) => r.success);
@@ -108,10 +110,9 @@ export const uploadMultipleMedia = async (
 
 export const deleteMedia = async (mediaId: number) => {
   try {
-    const mediaResult = await db.query(
-      "SELECT * FROM media WHERE id = $1",
-      [mediaId]
-    );
+    const mediaResult = await db.query("SELECT * FROM media WHERE id = $1", [
+      mediaId,
+    ]);
 
     const media = mediaResult.rows[0];
 
@@ -148,12 +149,12 @@ export const deleteMedia = async (mediaId: number) => {
 
 export const getMediaByRelated = async (
   relatedType: string,
-  relatedId: number
+  relatedId: number,
 ) => {
   try {
     const result = await db.query(
       "SELECT * FROM media WHERE related_type = $1 AND related_id = $2 ORDER BY created_at DESC",
-      [relatedType, relatedId]
+      [relatedType, relatedId],
     );
 
     return {

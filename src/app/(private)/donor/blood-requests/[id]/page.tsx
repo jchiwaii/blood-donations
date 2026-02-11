@@ -11,7 +11,7 @@ async function getBloodRequestById(id: number) {
      FROM blood_requests br
      LEFT JOIN user_profiles up ON br.recipient_id = up.id
      WHERE br.id = $1 AND br.status = 'approved'`,
-    [id]
+    [id],
   );
 
   if (result.rows.length === 0) {

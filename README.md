@@ -5,6 +5,7 @@ A comprehensive blood donation management system connecting donors with recipien
 ## Features
 
 ### For Recipients
+
 - Create blood requests with urgency levels
 - View approved donation offers from donors
 - Track request status (pending/approved/rejected)
@@ -12,6 +13,7 @@ A comprehensive blood donation management system connecting donors with recipien
 - Protected from editing approved requests
 
 ### For Donors
+
 - View approved blood requests needing help
 - Create donation offers
 - Browse recipients' requests by urgency
@@ -19,6 +21,7 @@ A comprehensive blood donation management system connecting donors with recipien
 - Direct contact with recipients
 
 ### For Admins
+
 - Review and approve/reject blood requests
 - Review and approve/reject donation offers
 - Manage users (view all donors and recipients)

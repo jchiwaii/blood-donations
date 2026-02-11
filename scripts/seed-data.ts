@@ -9,9 +9,7 @@ dotenv.config({ path: resolve(__dirname, "../.env.local") });
 const connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
-  console.error(
-    "Error: DATABASE_URL must be set in .env.local"
-  );
+  console.error("Error: DATABASE_URL must be set in .env.local");
   process.exit(1);
 }
 
@@ -71,7 +69,7 @@ async function seedData() {
     for (let i = 0; i < 5; i++) {
       const result = await pool.query(
         "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
-        [donorNames[i], `donor${i + 1}@example.com`, hashedPassword, "donor"]
+        [donorNames[i], `donor${i + 1}@example.com`, hashedPassword, "donor"],
       );
 
       const data = result.rows[0];
@@ -89,7 +87,12 @@ async function seedData() {
     for (let i = 0; i < 5; i++) {
       const result = await pool.query(
         "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *",
-        [recipientNames[i], `recipient${i + 1}@example.com`, hashedPassword, "recipient"]
+        [
+          recipientNames[i],
+          `recipient${i + 1}@example.com`,
+          hashedPassword,
+          "recipient",
+        ],
       );
 
       const data = result.rows[0];
@@ -127,7 +130,7 @@ async function seedData() {
             `${Math.floor(Math.random() * 9000) + 1000} Medical Center Dr, ${
               cities[Math.floor(Math.random() * cities.length)]
             }`,
-          ]
+          ],
         );
 
         const data = result.rows[0];
@@ -136,7 +139,7 @@ async function seedData() {
           continue;
         }
         console.log(
-          `Created blood request for ${recipient.name}: ${data.title}`
+          `Created blood request for ${recipient.name}: ${data.title}`,
         );
       }
     }

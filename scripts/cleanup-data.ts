@@ -48,7 +48,7 @@ async function cleanupData() {
     console.log("\n3. Deleting all non-admin users...");
     try {
       await pool.query(
-        "DELETE FROM user_profiles WHERE role IN ('donor', 'recipient')"
+        "DELETE FROM user_profiles WHERE role IN ('donor', 'recipient')",
       );
       console.log("✓ All non-admin users deleted");
     } catch (err) {
@@ -59,7 +59,7 @@ async function cleanupData() {
     console.log("\n4. Checking remaining admin users...");
     try {
       const result = await pool.query(
-        "SELECT id, name, email, role FROM user_profiles WHERE role = 'admin'"
+        "SELECT id, name, email, role FROM user_profiles WHERE role = 'admin'",
       );
       const admins = result.rows;
       console.log(`✓ ${admins.length || 0} admin user(s) preserved:`);

@@ -17,7 +17,7 @@ export const registerUser = async (payload: Partial<IUser>) => {
 
     const existingUserResult = await db.query(
       "SELECT id FROM user_profiles WHERE email = $1 LIMIT 1",
-      [payload.email]
+      [payload.email],
     );
 
     if (existingUserResult.rows.length > 0) {
@@ -31,7 +31,7 @@ export const registerUser = async (payload: Partial<IUser>) => {
 
     const insertResult = await db.query(
       "INSERT INTO user_profiles (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role",
-      [payload.name, payload.email, hashedPassword, payload.role]
+      [payload.name, payload.email, hashedPassword, payload.role],
     );
 
     const data = insertResult.rows[0];
@@ -51,7 +51,7 @@ export const registerUser = async (payload: Partial<IUser>) => {
         name: data.name,
       },
       process.env.JWT_SECRET || "qwdweryrty",
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     return {
@@ -88,7 +88,7 @@ export const loginUser = async (payload: {
 
     const userResult = await db.query(
       "SELECT * FROM user_profiles WHERE email = $1 LIMIT 1",
-      [payload.email]
+      [payload.email],
     );
 
     const user = userResult.rows[0];
@@ -109,7 +109,7 @@ export const loginUser = async (payload: {
 
     const isPasswordValid = await bcrypt.compare(
       payload.password,
-      user.password
+      user.password,
     );
 
     if (!isPasswordValid) {
@@ -127,7 +127,7 @@ export const loginUser = async (payload: {
         name: user.name,
       },
       process.env.JWT_SECRET || "your-secret-key",
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     return {
@@ -161,12 +161,12 @@ export const currentUser = async (token?: string) => {
 
     const decoded: any = jwt.verify(
       authToken,
-      process.env.JWT_SECRET || "your-secret-key"
+      process.env.JWT_SECRET || "your-secret-key",
     );
 
     const userResult = await db.query(
       "SELECT id, name, email, role FROM user_profiles WHERE id = $1",
-      [decoded.id]
+      [decoded.id],
     );
 
     const data = userResult.rows[0];
@@ -188,29 +188,37 @@ export const currentUser = async (token?: string) => {
 
 export const getUsersStatistics = async () => {
   try {
-    const [donorsResult, recipientsResult, adminsResult, donationsResult, requestsResult, pendingResult, approvedResult, rejectedResult] =
-      await Promise.all([
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'donor'"
-        ),
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'recipient'"
-        ),
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'admin'"
-        ),
-        db.query("SELECT COUNT(*)::int AS count FROM blood_donations"),
-        db.query("SELECT COUNT(*)::int AS count FROM blood_requests"),
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'pending'"
-        ),
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'approved'"
-        ),
-        db.query(
-          "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'rejected'"
-        ),
-      ]);
+    const [
+      donorsResult,
+      recipientsResult,
+      adminsResult,
+      donationsResult,
+      requestsResult,
+      pendingResult,
+      approvedResult,
+      rejectedResult,
+    ] = await Promise.all([
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'donor'",
+      ),
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'recipient'",
+      ),
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM user_profiles WHERE role = 'admin'",
+      ),
+      db.query("SELECT COUNT(*)::int AS count FROM blood_donations"),
+      db.query("SELECT COUNT(*)::int AS count FROM blood_requests"),
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'pending'",
+      ),
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'approved'",
+      ),
+      db.query(
+        "SELECT COUNT(*)::int AS count FROM blood_requests WHERE status = 'rejected'",
+      ),
+    ]);
 
     return {
       success: true,
@@ -237,7 +245,7 @@ export const getUsersStatistics = async () => {
 export const getAllUsers = async () => {
   try {
     const result = await db.query(
-      "SELECT id, name, email, role, created_at FROM user_profiles WHERE role IN ('donor', 'recipient') ORDER BY created_at DESC"
+      "SELECT id, name, email, role, created_at FROM user_profiles WHERE role IN ('donor', 'recipient') ORDER BY created_at DESC",
     );
 
     return {
