@@ -1,8 +1,13 @@
 import { Pool } from "pg";
 
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgresql://neondb_owner:npg_VN9HSo0PKvJt@ep-divine-bush-aind4397-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error(
+    "DATABASE_URL environment variable is not set. " +
+      "Please add it to your .env.local file.",
+  );
+}
 
 const globalForPool = globalThis as typeof globalThis & {
   neonPool?: Pool;
