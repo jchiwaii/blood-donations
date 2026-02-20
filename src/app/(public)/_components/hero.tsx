@@ -1,348 +1,742 @@
 import Link from "next/link";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
-  CalendarClock,
-  CheckCircle2,
-  Clock3,
-  Droplet,
-  HeartHandshake,
+  ChevronLeft,
+  ChevronRight,
+  CirclePlay,
+  Facebook,
+  HandHeart,
+  HeartPulse,
+  Instagram,
+  Mail,
   MapPin,
+  Phone,
   ShieldCheck,
-  Sparkles,
-  UsersRound,
+  Star,
+  Twitter,
+  Users,
+  Youtube,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const trustPillars = [
+type MissionCard = {
+  title: string;
+  src: string;
+};
+
+type ProgramCard = {
+  title: string;
+  description: string;
+  location: string;
+  src: string;
+  tall?: boolean;
+  dark?: boolean;
+};
+
+type Volunteer = {
+  name: string;
+  role: string;
+  src: string;
+  featured?: boolean;
+};
+
+const missionCards: MissionCard[] = [
+  { title: "Hollow Creek", src: "https://picsum.photos/seed/hollow-creek/338/480" },
+  { title: "Stonepath Village", src: "https://picsum.photos/seed/stonepath-village/338/480" },
+  { title: "Drywell Town", src: "https://picsum.photos/seed/drywell-town/338/480" },
+  { title: "Silent Haven", src: "https://picsum.photos/seed/silent-haven/338/480" },
+  { title: "Hopefall Settlement", src: "https://picsum.photos/seed/hopefall-settlement/338/480" },
+];
+
+const stats = [
+  { label: "Community projects supported", value: "2.3K+" },
+  { label: "Families empowered through care", value: "3.6M" },
+  { label: "Lives impacted through donations", value: "130K+" },
+  { label: "Community members in our network", value: "136K+" },
+];
+
+const commitmentColumns = [
   {
-    icon: ShieldCheck,
-    title: "Verified in minutes",
-    description:
-      "Every request is reviewed with coordinator checks before alerts are sent to donors.",
+    title: "Saving Lives",
+    text: "We are dedicated to building a healthier, stronger community by ensuring a safe and reliable blood supply.",
   },
   {
-    icon: UsersRound,
-    title: "Local-first routing",
-    description:
-      "Matching prioritizes nearby donors to reduce response time and coordination overhead.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Human follow-through",
-    description:
-      "Coordinators stay in the loop until donation handoff is complete and confirmed.",
+    title: "Ensuring Safe",
+    text: "Every donation follows strict safety protocols, transparent handling, and quality standards at every step.",
   },
 ];
 
-const journeySteps = [
+const programs: ProgramCard[] = [
   {
-    title: "Post a request",
-    description:
-      "Recipients submit details once and receive status updates in a shared timeline.",
+    title: "Community Blood Drives",
+    description: "Bringing donation events directly into neighborhoods.",
+    location: "River district",
+    src: "https://picsum.photos/seed/program-community/570/380",
   },
   {
-    title: "Activate donor circle",
-    description:
-      "Compatible donors near the location receive a clear request with urgency context.",
+    title: "Youth Engagement",
+    description: "Encouraging students to build a habit of compassion early.",
+    location: "North campus",
+    src: "https://picsum.photos/seed/program-youth/570/1220",
+    tall: true,
+    dark: true,
   },
   {
-    title: "Close the loop",
-    description:
-      "Once fulfilled, the request is automatically closed with verified handoff notes.",
+    title: "Mobile Donation Units",
+    description: "Reaching remote and underserved communities on schedule.",
+    location: "Harbor route",
+    src: "https://picsum.photos/seed/program-mobile/570/380",
+  },
+  {
+    title: "Donor Education",
+    description: "Practical guidance for first-time and returning donors.",
+    location: "Downtown center",
+    src: "https://picsum.photos/seed/program-education/570/380",
+  },
+  {
+    title: "Donor Care & Support",
+    description: "Ensuring every donor feels informed, safe, and supported.",
+    location: "Neighborhood clinic",
+    src: "https://picsum.photos/seed/program-support/570/380",
   },
 ];
 
-const pulseBoard = [
-  { type: "A+", city: "Queens", status: "Need in 2h" },
-  { type: "O-", city: "Jersey City", status: "Priority" },
-  { type: "B+", city: "Brooklyn", status: "Today" },
-  { type: "AB-", city: "Lower Manhattan", status: "Scheduled" },
+const volunteers: Volunteer[] = [
+  {
+    name: "Andrew Leadon",
+    role: "Community Outreach",
+    src: "https://picsum.photos/seed/volunteer-andrew/270/360",
+  },
+  {
+    name: "Gillian Freeman",
+    role: "Blood Drive Coordinator",
+    src: "https://picsum.photos/seed/volunteer-gillian/270/360",
+    featured: true,
+  },
+  {
+    name: "Amber Julia",
+    role: "Registration & Donor Support",
+    src: "https://picsum.photos/seed/volunteer-amber/270/360",
+  },
+  {
+    name: "Barbara Michelle",
+    role: "Logistics & Supply Aid",
+    src: "https://picsum.photos/seed/volunteer-barbara/270/360",
+  },
 ];
+
+const valueCards = [
+  {
+    src: "https://picsum.photos/seed/value-left/470/470",
+    alt: "Volunteer helping donor during intake",
+  },
+  {
+    src: "https://picsum.photos/seed/value-right/470/470",
+    alt: "Donor support team smiling",
+  },
+];
+
+const socials: LucideIcon[] = [Facebook, Instagram, Youtube, Twitter];
+
+function Photo({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className: string;
+}) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+    />
+  );
+}
+
+function SectionTag({ text }: { text: string }) {
+  return (
+    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">{text}</p>
+  );
+}
 
 export function Hero() {
   return (
-    <div className="relative isolate overflow-hidden pb-20">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          background:
-            "radial-gradient(circle at 88% -2%, rgba(196, 44, 43, 0.18) 0%, rgba(196, 44, 43, 0) 42%), radial-gradient(circle at 6% 34%, rgba(180, 83, 9, 0.1) 0%, rgba(180, 83, 9, 0) 28%)",
-        }}
-      />
+    <div className="overflow-hidden bg-background text-foreground">
+      <section className="px-5 pb-0 pt-4 md:px-8 lg:px-10 lg:pt-5">
+        <div className="mx-auto max-w-[1880px] overflow-hidden rounded-[24px] bg-[#1d1d1f] shadow-[0_30px_100px_-45px_rgba(0,0,0,0.6)] md:rounded-[30px]">
+          <div className="relative grid min-h-[560px] items-end gap-8 p-7 sm:p-10 lg:min-h-[840px] lg:grid-cols-[1.15fr_470px] lg:p-14">
+            <Photo
+              src="https://picsum.photos/seed/redkind-hero/1880/840"
+              alt="Blood donation volunteers collaborating"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
 
-      <section className="relative px-6 pb-20 pt-16 sm:px-10 sm:pt-20 lg:pb-28">
-        <div className="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
-          <div className="space-y-8">
-            <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
-              <Sparkles className="size-3.5" />
-              Modern donation coordination
-            </p>
+            <div className="absolute inset-0 bg-[linear-gradient(102deg,rgba(17,17,19,0.82)_12%,rgba(17,17,19,0.3)_50%,rgba(17,17,19,0.55)_100%)]" />
 
-            <div className="space-y-6">
-              <h1 className="max-w-2xl text-balance font-heading text-4xl font-semibold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                A cleaner way to move from urgent request to confirmed donation.
-              </h1>
-              <p className="max-w-xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Bloodline helps recipients, donors, and coordinators stay aligned
-                in one flow, so every step is visible and no critical request
-                goes cold.
+            <div className="relative z-10 max-w-[760px] space-y-6 lg:pb-16">
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
+                <span className="size-1.5 rounded-full bg-[#ff5c5c]" />
+                Lifeline network
               </p>
-            </div>
-
-            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-              <Button asChild size="lg" className="h-12 rounded-full px-7">
+              <h1 className="font-heading text-4xl leading-tight text-white sm:text-5xl lg:text-7xl">
+                Every Drop Tells a Story of Hope.
+              </h1>
+              <p className="max-w-[500px] text-base leading-relaxed text-white/80 sm:text-lg">
+                Every drop you share becomes a lifeline for someone fighting for another day.
+              </p>
+              <Button
+                asChild
+                className="h-11 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-7 text-sm text-white shadow-[0_12px_26px_-10px_rgba(252,59,50,0.75)] hover:from-[#fc5a56] hover:to-[#f5322a]"
+              >
                 <Link href="/auth" className="gap-2">
-                  Become a donor
+                  View Our Program
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-12 rounded-full border-border/80 bg-card/70 px-7 backdrop-blur-sm"
-              >
-                <Link href="/campaigns">Browse campaigns</Link>
-              </Button>
             </div>
 
-            <div className="grid max-w-xl grid-cols-3 gap-3 pt-4">
-              <article className="rounded-2xl border border-border/70 bg-card/80 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-semibold tracking-tight">12K+</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Active donors
-                </p>
-              </article>
-              <article className="rounded-2xl border border-border/70 bg-card/80 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-semibold tracking-tight">7 min</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Avg response
-                </p>
-              </article>
-              <article className="rounded-2xl border border-border/70 bg-card/80 p-4 backdrop-blur-sm">
-                <p className="text-2xl font-semibold tracking-tight">24/7</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Coordinator desk
-                </p>
-              </article>
-            </div>
-          </div>
-
-          <div className="relative lg:pt-5">
-            <div className="absolute -left-5 -top-5 h-28 w-28 rounded-full bg-primary/10 blur-2xl [animation:var(--animate-drift)]" />
-            <article className="relative overflow-hidden rounded-[2rem] border border-border/70 bg-card/90 p-6 shadow-lg backdrop-blur-sm sm:p-8">
-              <div className="pointer-events-none absolute inset-0 grid-faint opacity-25" />
-              <div className="relative space-y-6">
-                <header className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                      Live request pulse
-                    </p>
-                    <p className="mt-1 font-heading text-xl font-semibold tracking-tight">
-                      Nearby alerts
-                    </p>
+            <aside className="relative z-10 ml-auto w-full max-w-[470px] rounded-[20px] bg-white p-5 shadow-[0_28px_80px_-35px_rgba(0,0,0,0.55)] sm:p-6">
+              <div className="rounded-[16px] border border-[#e5e7ef] bg-[#f5f6fb] p-4">
+                <div className="mb-4 flex items-start justify-between gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e8edf7] to-[#cad8f6] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-black">
+                    <span className="size-1.5 rounded-full bg-black" />
+                    O+
                   </div>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                    <Clock3 className="size-3.5" />
-                    Updated now
-                  </span>
-                </header>
-
-                <div className="space-y-3">
-                  {pulseBoard.map((item) => (
-                    <div
-                      key={`${item.type}-${item.city}`}
-                      className="flex items-center justify-between rounded-2xl border border-border/70 bg-background/80 px-4 py-3"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="flex size-9 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 text-sm font-semibold text-primary">
-                          {item.type}
-                        </span>
-                        <p className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-                          <MapPin className="size-3.5" />
-                          {item.city}
-                        </p>
-                      </div>
-                      <p className="text-sm font-medium text-foreground">{item.status}</p>
-                    </div>
-                  ))}
+                  <div className="inline-flex items-center gap-1 rounded-full bg-[#1f1f22] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                    <span className="size-1.5 rounded-full bg-[#62d563]" />
+                    Online
+                  </div>
                 </div>
 
-                <footer className="rounded-2xl border border-primary/20 bg-primary/10 p-4">
-                  <p className="text-sm font-medium text-foreground">
-                    91% of urgent requests in your area were matched within 30
-                    minutes last week.
-                  </p>
-                </footer>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="mb-10 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              Why people trust it
-            </p>
-            <h2 className="mt-3 text-balance font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Minimal interface, serious operational clarity.
-            </h2>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {trustPillars.map(({ icon: Icon, title, description }) => (
-              <article
-                key={title}
-                className="group rounded-3xl border border-border/70 bg-card/75 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-md"
-              >
-                <span className="mb-5 inline-flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                  <Icon className="size-5" />
-                </span>
-                <h3 className="font-heading text-xl font-semibold tracking-tight">
-                  {title}
+                <h3 className="font-heading text-2xl leading-tight text-[#121317]">
+                  Lifeline Heroes Initiative
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {description}
+                <p className="mt-3 text-sm leading-relaxed text-[#5a6170]">
+                  Every donor can help keep emergency care moving. Register now and get matched to nearby drives.
                 </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto w-full max-w-6xl rounded-[2rem] border border-border/70 bg-card/70 p-6 shadow-sm backdrop-blur-sm sm:p-9">
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                Request flow
-              </p>
-              <h2 className="mt-2 font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
-                Three steps, zero confusion.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Designed for urgency: everyone sees who is responsible and what
-              happens next.
-            </p>
-          </div>
+                <Button
+                  asChild
+                  className="mt-5 h-10 rounded-full bg-gradient-to-r from-[#1f1f22] to-black px-5 text-xs uppercase tracking-[0.16em] text-white"
+                >
+                  <Link href="/auth">Register</Link>
+                </Button>
 
-          <div className="grid gap-3 md:grid-cols-3">
-            {journeySteps.map((step, index) => (
-              <article
-                key={step.title}
-                className="rounded-2xl border border-border/70 bg-background/85 p-5"
-              >
-                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                  Step {index + 1}
-                </span>
-                <h3 className="mt-3 font-heading text-lg font-semibold tracking-tight">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto grid w-full max-w-6xl gap-5 lg:grid-cols-[1.15fr_0.85fr]">
-          <article className="rounded-[2rem] border border-border/70 bg-card p-7 shadow-md sm:p-9">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              Real impact
-            </p>
-            <h2 className="mt-3 max-w-lg text-balance font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-              Built for consistent results, not one-off heroics.
-            </h2>
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl bg-secondary/70 p-4">
-                <p className="text-2xl font-semibold">58K+</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Lives supported
-                </p>
-              </div>
-              <div className="rounded-2xl bg-secondary/70 p-4">
-                <p className="text-2xl font-semibold">320+</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Partner clinics
-                </p>
-              </div>
-              <div className="rounded-2xl bg-secondary/70 p-4">
-                <p className="text-2xl font-semibold">4.9/5</p>
-                <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                  Coordinator score
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <div className="grid gap-5">
-            <article className="rounded-3xl border border-border/70 bg-card/85 p-6 shadow-sm">
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                &quot;What used to take dozens of calls is now one flow. We can
-                spot risk early and move donors faster.&quot;
-              </p>
-              <div className="mt-5 flex items-center gap-3">
-                <span className="inline-flex size-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <CheckCircle2 className="size-5" />
-                </span>
-                <div>
-                  <p className="text-sm font-medium">Nina Patel</p>
-                  <p className="text-xs text-muted-foreground">
-                    Regional Donation Coordinator
-                  </p>
+                <div className="mt-6 overflow-hidden rounded-[14px]">
+                  <Photo
+                    src="https://picsum.photos/seed/hero-card-photo/410/260"
+                    alt="Volunteer preparing blood donation kit"
+                    className="h-[210px] w-full object-cover"
+                  />
                 </div>
               </div>
-            </article>
+            </aside>
+          </div>
+        </div>
 
-            <article className="rounded-3xl border border-border/70 bg-secondary/65 p-6">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                    Next drive
-                  </p>
-                  <p className="mt-2 font-heading text-xl font-semibold tracking-tight">
-                    Downtown Mobile Unit
-                  </p>
-                </div>
-                <CalendarClock className="mt-1 size-5 text-primary" />
+        <div className="mx-auto -mt-1 max-w-[1170px] rounded-b-[14px] border border-t-0 border-[#eceef5] bg-white px-4 py-4 shadow-[0_14px_35px_-30px_rgba(0,0,0,0.35)] sm:px-6 md:px-8 lg:-mt-10">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex -space-x-3">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Photo
+                    key={`avatar-${index}`}
+                    src={`https://picsum.photos/seed/home-avatar-${index + 1}/40/40`}
+                    alt={`Community donor ${index + 1}`}
+                    className="size-10 rounded-full border-2 border-white object-cover"
+                  />
+                ))}
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                Saturday, 10:00 AM to 4:00 PM. Open slots available for first
-                time donors.
+              <p className="text-sm text-muted-foreground">
+                10,000+ people smiling through every donation cycle.
               </p>
-            </article>
+            </div>
+
+            <Button
+              asChild
+              variant="outline"
+              className="h-10 rounded-full border-primary/45 px-5 text-primary"
+            >
+              <Link href="#how-it-works">See How It Works</Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      <section className="px-6 pb-8 pt-6 sm:px-10">
-        <div className="mx-auto w-full max-w-6xl rounded-[2rem] border border-primary/20 bg-primary/10 px-6 py-10 sm:px-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-                Ready when needed
-              </p>
-              <h2 className="mt-3 text-balance font-heading text-3xl font-semibold tracking-tight sm:text-4xl">
-                Join a donor network designed for speed, trust, and follow-through.
+      <section id="about" className="px-5 pb-18 pt-20 md:px-8 md:pt-24 lg:px-10">
+        <div className="mx-auto max-w-[1770px]">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-[1080px]">
+              <SectionTag text="Our Mission" />
+              <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+                Our mission is to inspire a culture of compassion by making blood donation accessible, meaningful, and impactful.
               </h2>
+              <p className="mt-4 max-w-[690px] text-base leading-relaxed text-muted-foreground">
+                We are committed to creating a healthier, more resilient community where every person can access life-saving blood when it matters most.
+              </p>
             </div>
             <Button
               asChild
-              size="lg"
-              className="h-12 rounded-full px-7 md:mb-1"
+              variant="outline"
+              className="h-11 rounded-full border-primary/45 px-7 text-primary"
             >
-              <Link href="/auth" className="gap-2">
-                Create your profile
-                <ArrowRight className="size-4" />
-              </Link>
+              <Link href="#our-programs">Learn More</Link>
             </Button>
           </div>
+
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {missionCards.map((card) => (
+              <article key={card.title} className="group relative overflow-hidden rounded-[18px]">
+                <Photo
+                  src={card.src}
+                  alt={card.title}
+                  className="h-[300px] w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(16,17,20,0.72),rgba(16,17,20,0.12))]" />
+                <p className="absolute left-5 top-5 rounded-full bg-black/50 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm">
+                  {card.title}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="overflow-hidden border-y border-[#d8ddef] bg-[#c6d3f7] py-8">
+        <div className="mx-auto flex w-max min-w-full items-center gap-8 px-6 text-sm font-medium text-[#ec3d34] md:text-base">
+          <span>A Gift of Blood is a Gift of Life</span>
+          <span>•</span>
+          <span>Strong Hearts Donate Blood</span>
+          <span>•</span>
+          <span>Saving Lives Starts with You</span>
+          <span>•</span>
+          <span>Be the Lifesaver Someone Needs</span>
+          <span>•</span>
+          <span>Blood Donation Builds Tomorrow</span>
+          <span>•</span>
+          <span>One Donation, Endless Hope</span>
+        </div>
+      </section>
+
+      <section className="overflow-hidden bg-background py-6">
+        <p
+          className="whitespace-nowrap text-center font-heading text-[clamp(52px,8vw,128px)] font-semibold uppercase leading-none text-transparent"
+          style={{
+            WebkitTextStroke: "1px #f04842",
+          }}
+        >
+          THE REDGESTURE THE REDGESTURE THE REDGESTURE
+        </p>
+      </section>
+
+      <section className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1770px]">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-[1220px]">
+              <SectionTag text="About Us" />
+              <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+                Built on compassion, integrity, and commitment to public health, our mission is to ensure safe and reliable blood for hospitals and families.
+              </h2>
+              <Button
+                asChild
+                className="mt-7 h-11 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-7 text-sm text-white"
+              >
+                <Link href="#our-programs">View Our Program</Link>
+              </Button>
+            </div>
+
+            <article className="w-full max-w-[290px] rounded-[16px] bg-white p-5 shadow-[0_14px_40px_-28px_rgba(0,0,0,0.35)]">
+              <div className="flex items-center gap-3">
+                <p className="font-heading text-5xl">4.9/5</p>
+                <p className="text-xs leading-relaxed text-muted-foreground">37K happy donors</p>
+              </div>
+              <div className="mt-2 flex items-center gap-1 text-[#ff9f1a]">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={`star-${index}`} className="size-4 fill-current" />
+                ))}
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-12 grid gap-6 rounded-[20px] border border-[#d9dfef] bg-white/75 p-6 shadow-[0_24px_60px_-45px_rgba(0,0,0,0.32)] sm:grid-cols-2 md:grid-cols-4 md:p-9">
+            {stats.map((item, index) => (
+              <article
+                key={item.label}
+                className={`space-y-3 ${index < stats.length - 1 ? "md:border-r md:border-black/15 md:pr-6" : ""}`}
+              >
+                <p className="text-sm text-muted-foreground">{item.label}</p>
+                <p className="font-heading text-4xl text-[#fc3b32]">{item.value}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="bg-white px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1770px]">
+          <div className="mx-auto max-w-[980px] text-center">
+            <SectionTag text="Our Commitment" />
+            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+              We are dedicated to building a healthier, stronger community by ensuring reliable blood for those who need it most.
+            </h2>
+
+            <div className="mt-10 flex items-center justify-center gap-8 text-xl sm:text-4xl">
+              <p className="font-heading text-[#7d7e88]">Saving Lives</p>
+              <p className="font-heading text-black">Delivering Hope</p>
+              <p className="font-heading text-[#7d7e88]">Ensuring Safe</p>
+            </div>
+
+            <div className="mx-auto mt-3 h-[2px] w-[180px] bg-black/80" />
+          </div>
+
+          <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-start">
+            <article className="space-y-4">
+              <h3 className="font-heading text-4xl text-[#7d7e88]">{commitmentColumns[0].title}</h3>
+              <p className="max-w-[580px] text-base leading-relaxed text-muted-foreground">
+                {commitmentColumns[0].text}
+              </p>
+            </article>
+
+            <article className="space-y-4 lg:text-right">
+              <h3 className="font-heading text-4xl text-[#7d7e88]">{commitmentColumns[1].title}</h3>
+              <p className="ml-auto max-w-[580px] text-base leading-relaxed text-muted-foreground">
+                {commitmentColumns[1].text}
+              </p>
+            </article>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <button
+              type="button"
+              aria-label="Previous"
+              className="flex size-11 items-center justify-center rounded-full border border-[#e0e4ef] bg-white text-[#fc3b32] transition hover:border-[#fc3b32]/40"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next"
+              className="flex size-11 items-center justify-center rounded-full border border-[#e0e4ef] bg-white text-[#fc3b32] transition hover:border-[#fc3b32]/40"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          </div>
+
+          <div className="relative mt-10 overflow-hidden rounded-[22px] border border-[#d9dfef]">
+            <Photo
+              src="https://picsum.photos/seed/commitment-video/1770/680"
+              alt="Blood donation process in action"
+              className="h-[360px] w-full object-cover md:h-[680px]"
+            />
+            <div className="absolute inset-0 bg-black/30" />
+            <button
+              type="button"
+              aria-label="Play video"
+              className="absolute left-1/2 top-1/2 flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-black/30 text-white backdrop-blur-sm transition hover:scale-105"
+            >
+              <CirclePlay className="size-8" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1170px] rounded-[24px] bg-gradient-to-b from-[#edf2ff] to-[#c4d2f8] px-8 py-14 text-center shadow-[0_24px_70px_-52px_rgba(0,0,0,0.5)] sm:px-12 sm:py-18">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Every drop you give becomes a lifeline, restoring health, sparking hope, and giving someone a second chance.
+          </p>
+          <p className="mt-7 font-heading text-5xl text-[#fc3b32] sm:text-7xl">382,945+</p>
+          <p className="mt-4 text-sm uppercase tracking-[0.16em] text-muted-foreground">Lives touched through donor support</p>
+
+          <Button
+            asChild
+            className="mt-7 h-10 rounded-full bg-gradient-to-r from-[#1e1f23] to-black px-6 text-xs uppercase tracking-[0.16em] text-white"
+          >
+            <Link href="/auth">Join Us Today</Link>
+          </Button>
+        </div>
+      </section>
+
+      <section id="our-programs" className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1770px]">
+          <div className="mx-auto max-w-[980px] text-center">
+            <SectionTag text="Our Programs" />
+            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+              Discover the initiatives we built to support donors, empower communities, and secure life-saving blood where it is needed most.
+            </h2>
+          </div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            <article className="space-y-5 rounded-[18px] bg-white/85 p-0 shadow-[0_16px_55px_-40px_rgba(0,0,0,0.35)]">
+              <div className="relative overflow-hidden rounded-[18px]">
+                <Photo
+                  src={programs[0].src}
+                  alt={programs[0].title}
+                  className="h-[280px] w-full object-cover sm:h-[380px]"
+                />
+              </div>
+              <div className="px-6 pb-6">
+                <h3 className="font-heading text-3xl">{programs[0].title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{programs[0].description}</p>
+                <div className="mt-5 flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{programs[0].location}</p>
+                  <button type="button" className="flex size-10 items-center justify-center rounded-full bg-[#1f1f22] text-white">
+                    <ArrowRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article className="relative overflow-hidden rounded-[20px] bg-black text-white shadow-[0_22px_65px_-50px_rgba(0,0,0,0.55)] lg:row-span-2">
+              <Photo
+                src={programs[1].src}
+                alt={programs[1].title}
+                className="h-full min-h-[560px] w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.85)_10%,rgba(0,0,0,0.2)_55%)]" />
+              <div className="absolute inset-x-0 bottom-0 p-7">
+                <h3 className="font-heading text-3xl">{programs[1].title}</h3>
+                <p className="mt-3 text-sm text-white/80">{programs[1].description}</p>
+                <div className="mt-5 flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.16em] text-white/70">{programs[1].location}</p>
+                  <button type="button" className="flex size-10 items-center justify-center rounded-full bg-white text-black">
+                    <ArrowRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article className="space-y-5 rounded-[18px] bg-white/85 p-0 shadow-[0_16px_55px_-40px_rgba(0,0,0,0.35)]">
+              <div className="relative overflow-hidden rounded-[18px]">
+                <Photo
+                  src={programs[2].src}
+                  alt={programs[2].title}
+                  className="h-[280px] w-full object-cover sm:h-[380px]"
+                />
+              </div>
+              <div className="px-6 pb-6">
+                <h3 className="font-heading text-3xl">{programs[2].title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{programs[2].description}</p>
+                <div className="mt-5 flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{programs[2].location}</p>
+                  <button type="button" className="flex size-10 items-center justify-center rounded-full bg-[#1f1f22] text-white">
+                    <ArrowRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article className="space-y-5 rounded-[18px] bg-white/85 p-0 shadow-[0_16px_55px_-40px_rgba(0,0,0,0.35)]">
+              <div className="relative overflow-hidden rounded-[18px]">
+                <Photo
+                  src={programs[3].src}
+                  alt={programs[3].title}
+                  className="h-[280px] w-full object-cover sm:h-[380px]"
+                />
+              </div>
+              <div className="px-6 pb-6">
+                <h3 className="font-heading text-3xl">{programs[3].title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{programs[3].description}</p>
+                <div className="mt-5 flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{programs[3].location}</p>
+                  <button type="button" className="flex size-10 items-center justify-center rounded-full bg-[#1f1f22] text-white">
+                    <ArrowRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article className="space-y-5 rounded-[18px] bg-white/85 p-0 shadow-[0_16px_55px_-40px_rgba(0,0,0,0.35)]">
+              <div className="relative overflow-hidden rounded-[18px]">
+                <Photo
+                  src={programs[4].src}
+                  alt={programs[4].title}
+                  className="h-[280px] w-full object-cover sm:h-[380px]"
+                />
+              </div>
+              <div className="px-6 pb-6">
+                <h3 className="font-heading text-3xl">{programs[4].title}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{programs[4].description}</p>
+                <div className="mt-5 flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{programs[4].location}</p>
+                  <button type="button" className="flex size-10 items-center justify-center rounded-full bg-[#1f1f22] text-white">
+                    <ArrowRight className="size-4" />
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="donations" className="bg-white px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1770px]">
+          <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <SectionTag text="Donation" />
+              <h2 className="mt-4 max-w-[820px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+                Every act of giving has the power to create a ripple of hope. Your contribution can change lives.
+              </h2>
+              <p className="mt-5 max-w-[680px] text-base leading-relaxed text-muted-foreground">
+                Your contribution builds stronger donor communities, improves emergency response speed, and keeps hospitals prepared.
+              </p>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-2">
+                <article className="overflow-hidden rounded-[18px]">
+                  <Photo
+                    src="https://picsum.photos/seed/donation-left/370/260"
+                    alt="Blood bank technician preparing supplies"
+                    className="h-[220px] w-full object-cover sm:h-[260px]"
+                  />
+                </article>
+                <article className="overflow-hidden rounded-[18px]">
+                  <Photo
+                    src="https://picsum.photos/seed/donation-right/370/260"
+                    alt="Donor being guided during registration"
+                    className="h-[220px] w-full object-cover sm:h-[260px]"
+                  />
+                </article>
+              </div>
+            </div>
+
+            <form className="space-y-4 rounded-[22px] border border-[#e5e8f1] bg-white p-6 shadow-[0_20px_50px_-40px_rgba(0,0,0,0.35)] sm:p-8">
+              <label className="block">
+                <span className="sr-only">Name</span>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
+                />
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Email Address</span>
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
+                />
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Phone</span>
+                <input
+                  type="tel"
+                  placeholder="Phone"
+                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
+                />
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Donation Amount</span>
+                <input
+                  type="text"
+                  placeholder="Donation Amount"
+                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
+                />
+              </label>
+
+              <label className="block">
+                <span className="sr-only">Your Message</span>
+                <textarea
+                  placeholder="Your Message"
+                  rows={5}
+                  className="w-full rounded-[28px] border border-[#ebeef7] bg-[#f9f9fb] px-6 py-4 text-sm outline-none transition focus:border-primary/40"
+                />
+              </label>
+
+              <Button
+                type="submit"
+                className="h-11 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-7 text-sm text-white"
+              >
+                Donate Now
+              </Button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="volunteers" className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1770px] text-center">
+          <SectionTag text="Volunteers" />
+          <h2 className="mx-auto mt-4 max-w-[1020px] font-heading text-3xl leading-tight sm:text-4xl">
+            Get to know the everyday heroes who make our community stronger through kindness, teamwork, and unwavering commitment.
+          </h2>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {volunteers.map((volunteer) => (
+              <article
+                key={volunteer.name}
+                className="group overflow-hidden rounded-[20px] bg-white p-4 text-left shadow-[0_18px_52px_-42px_rgba(0,0,0,0.45)]"
+              >
+                <div className="relative overflow-hidden rounded-[16px]">
+                  <Photo
+                    src={volunteer.src}
+                    alt={volunteer.name}
+                    className="h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-[360px]"
+                  />
+                  {volunteer.featured ? (
+                    <div className="absolute inset-0 flex items-end justify-center bg-[linear-gradient(to_top,rgba(0,0,0,0.74),rgba(0,0,0,0.12))] p-5">
+                      <div className="flex items-center gap-2">
+                        {socials.map((Icon, index) => (
+                          <span
+                            key={`${volunteer.name}-social-${index}`}
+                            className="flex size-9 items-center justify-center rounded-full bg-gradient-to-b from-[#fc605c] to-[#fc3b32] text-white"
+                          >
+                            <Icon className="size-4" />
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+                <h3 className="mt-4 font-heading text-2xl">{volunteer.name}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{volunteer.role}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#c6d3f7] px-5 py-20 md:px-8 lg:px-10">
+        <div className="mx-auto grid max-w-[1770px] items-center gap-8 lg:grid-cols-[470px_1fr_470px]">
+          <article className="overflow-hidden rounded-[20px]">
+            <Photo
+              src={valueCards[0].src}
+              alt={valueCards[0].alt}
+              className="h-[260px] w-full object-cover sm:h-[470px]"
+            />
+          </article>
+
+          <div className="mx-auto max-w-[700px] text-center">
+            <SectionTag text="Our Values" />
+            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+              We are guided by principles that reflect who we are and what we stand for.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-[#1d1f29]/75">
+              These values shape every action we take, every choice we make, and every life we support.
+            </p>
+            <Button
+              asChild
+              className="mt-7 h-11 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-7 text-sm text-white"
+            >
+              <Link href="/about">Learn More</Link>
+            </Button>
+          </div>
+
+          <article className="overflow-hidden rounded-[20px]">
+            <Photo
+              src={valueCards[1].src}
+              alt={valueCards[1].alt}
+              className="h-[260px] w-full object-cover sm:h-[470px]"
+            />
+          </article>
         </div>
       </section>
     </div>

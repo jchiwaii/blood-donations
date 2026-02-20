@@ -1,105 +1,81 @@
 import Link from "next/link";
-import { ArrowRight, Droplet, Mail, Phone } from "lucide-react";
-import { Button } from "../ui/button";
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter, Youtube } from "lucide-react";
+
+const footerLinks = [
+  { label: "About", href: "/#about" },
+  { label: "Our Programs", href: "/#our-programs" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Donation", href: "/#donations" },
+  { label: "Volunteers", href: "/#volunteers" },
+];
 
 const PublicFooter = () => {
   return (
-    <footer className="border-t border-border/70 bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 md:grid-cols-[1.1fr_0.9fr] md:px-8">
-        <div className="space-y-5">
-          <Link href="/" className="inline-flex items-center gap-3">
-            <span className="flex size-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-              <Droplet className="size-4 fill-current" />
-            </span>
-            <span className="font-heading text-xl font-semibold tracking-tight">
-              Bloodline
-            </span>
-          </Link>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-            A focused platform that helps donors, recipients, and coordinators
-            act faster with less noise and clearer accountability.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-full border-border/80 bg-card/70"
-            >
-              <Link href="/campaigns" className="gap-2">
-                View campaigns
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-            <Button asChild className="rounded-full">
-              <Link href="/auth">Join now</Link>
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2">
+    <footer id="contact" className="relative overflow-hidden bg-gradient-to-b from-[#fc605c] to-[#fc3b32] text-white">
+      <div className="mx-auto w-full max-w-[1770px] px-5 pb-8 pt-14 md:px-8 lg:px-10">
+        <div className="grid gap-10 border-b border-white/25 pb-10 md:grid-cols-[1.05fr_1fr_0.9fr] md:gap-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              Navigate
-            </p>
-            <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
-              <Link href="/" className="transition-colors hover:text-foreground">
-                Home
-              </Link>
-              <Link
-                href="/about"
-                className="transition-colors hover:text-foreground"
-              >
-                About
-              </Link>
-              <Link
-                href="/campaigns"
-                className="transition-colors hover:text-foreground"
-              >
-                Campaigns
-              </Link>
-              <Link
-                href="/auth"
-                className="transition-colors hover:text-foreground"
-              >
-                Sign in
-              </Link>
-            </div>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/70">From Proven Experience In Promise</p>
+            <h3 className="mt-4 max-w-[500px] font-heading text-3xl leading-tight sm:text-4xl">
+              Every act of generosity creates change that outlives the moment.
+            </h3>
           </div>
 
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              Contact
-            </p>
-            <div className="mt-3 grid gap-2 text-sm text-muted-foreground">
-              <a
-                href="mailto:support@bloodline.app"
-                className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
-              >
+            <p className="text-xs uppercase tracking-[0.2em] text-white/70">Say Hello</p>
+            <div className="mt-4 space-y-3 text-sm">
+              <a href="mailto:hello@redflow.org" className="inline-flex items-center gap-2 text-white/90 transition hover:text-white">
                 <Mail className="size-4" />
-                support@bloodline.app
+                hello@redflow.org
               </a>
-              <a
-                href="tel:+18001234567"
-                className="inline-flex items-center gap-2 transition-colors hover:text-foreground"
-              >
+              <a href="tel:+10123456789" className="inline-flex items-center gap-2 text-white/90 transition hover:text-white">
                 <Phone className="size-4" />
-                +1 (800) 123-4567
+                (+01) 123456789
               </a>
-              <p className="pt-2 text-xs leading-relaxed">
-                Emergency coordination desk available 24/7.
+              <p className="inline-flex items-start gap-2 text-white/90">
+                <MapPin className="mt-0.5 size-4" />
+                Festival Pavilion, 2nd floor, Midtown
               </p>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="border-t border-border/70">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-6 py-4 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
-          <p>© {new Date().getFullYear()} Bloodline. All rights reserved.</p>
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-white/70">Menu</p>
+            <div className="mt-4 grid gap-2 text-sm">
+              {footerLinks.map((link) => (
+                <Link key={link.href} href={link.href} className="text-white/90 transition hover:text-white">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-6 flex items-center gap-2">
+              {[Facebook, Instagram, Youtube, Twitter].map((Icon, index) => (
+                <a
+                  key={`footer-social-${index}`}
+                  href="#"
+                  aria-label="Social channel"
+                  className="flex size-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white transition hover:bg-white/20"
+                >
+                  <Icon className="size-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2 py-5 text-xs text-white/75 md:flex-row md:items-center md:justify-between">
+          <p>© Copyright 2026, Redflow. All rights reserved.</p>
           <p>Built for donor-first community response.</p>
         </div>
       </div>
+
+      <p
+        className="pointer-events-none select-none whitespace-nowrap px-5 pb-4 font-heading text-[clamp(62px,11vw,196px)] font-semibold leading-[0.86] text-[#a8bcf8] md:px-8 lg:px-10"
+        aria-hidden
+      >
+        Creates Change
+      </p>
     </footer>
   );
 };
