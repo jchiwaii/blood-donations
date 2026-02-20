@@ -184,7 +184,7 @@ export function Hero() {
                 <span className="size-1.5 rounded-full bg-[#ff5c5c]" />
                 Lifeline network
               </p>
-              <h1 className="font-heading text-4xl leading-tight text-white sm:text-5xl lg:text-7xl">
+              <h1 className="font-display text-4xl leading-tight text-white sm:text-5xl lg:text-7xl">
                 Every Drop Tells a Story of Hope.
               </h1>
               <p className="max-w-[500px] text-base leading-relaxed text-white/80 sm:text-lg">
@@ -325,11 +325,11 @@ export function Hero() {
       </section>
 
       <section className="overflow-hidden bg-background py-6">
-        <p
-          className="whitespace-nowrap text-center font-heading text-[clamp(52px,8vw,128px)] font-semibold uppercase leading-none text-transparent"
-          style={{
-            WebkitTextStroke: "1px #f04842",
-          }}
+          <p
+            className="whitespace-nowrap text-center font-display text-[clamp(52px,8vw,128px)] uppercase leading-none text-transparent"
+            style={{
+              WebkitTextStroke: "1px #f04842",
+            }}
         >
           THE REDGESTURE THE REDGESTURE THE REDGESTURE
         </p>
@@ -451,7 +451,7 @@ export function Hero() {
           <p className="text-sm leading-relaxed text-muted-foreground">
             Every drop you give becomes a lifeline, restoring health, sparking hope, and giving someone a second chance.
           </p>
-          <p className="mt-7 font-heading text-5xl text-[#fc3b32] sm:text-7xl">382,945+</p>
+          <p className="mt-7 font-display text-5xl text-[#fc3b32] sm:text-7xl">382,945+</p>
           <p className="mt-4 text-sm uppercase tracking-[0.16em] text-muted-foreground">Lives touched through donor support</p>
 
           <Button

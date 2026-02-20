@@ -71,7 +71,7 @@ const PublicFooter = () => {
       </div>
 
       <p
-        className="pointer-events-none select-none whitespace-nowrap px-5 pb-4 font-heading text-[clamp(62px,11vw,196px)] font-semibold leading-[0.86] text-[#a8bcf8] md:px-8 lg:px-10"
+        className="pointer-events-none select-none whitespace-nowrap px-5 pb-4 font-display text-[clamp(62px,11vw,196px)] leading-[0.86] text-[#a8bcf8] md:px-8 lg:px-10"
         aria-hidden
       >
         Creates Change

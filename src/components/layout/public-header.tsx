@@ -57,7 +57,7 @@ const PublicHeader = () => {
           <span className="flex size-10 items-center justify-center rounded-2xl bg-gradient-to-b from-[#fc605c] to-[#fc3b32] text-white shadow-[0_10px_24px_-14px_rgba(252,59,50,0.8)]">
             <Droplet className="size-5 fill-current" />
           </span>
-          <span className="font-heading text-xl font-semibold tracking-tight">
+          <span className="font-brand text-xl tracking-tight">
             Redflow
           </span>
         </Link>
