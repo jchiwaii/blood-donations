@@ -272,10 +272,16 @@ export function Hero() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex -space-x-3">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {[
+                  "https://randomuser.me/api/portraits/women/44.jpg",
+                  "https://randomuser.me/api/portraits/men/32.jpg",
+                  "https://randomuser.me/api/portraits/women/68.jpg",
+                  "https://randomuser.me/api/portraits/men/75.jpg",
+                  "https://randomuser.me/api/portraits/women/90.jpg",
+                ].map((src, index) => (
                   <Photo
                     key={`avatar-${index}`}
-                    src={`https://picsum.photos/seed/home-avatar-${index + 1}/40/40`}
+                    src={src}
                     alt={`Community donor ${index + 1}`}
                     className="size-10 rounded-full border-2 border-white object-cover"
                   />
