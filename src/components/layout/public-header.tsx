@@ -19,6 +19,7 @@ const navItems = [
 const PublicHeader = () => {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const closeMobileMenu = () => setMobileOpen(false);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -37,7 +38,7 @@ const PublicHeader = () => {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background/95 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-border/70 bg-background">
       <div className="mx-auto flex h-20 w-full max-w-[1880px] items-center justify-between px-5 md:px-8 lg:px-10">
         <Link href="/" className="group flex items-center gap-3">
           <span className="flex size-10 items-center justify-center rounded-2xl bg-gradient-to-b from-[#fc605c] to-[#fc3b32] text-white shadow-[0_10px_24px_-14px_rgba(252,59,50,0.8)]">
@@ -84,37 +85,67 @@ const PublicHeader = () => {
 
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-background/95 pt-20 backdrop-blur-xl transition-all duration-300 md:hidden",
+          "fixed inset-x-0 bottom-0 top-20 z-40 transition-opacity duration-300 md:hidden",
           mobileOpen
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-2 opacity-0"
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
         )}
       >
-        <div className="mx-auto flex h-full w-full max-w-[1880px] flex-col px-5 pb-8 pt-6">
-          <nav className="space-y-2">
+        <button
+          type="button"
+          aria-label="Close menu"
+          onClick={closeMobileMenu}
+          className="absolute inset-0 backdrop-blur-2xl"
+        />
+
+        <aside
+          role="dialog"
+          aria-modal="true"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeMobileMenu();
+          }}
+          className="absolute inset-0 flex flex-col px-6 pb-8 pt-24 text-white"
+        >
+          <nav className="mx-auto mt-12 w-full max-w-lg space-y-5 text-center">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-xl px-3 py-3 text-base text-foreground transition-colors hover:bg-secondary"
+                onClick={closeMobileMenu}
+                className="pointer-events-auto block text-[clamp(2.4rem,11vw,4.9rem)] font-semibold leading-[0.95] text-white transition-opacity hover:opacity-80"
               >
                 {item.label}
               </Link>
             ))}
           </nav>
 
-          <div className="mt-auto grid grid-cols-2 gap-2 pt-6">
-            <Button variant="outline" asChild className="h-11 rounded-xl border-border/80">
-              <Link href="/auth">Sign In</Link>
-            </Button>
-            <Button
-              asChild
-              className="h-11 rounded-xl bg-gradient-to-r from-[#fc605c] to-[#fc3b32] text-white"
-            >
-              <Link href="/auth">Donate</Link>
-            </Button>
+          <div className="mt-auto pt-8 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/60">Get In Touch</p>
+            <p className="mt-4 text-4xl text-white">+1 800 123 4567</p>
+            <p className="mt-2 text-xl text-white/70">Midtown</p>
+
+            <div className="mt-7 grid grid-cols-2 gap-2">
+              <Button
+                variant="outline"
+                asChild
+                className="pointer-events-auto h-12 rounded-xl border-white/50 !bg-transparent text-base text-white hover:opacity-80"
+              >
+                <Link href="/auth" onClick={closeMobileMenu}>
+                  Login
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                asChild
+                className="pointer-events-auto h-12 rounded-xl border-white/50 !bg-transparent text-base text-white hover:opacity-80"
+              >
+                <Link href="/auth" onClick={closeMobileMenu}>
+                  Register
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
+        </aside>
       </div>
     </header>
   );
