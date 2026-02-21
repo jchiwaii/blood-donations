@@ -325,6 +325,10 @@ body {
 }
 
 @layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
   .font-brand {
     font-family: var(--font-brand);
   }

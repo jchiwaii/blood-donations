@@ -19,6 +19,7 @@ const navItems = [
 const PublicHeader = () => {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileContentVisible, setMobileContentVisible] = useState(false);
   const closeMobileMenu = () => setMobileOpen(false);
 
   useEffect(() => {
@@ -35,6 +36,16 @@ const PublicHeader = () => {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      setMobileContentVisible(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setMobileContentVisible(true), 130);
+    return () => window.clearTimeout(timer);
   }, [mobileOpen]);
 
   return (
@@ -85,7 +96,7 @@ const PublicHeader = () => {
 
       <div
         className={cn(
-          "fixed inset-x-0 bottom-0 top-20 z-40 transition-opacity duration-300 md:hidden",
+          "fixed inset-x-0 bottom-0 top-20 z-40 transition-opacity duration-300 ease-out md:hidden",
           mobileOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -95,7 +106,10 @@ const PublicHeader = () => {
           type="button"
           aria-label="Close menu"
           onClick={closeMobileMenu}
-          className="absolute inset-0 backdrop-blur-2xl"
+          className={cn(
+            "absolute inset-0 bg-transparent transition-opacity duration-300 ease-out will-change-[opacity]",
+            mobileOpen ? "opacity-100 backdrop-blur-lg" : "opacity-0 backdrop-blur-none"
+          )}
         />
 
         <aside
@@ -104,45 +118,55 @@ const PublicHeader = () => {
           onClick={(event) => {
             if (event.target === event.currentTarget) closeMobileMenu();
           }}
-          className="absolute inset-0 flex flex-col px-6 pb-8 pt-24 text-white"
+          className="absolute inset-0 flex flex-col px-7 pb-7 pt-8 text-foreground"
         >
-          <nav className="mx-auto mt-12 w-full max-w-lg space-y-5 text-center">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMobileMenu}
-                className="pointer-events-auto block text-[clamp(2.4rem,11vw,4.9rem)] font-semibold leading-[0.95] text-white transition-opacity hover:opacity-80"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mt-auto pt-8 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/60">Get In Touch</p>
-            <p className="mt-4 text-4xl text-white">+1 800 123 4567</p>
-            <p className="mt-2 text-xl text-white/70">Midtown</p>
-
-            <div className="mt-7 grid grid-cols-2 gap-2">
-              <Button
-                variant="outline"
-                asChild
-                className="pointer-events-auto h-12 rounded-xl border-white/50 !bg-transparent text-base text-white hover:opacity-80"
-              >
-                <Link href="/auth" onClick={closeMobileMenu}>
-                  Login
+          <div
+            className={cn(
+              "mx-auto flex h-full w-full max-w-md flex-col transition-all duration-300 ease-out",
+              mobileContentVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+            )}
+          >
+            <nav className="mt-6 w-full space-y-2 text-center">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  className="font-heading pointer-events-auto block rounded-2xl border border-border/80 bg-background/78 px-4 py-3 text-[clamp(2rem,9.6vw,3.25rem)] font-medium leading-[1.04] tracking-[-0.015em] text-foreground/95 shadow-[0_14px_34px_-26px_rgba(15,23,42,0.9)] backdrop-blur-sm transition-colors hover:bg-background/92"
+                >
+                  {item.label}
                 </Link>
-              </Button>
-              <Button
-                variant="outline"
-                asChild
-                className="pointer-events-auto h-12 rounded-xl border-white/50 !bg-transparent text-base text-white hover:opacity-80"
-              >
-                <Link href="/auth" onClick={closeMobileMenu}>
-                  Register
-                </Link>
-              </Button>
+              ))}
+            </nav>
+
+            <div className="mt-auto border-t border-border/70 pt-8 text-center">
+              <p className="text-[0.72rem] font-medium uppercase tracking-[0.28em] text-white/80">
+                Get In Touch
+              </p>
+              <p className="font-heading mt-3 text-[1.8rem] font-semibold leading-tight text-white">
+                +1 800 123 4567
+              </p>
+              <p className="mt-1 text-base font-medium text-white/85">Midtown</p>
+
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <Button
+                  variant="outline"
+                  asChild
+                  className="pointer-events-auto h-11 rounded-xl border-border bg-card/85 text-sm text-foreground hover:bg-card"
+                >
+                  <Link href="/auth" onClick={closeMobileMenu}>
+                    Login
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  className="pointer-events-auto h-11 rounded-xl bg-gradient-to-r from-[#fc605c] to-[#fc3b32] text-sm text-white"
+                >
+                  <Link href="/auth" onClick={closeMobileMenu}>
+                    Register
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
         </aside>
