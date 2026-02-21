@@ -19,6 +19,7 @@ import {
   Youtube,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Photo } from "@/components/ui/photo";
 
 type MissionCard = {
   title: string;
@@ -163,26 +164,6 @@ const tickerPhrases = [
   "One Donation, Endless Hope",
 ];
 
-function Photo({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className: string;
-}) {
-  return (
-    <img
-      src={src}
-      alt={alt}
-      className={className}
-      loading="lazy"
-      decoding="async"
-    />
-  );
-}
-
 function SectionTag({ text }: { text: string }) {
   return (
     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
@@ -200,6 +181,10 @@ export function Hero() {
             <Photo
               src="https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/diverse-people-refugee-camps_pzei9h.jpg"
               alt="Blood donation volunteers collaborating"
+              width={1880}
+              height={840}
+              priority
+              sizes="100vw"
               className="absolute inset-0 h-full w-full object-cover object-[18%_center] sm:object-[14%_center] lg:object-[8%_center]"
             />
 
@@ -260,6 +245,10 @@ export function Hero() {
                   <Photo
                     src="https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/african-children-standing-head-head_jbhoqr.jpg"
                     alt="Volunteer preparing blood donation kit"
+                    width={410}
+                    height={210}
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 410px"
                     className="h-[210px] w-full object-cover"
                   />
                 </div>
@@ -283,6 +272,9 @@ export function Hero() {
                     key={`avatar-${index}`}
                     src={src}
                     alt={`Community donor ${index + 1}`}
+                    width={40}
+                    height={40}
+                    sizes="40px"
                     className="size-10 rounded-full border-2 border-white object-cover"
                   />
                 ))}
@@ -339,6 +331,9 @@ export function Hero() {
                 <Photo
                   src={card.src}
                   alt={card.title}
+                  width={338}
+                  height={480}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
                   className="h-[300px] w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(16,17,20,0.72),rgba(16,17,20,0.12))]" />
@@ -499,6 +494,9 @@ export function Hero() {
             <Photo
               src="https://picsum.photos/seed/commitment-video/1770/680"
               alt="Blood donation process in action"
+              width={1770}
+              height={680}
+              sizes="100vw"
               className="h-[360px] w-full object-cover md:h-[680px]"
             />
             <div className="absolute inset-0 bg-black/30" />
@@ -554,6 +552,9 @@ export function Hero() {
                 <Photo
                   src={programs[0].src}
                   alt={programs[0].title}
+                  width={570}
+                  height={380}
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   className="h-[280px] w-full object-cover sm:h-[380px]"
                 />
               </div>
@@ -580,6 +581,9 @@ export function Hero() {
               <Photo
                 src={programs[1].src}
                 alt={programs[1].title}
+                width={570}
+                height={1220}
+                sizes="(max-width: 1024px) 100vw, 33vw"
                 className="h-full min-h-[560px] w-full object-cover"
               />
               <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.85)_10%,rgba(0,0,0,0.2)_55%)]" />
@@ -607,6 +611,9 @@ export function Hero() {
                 <Photo
                   src={programs[2].src}
                   alt={programs[2].title}
+                  width={570}
+                  height={380}
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   className="h-[280px] w-full object-cover sm:h-[380px]"
                 />
               </div>
@@ -634,6 +641,9 @@ export function Hero() {
                 <Photo
                   src={programs[3].src}
                   alt={programs[3].title}
+                  width={570}
+                  height={380}
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   className="h-[280px] w-full object-cover sm:h-[380px]"
                 />
               </div>
@@ -661,6 +671,9 @@ export function Hero() {
                 <Photo
                   src={programs[4].src}
                   alt={programs[4].title}
+                  width={570}
+                  height={380}
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   className="h-[280px] w-full object-cover sm:h-[380px]"
                 />
               </div>
@@ -705,6 +718,9 @@ export function Hero() {
                   <Photo
                     src="https://picsum.photos/seed/donation-left/370/260"
                     alt="Blood bank technician preparing supplies"
+                    width={370}
+                    height={260}
+                    sizes="(max-width: 1024px) 100vw, 370px"
                     className="h-[220px] w-full object-cover sm:h-[260px]"
                   />
                 </article>
@@ -712,6 +728,9 @@ export function Hero() {
                   <Photo
                     src="https://picsum.photos/seed/donation-right/370/260"
                     alt="Donor being guided during registration"
+                    width={370}
+                    height={260}
+                    sizes="(max-width: 1024px) 100vw, 370px"
                     className="h-[220px] w-full object-cover sm:h-[260px]"
                   />
                 </article>
@@ -796,6 +815,9 @@ export function Hero() {
                   <Photo
                     src={volunteer.src}
                     alt={volunteer.name}
+                    width={270}
+                    height={360}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="h-[280px] w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-[360px]"
                   />
                   {volunteer.featured ? (
@@ -829,6 +851,9 @@ export function Hero() {
             <Photo
               src={valueCards[0].src}
               alt={valueCards[0].alt}
+              width={470}
+              height={470}
+              sizes="(max-width: 1024px) 100vw, 470px"
               className="h-[260px] w-full object-cover sm:h-[470px]"
             />
           </article>
@@ -855,6 +880,9 @@ export function Hero() {
             <Photo
               src={valueCards[1].src}
               alt={valueCards[1].alt}
+              width={470}
+              height={470}
+              sizes="(max-width: 1024px) 100vw, 470px"
               className="h-[260px] w-full object-cover sm:h-[470px]"
             />
           </article>

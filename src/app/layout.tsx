@@ -15,6 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="//res.cloudinary.com" />
+      </head>
       <body className="font-sans antialiased">
         <CustomLayout>{children}</CustomLayout>
         <Toaster />
