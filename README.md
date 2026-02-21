@@ -1,6 +1,6 @@
 # Blood Donation Platform
 
-A comprehensive blood donation management system connecting donors with recipients through an admin-approved workflow.
+A fullstack blood donation management system connecting donors with recipients through an admin-approved workflow.
 
 ## Features
 
@@ -38,3 +38,5 @@ A comprehensive blood donation management system connecting donors with recipien
 - **UI Components:** Radix UI
 - **Form Handling:** React Hook Form
 - **State Management:** Zustand
+
+Images were sourced from Freepik
