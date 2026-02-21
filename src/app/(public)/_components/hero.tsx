@@ -42,11 +42,26 @@ type Volunteer = {
 };
 
 const missionCards: MissionCard[] = [
-  { title: "Hollow Creek", src: "https://picsum.photos/seed/hollow-creek/338/480" },
-  { title: "Stonepath Village", src: "https://picsum.photos/seed/stonepath-village/338/480" },
-  { title: "Drywell Town", src: "https://picsum.photos/seed/drywell-town/338/480" },
-  { title: "Silent Haven", src: "https://picsum.photos/seed/silent-haven/338/480" },
-  { title: "Hopefall Settlement", src: "https://picsum.photos/seed/hopefall-settlement/338/480" },
+  {
+    title: "Hollow Creek",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/adorable-kid-playing-with-shadows_ng75ah.jpg",
+  },
+  {
+    title: "Stonepath Village",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1771666461/photorealistic-kid-refugee-camp_2_l8aagx.jpg",
+  },
+  {
+    title: "Drywell Town",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1771666461/photorealistic-refugee-camp_1_efasij.jpg",
+  },
+  {
+    title: "Silent Haven",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1771666461/photorealistic-refugee-camp_f8uy0n.jpg",
+  },
+  {
+    title: "Hopefall Settlement",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1771666459/photorealistic-kid-refugee-camp_1_oxx559.jpg",
+  },
 ];
 
 const stats = [
@@ -139,6 +154,15 @@ const valueCards = [
 
 const socials: LucideIcon[] = [Facebook, Instagram, Youtube, Twitter];
 
+const tickerPhrases = [
+  "A Gift of Blood is a Gift of Life",
+  "Strong Hearts Donate Blood",
+  "Saving Lives Starts with You",
+  "Be the Lifesaver Someone Needs",
+  "Blood Donation Builds Tomorrow",
+  "One Donation, Endless Hope",
+];
+
 function Photo({
   src,
   alt,
@@ -172,7 +196,7 @@ export function Hero() {
         <div className="mx-auto max-w-[1880px] overflow-hidden rounded-[24px] bg-[#1d1d1f] shadow-[0_30px_100px_-45px_rgba(0,0,0,0.6)] md:rounded-[30px]">
           <div className="relative grid min-h-[560px] items-end gap-8 p-7 sm:p-10 lg:min-h-[840px] lg:grid-cols-[1.15fr_470px] lg:p-14">
             <Photo
-              src="https://picsum.photos/seed/redkind-hero/1880/840"
+              src="https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/diverse-people-refugee-camps_pzei9h.jpg"
               alt="Blood donation volunteers collaborating"
               className="absolute inset-0 h-full w-full object-cover"
             />
@@ -230,7 +254,7 @@ export function Hero() {
 
                 <div className="mt-6 overflow-hidden rounded-[14px]">
                   <Photo
-                    src="https://picsum.photos/seed/hero-card-photo/410/260"
+                    src="https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/african-children-standing-head-head_jbhoqr.jpg"
                     alt="Volunteer preparing blood donation kit"
                     className="h-[210px] w-full object-cover"
                   />
@@ -240,7 +264,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mx-auto -mt-1 max-w-[1170px] rounded-b-[14px] border border-t-0 border-[#eceef5] bg-white px-4 py-4 shadow-[0_14px_35px_-30px_rgba(0,0,0,0.35)] sm:px-6 md:px-8 lg:-mt-10">
+        <div className="mx-auto mt-6 max-w-[1170px] rounded-[14px] border border-[#eceef5] bg-white px-4 py-4 shadow-[0_14px_35px_-30px_rgba(0,0,0,0.35)] sm:px-6 md:px-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex -space-x-3">
@@ -309,30 +333,37 @@ export function Hero() {
       </section>
 
       <section className="overflow-hidden border-y border-[#d8ddef] bg-[#c6d3f7] py-8">
-        <div className="mx-auto flex w-max min-w-full items-center gap-8 px-6 text-sm font-medium text-[#ec3d34] md:text-base">
-          <span>A Gift of Blood is a Gift of Life</span>
-          <span>•</span>
-          <span>Strong Hearts Donate Blood</span>
-          <span>•</span>
-          <span>Saving Lives Starts with You</span>
-          <span>•</span>
-          <span>Be the Lifesaver Someone Needs</span>
-          <span>•</span>
-          <span>Blood Donation Builds Tomorrow</span>
-          <span>•</span>
-          <span>One Donation, Endless Hope</span>
+        <div className="marquee-track text-sm font-medium text-[#ec3d34] md:text-base">
+          {Array.from({ length: 2 }).map((_, copyIndex) => (
+            <div
+              key={`ticker-copy-${copyIndex}`}
+              className="flex shrink-0 items-center gap-8 px-4 sm:px-6"
+            >
+              {tickerPhrases.map((phrase) => (
+                <span key={`${copyIndex}-${phrase}`} className="whitespace-nowrap">
+                  {phrase}
+                  <span className="ml-8">•</span>
+                </span>
+              ))}
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="overflow-hidden bg-background py-6">
-          <p
-            className="whitespace-nowrap text-center font-display text-[clamp(52px,8vw,128px)] uppercase leading-none text-transparent"
-            style={{
-              WebkitTextStroke: "1px #f04842",
-            }}
-        >
-          THE REDGESTURE THE REDGESTURE THE REDGESTURE
-        </p>
+        <div className="marquee-track-reverse">
+          {Array.from({ length: 2 }).map((_, copyIndex) => (
+            <p
+              key={`redgesture-copy-${copyIndex}`}
+              className="shrink-0 whitespace-nowrap px-6 font-display text-[clamp(52px,8vw,128px)] uppercase leading-none text-transparent"
+              style={{
+                WebkitTextStroke: "1px #f04842",
+              }}
+            >
+              THE REDGESTURE THE REDGESTURE THE REDGESTURE THE REDGESTURE
+            </p>
+          ))}
+        </div>
       </section>
 
       <section className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">

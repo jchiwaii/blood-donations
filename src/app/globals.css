@@ -294,6 +294,26 @@ body {
   background-attachment: fixed;
 }
 
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -318,5 +338,19 @@ body {
       linear-gradient(to right, rgb(24 28 35 / 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgb(24 28 35 / 0.05) 1px, transparent 1px);
     background-size: 32px 32px;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-left 58s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-track-reverse {
+    display: flex;
+    width: max-content;
+    animation: marquee-right 64s linear infinite;
+    will-change: transform;
   }
 }
