@@ -198,7 +198,7 @@ export function Hero() {
             <Photo
               src="https://res.cloudinary.com/dgh4a1why/image/upload/v1771666460/diverse-people-refugee-camps_pzei9h.jpg"
               alt="Blood donation volunteers collaborating"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-[18%_center] sm:object-[14%_center] lg:object-[8%_center]"
             />
 
             <div className="absolute inset-0 bg-[linear-gradient(102deg,rgba(17,17,19,0.82)_12%,rgba(17,17,19,0.3)_50%,rgba(17,17,19,0.55)_100%)]" />
