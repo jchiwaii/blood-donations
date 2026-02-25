@@ -297,32 +297,36 @@ export function Hero() {
 
       <section
         id="about"
-        className="px-5 pb-18 pt-20 md:px-8 md:pt-24 lg:px-10"
+        className="px-5 pb-18 pt-20 md:px-8 md:pt-24 lg:px-10 lg:pb-[140px] lg:pt-[140px]"
       >
         <div className="mx-auto max-w-[1770px]">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-[1080px]">
+          <div className="grid gap-8 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-0">
+            <div>
               <SectionTag text="Our Mission" />
-              <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+            </div>
+            <div>
+              <h2 className="max-w-[1270px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
                 Our mission is to inspire a culture of compassion by making
                 blood donation accessible, meaningful, and impactful.
               </h2>
-              <p className="mt-4 max-w-[690px] text-base leading-relaxed text-muted-foreground">
-                We are committed to creating a healthier, more resilient
-                community where every person can access life-saving blood when
-                it matters most.
-              </p>
+              <div className="mt-[53px] flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+                <p className="max-w-[670px] text-base leading-relaxed text-muted-foreground">
+                  We are committed to creating a healthier, more resilient
+                  community where every person can access life-saving blood when
+                  it matters most.
+                </p>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-[50px] w-[160px] rounded-full border-[#fc3830] px-7 text-[#fc3830] xl:mt-[5px]"
+                >
+                  <Link href="#our-programs">Learn More</Link>
+                </Button>
+              </div>
             </div>
-            <Button
-              asChild
-              variant="outline"
-              className="h-11 rounded-full border-primary/45 px-7 text-primary"
-            >
-              <Link href="#our-programs">Learn More</Link>
-            </Button>
           </div>
 
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:mt-[100px] lg:grid-cols-5">
             {missionCards.map((card) => (
               <article
                 key={card.title}
