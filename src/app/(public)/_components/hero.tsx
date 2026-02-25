@@ -287,7 +287,7 @@ export function Hero() {
             <Button
               asChild
               variant="outline"
-              className="h-10 rounded-full border-primary/45 px-5 text-primary"
+              className="h-[50px] w-[160px] rounded-full border-[#fc3830] px-7 text-[#fc3830]"
             >
               <Link href="#how-it-works">See How It Works</Link>
             </Button>
@@ -297,7 +297,7 @@ export function Hero() {
 
       <section
         id="about"
-        className="px-5 pb-18 pt-20 md:px-8 md:pt-24 lg:px-10 lg:pb-[140px] lg:pt-[140px]"
+        className="px-4 pb-18 pt-20 md:px-6 md:pt-24 lg:px-8 lg:pb-[140px] lg:pt-[140px]"
       >
         <div className="mx-auto max-w-[1770px]">
           <div className="grid gap-8 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-0">
@@ -309,7 +309,7 @@ export function Hero() {
                 Our mission is to inspire a culture of compassion by making
                 blood donation accessible, meaningful, and impactful.
               </h2>
-              <div className="mt-[53px] flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+              <div className="mt-[53px] flex flex-col gap-6 xl:w-[960px] xl:flex-row xl:items-start xl:justify-between">
                 <p className="max-w-[670px] text-base leading-relaxed text-muted-foreground">
                   We are committed to creating a healthier, more resilient
                   community where every person can access life-saving blood when
@@ -389,49 +389,55 @@ export function Hero() {
 
       <section className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">
         <div className="mx-auto max-w-[1770px]">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-[1220px]">
-              <SectionTag text="About Us" />
-              <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
-                Built on compassion, integrity, and commitment to public health,
-                our mission is to ensure safe and reliable blood for hospitals
-                and families.
-              </h2>
-              <Button
-                asChild
-                className="mt-7 h-12 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-8 text-sm font-medium text-white"
-              >
-                <Link href="#our-programs">View Our Program</Link>
-              </Button>
+          <div className="max-w-[1270px]">
+            <SectionTag text="About Us" />
+            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+              Built on compassion, integrity, and commitment to public health,
+              our mission is to ensure safe and reliable blood for hospitals and
+              families.
+            </h2>
+            <Button
+              asChild
+              className="mt-7 h-12 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-8 text-sm font-medium text-white"
+            >
+              <Link href="#our-programs">View Our Program</Link>
+            </Button>
+          </div>
+
+          <div className="mt-16 lg:mt-[100px] lg:grid lg:grid-cols-[minmax(0,1170px)_272px] lg:items-start lg:gap-[30px]">
+            <div className="grid gap-6 sm:grid-cols-2 lg:w-[1170px] lg:grid-cols-4 lg:gap-x-[30px] lg:gap-y-0">
+              {stats.map((item) => (
+                <article
+                  key={item.label}
+                  className="min-h-[170px] border-l border-black/15 pl-8 lg:min-h-[200px] lg:pl-10"
+                >
+                  <p className="max-w-[230px] text-lg leading-tight text-black">
+                    {item.label}
+                  </p>
+                  <p className="mt-10 font-heading text-[54px] leading-none text-[#fc3b32]">
+                    {item.value}
+                  </p>
+                </article>
+              ))}
             </div>
 
-            <article className="w-full max-w-[290px] rounded-[16px] bg-white p-5 shadow-[0_14px_40px_-28px_rgba(0,0,0,0.35)]">
-              <div className="flex items-center gap-3">
-                <p className="font-heading text-5xl">4.9/5</p>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  37K happy donors
+            <article className="mt-8 lg:mt-12">
+              <div className="flex items-start gap-4">
+                <p className="font-heading text-[56px] leading-none lg:text-[64px]">
+                  4.9/5
+                </p>
+                <p className="pt-2 text-sm leading-5 text-muted-foreground">
+                  37K Happy
+                  <br />
+                  Donors
                 </p>
               </div>
               <div className="mt-2 flex items-center gap-1 text-[#ff9f1a]">
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={`star-${index}`} className="size-4 fill-current" />
+                  <Star key={`star-${index}`} className="size-5 fill-current" />
                 ))}
               </div>
             </article>
-          </div>
-
-          <div className="mt-12 grid gap-6 rounded-[20px] border border-[#d9dfef] bg-white/75 p-6 shadow-[0_24px_60px_-45px_rgba(0,0,0,0.32)] sm:grid-cols-2 md:grid-cols-4 md:p-9">
-            {stats.map((item, index) => (
-              <article
-                key={item.label}
-                className={`space-y-3 ${index < stats.length - 1 ? "md:border-r md:border-black/15 md:pr-6" : ""}`}
-              >
-                <p className="text-sm text-muted-foreground">{item.label}</p>
-                <p className="font-heading text-4xl text-[#fc3b32]">
-                  {item.value}
-                </p>
-              </article>
-            ))}
           </div>
         </div>
       </section>
