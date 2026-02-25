@@ -63,7 +63,7 @@ const PublicHeader = () => {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm text-foreground transition-colors hover:text-primary"
+              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
             >
               {item.label}
             </Link>
@@ -71,13 +71,13 @@ const PublicHeader = () => {
         </nav>
 
         <div className="hidden items-center gap-6 md:flex">
-          <Link href="/auth" className="text-sm text-foreground transition-colors hover:text-primary">
+          <Link href="/auth" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
             Sign In
           </Link>
 
           <Button
             asChild
-            className="h-10 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-6 text-sm text-white shadow-[0_10px_24px_-14px_rgba(252,59,50,0.8)]"
+            className="h-10 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-6 text-sm font-medium text-white shadow-[0_10px_24px_-14px_rgba(252,59,50,0.8)]"
           >
             <Link href="/auth">Donate Now</Link>
           </Button>

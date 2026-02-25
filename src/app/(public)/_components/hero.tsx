@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CirclePlay,
+  Droplet,
   Facebook,
   HandHeart,
   HeartPulse,
@@ -66,21 +67,10 @@ const missionCards: MissionCard[] = [
 ];
 
 const stats = [
-  { label: "Community projects supported", value: "2.3K+" },
+  { label: "Community projects supported and completed", value: "2.3K+" },
   { label: "Families empowered through care", value: "3.6M" },
   { label: "Lives impacted through donations", value: "130K+" },
   { label: "Community members in our network", value: "136K+" },
-];
-
-const commitmentColumns = [
-  {
-    title: "Saving Lives",
-    text: "We are dedicated to building a healthier, stronger community by ensuring a safe and reliable blood supply.",
-  },
-  {
-    title: "Ensuring Safe",
-    text: "Every donation follows strict safety protocols, transparent handling, and quality standards at every step.",
-  },
 ];
 
 const programs: ProgramCard[] = [
@@ -172,6 +162,25 @@ function SectionTag({ text }: { text: string }) {
   );
 }
 
+function TickerSparkIcon() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="size-5"
+      aria-hidden="true"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.79241 10.6085C5.52825 23.1305 -1.70743 18.1151 9.45736 10.3761C-1.70743 18.1151 -4.47156 10 9.32934 10C-4.47156 10 -1.70743 1.88495 9.45736 9.62393C-1.70743 1.88495 5.52825 -3.13048 9.79241 9.39145C5.52825 -3.13048 14.4721 -3.13048 10.2072 9.39145C14.4721 -3.13048 21.7078 1.88495 10.5422 9.62393C21.7078 1.88495 24.4715 10 10.6703 10C24.4715 10 21.7078 18.1151 10.5422 10.3761C21.7078 18.1151 14.4721 23.1305 10.2072 10.6085C14.4721 23.1305 5.52825 23.1305 9.79241 10.6085"
+        fill="#FC382F"
+      />
+    </svg>
+  );
+}
+
 export function Hero() {
   return (
     <div className="overflow-hidden bg-background text-foreground">
@@ -217,7 +226,7 @@ export function Hero() {
               <div className="rounded-[16px] border border-[#e5e7ef] bg-[#f5f6fb] p-4">
                 <div className="mb-4 flex items-start justify-between gap-3">
                   <div className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#e8edf7] to-[#cad8f6] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-black">
-                    <span className="size-1.5 rounded-full bg-black" />
+                    <Droplet className="size-3 fill-current" />
                     Redflow
                   </div>
                   <div className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-[#1f1f22] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
@@ -226,7 +235,7 @@ export function Hero() {
                   </div>
                 </div>
 
-                <h3 className="font-heading text-2xl leading-tight text-[#121317]">
+                <h3 className="font-heading text-2xl font-semibold leading-tight text-[#121317]">
                   Lifeline Heroes Initiative
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-[#5a6170]">
@@ -257,10 +266,10 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mx-auto mt-6 max-w-[1170px] rounded-[14px] border border-[#eceef5] bg-white px-4 py-4 shadow-[0_14px_35px_-30px_rgba(0,0,0,0.35)] sm:px-6 md:px-8">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex -space-x-3">
+        <div className="mx-auto mt-6 max-w-[1170px]">
+          <div className="grid grid-cols-1 gap-3 py-3 px-4 sm:px-5 md:grid-cols-[1fr_180px] md:items-center md:gap-4 lg:px-0">
+            <div className="flex flex-wrap items-center gap-2.5 lg:w-[492px]">
+              <div className="flex -space-x-[10px]">
                 {[
                   "https://randomuser.me/api/portraits/women/44.jpg",
                   "https://randomuser.me/api/portraits/men/32.jpg",
@@ -287,7 +296,7 @@ export function Hero() {
             <Button
               asChild
               variant="outline"
-              className="h-[50px] w-[160px] rounded-full border-[#fc3830] px-7 text-[#fc3830]"
+              className="h-[50px] w-[180px] rounded-full border-[#fc3830] px-7 text-[#fc3830] md:justify-self-end"
             >
               <Link href="#how-it-works">See How It Works</Link>
             </Button>
@@ -297,31 +306,33 @@ export function Hero() {
 
       <section
         id="about"
-        className="px-4 pb-18 pt-20 md:px-6 md:pt-24 lg:px-8 lg:pb-[140px] lg:pt-[140px]"
+        className="px-5 pb-18 pt-20 md:px-8 md:pt-24 lg:px-10 lg:pb-[140px] lg:pt-[140px]"
       >
         <div className="mx-auto max-w-[1770px]">
-          <div className="grid gap-8 lg:grid-cols-[500px_minmax(0,1fr)] lg:gap-0">
-            <div>
-              <SectionTag text="Our Mission" />
-            </div>
-            <div>
-              <h2 className="max-w-[1270px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
-                Our mission is to inspire a culture of compassion by making
-                blood donation accessible, meaningful, and impactful.
-              </h2>
-              <div className="mt-[53px] flex flex-col gap-6 xl:w-[960px] xl:flex-row xl:items-start xl:justify-between">
-                <p className="max-w-[670px] text-base leading-relaxed text-muted-foreground">
-                  We are committed to creating a healthier, more resilient
-                  community where every person can access life-saving blood when
-                  it matters most.
-                </p>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-[50px] w-[160px] rounded-full border-[#fc3830] px-7 text-[#fc3830] xl:mt-[5px]"
-                >
-                  <Link href="#our-programs">Learn More</Link>
-                </Button>
+          <div className="mx-auto max-w-[1170px]">
+            <div className="grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-0">
+              <div>
+                <SectionTag text="Our Mission" />
+              </div>
+              <div>
+                <h2 className="max-w-[930px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+                  Our mission is to inspire a culture of compassion by making
+                  blood donation accessible, meaningful, and impactful.
+                </h2>
+                <div className="mt-[53px] grid gap-6 md:grid-cols-[minmax(0,1fr)_180px] md:items-start">
+                  <p className="max-w-[670px] text-base leading-relaxed text-muted-foreground">
+                    We are committed to creating a healthier, more resilient
+                    community where every person can access life-saving blood
+                    when it matters most.
+                  </p>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="h-[50px] w-[180px] rounded-full border-[#fc3830] px-7 text-[#fc3830] md:mt-[5px] md:justify-self-end"
+                  >
+                    <Link href="#our-programs">Learn More</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -350,12 +361,12 @@ export function Hero() {
         </div>
       </section>
 
-      <section className="overflow-hidden border-y border-[#d8ddef] bg-[#c6d3f7] py-8">
-        <div className="marquee-track text-sm font-medium text-[#ec3d34] md:text-base">
+      <section className="overflow-hidden border-y border-[#d8ddef] bg-[#c6d3f7]">
+        <div className="marquee-track py-[50px] font-heading text-[clamp(20px,2.15vw,42px)] leading-none text-[#ec3d34]">
           {Array.from({ length: 2 }).map((_, copyIndex) => (
             <div
               key={`ticker-copy-${copyIndex}`}
-              className="flex shrink-0 items-center gap-8 px-4 sm:px-6"
+              className="flex shrink-0 items-center gap-10 px-5 sm:px-8"
             >
               {tickerPhrases.map((phrase) => (
                 <span
@@ -363,7 +374,9 @@ export function Hero() {
                   className="whitespace-nowrap"
                 >
                   {phrase}
-                  <span className="ml-8">•</span>
+                  <span className="ml-8 inline-flex items-center align-middle">
+                    <TickerSparkIcon />
+                  </span>
                 </span>
               ))}
             </div>
@@ -371,14 +384,14 @@ export function Hero() {
         </div>
       </section>
 
-      <section className="overflow-hidden bg-background py-6">
+      <section className="overflow-hidden bg-background py-3">
         <div className="marquee-track-reverse">
           {Array.from({ length: 2 }).map((_, copyIndex) => (
             <p
               key={`redgesture-copy-${copyIndex}`}
-              className="shrink-0 whitespace-nowrap px-6 font-display text-[clamp(52px,8vw,128px)] uppercase leading-none text-transparent"
+              className="shrink-0 whitespace-nowrap px-6 font-display text-[clamp(82px,9.8vw,188px)] uppercase leading-none text-transparent"
               style={{
-                WebkitTextStroke: "1px #f04842",
+                WebkitTextStroke: "0.5px #f04842",
               }}
             >
               THE REDGESTURE THE REDGESTURE THE REDGESTURE THE REDGESTURE
@@ -447,60 +460,52 @@ export function Hero() {
         className="bg-white px-5 py-20 md:px-8 lg:px-10"
       >
         <div className="mx-auto max-w-[1770px]">
-          <div className="mx-auto max-w-[980px] text-center">
+          <div className="mx-auto max-w-[1270px] text-center">
             <SectionTag text="Our Commitment" />
-            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl lg:text-[58px] lg:leading-[1.15]">
               We are dedicated to building a healthier, stronger community by
               ensuring reliable blood for those who need it most.
             </h2>
 
-            <div className="mt-10 flex items-center justify-center gap-8 text-xl sm:text-4xl">
-              <p className="font-heading text-[#7d7e88]">Saving Lives</p>
-              <p className="font-heading text-black">Delivering Hope</p>
-              <p className="font-heading text-[#7d7e88]">Ensuring Safe</p>
+            <div className="mt-14 grid gap-8 md:mt-18 md:grid-cols-3 md:items-start">
+              <p className="order-2 text-center font-heading text-[clamp(42px,4.4vw,72px)] leading-none text-[#8a8b92] md:order-1 md:text-left">
+                Saving Lives
+              </p>
+
+              <div className="order-1 text-center md:order-2">
+                <p className="font-heading text-[clamp(48px,5.2vw,76px)] leading-none text-black">
+                  Delivering Hope
+                </p>
+                <p className="mx-auto mt-6 max-w-[570px] text-base leading-relaxed text-muted-foreground">
+                  We follow strict standards to ensure every donation is
+                  processed with the highest level of safety and care.
+                </p>
+
+                <div className="mt-8 flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    aria-label="Previous"
+                    className="flex size-[50px] items-center justify-center rounded-full bg-[#f6f6f7] text-[#fc3b32] transition hover:bg-[#efeff2]"
+                  >
+                    <ChevronLeft className="size-5" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next"
+                    className="flex size-[50px] items-center justify-center rounded-full bg-[#f6f6f7] text-[#fc3b32] transition hover:bg-[#efeff2]"
+                  >
+                    <ChevronRight className="size-5" />
+                  </button>
+                </div>
+              </div>
+
+              <p className="order-3 text-center font-heading text-[clamp(42px,4.4vw,72px)] leading-none text-[#8a8b92] md:text-right">
+                Ensuring Safe
+              </p>
             </div>
-
-            <div className="mx-auto mt-3 h-[2px] w-[180px] bg-black/80" />
           </div>
 
-          <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-start">
-            <article className="space-y-4">
-              <h3 className="font-heading text-4xl text-[#7d7e88]">
-                {commitmentColumns[0].title}
-              </h3>
-              <p className="max-w-[580px] text-base leading-relaxed text-muted-foreground">
-                {commitmentColumns[0].text}
-              </p>
-            </article>
-
-            <article className="space-y-4 lg:text-right">
-              <h3 className="font-heading text-4xl text-[#7d7e88]">
-                {commitmentColumns[1].title}
-              </h3>
-              <p className="ml-auto max-w-[580px] text-base leading-relaxed text-muted-foreground">
-                {commitmentColumns[1].text}
-              </p>
-            </article>
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <button
-              type="button"
-              aria-label="Previous"
-              className="flex size-11 items-center justify-center rounded-full border border-[#e0e4ef] bg-white text-[#fc3b32] transition hover:border-[#fc3b32]/40"
-            >
-              <ChevronLeft className="size-5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Next"
-              className="flex size-11 items-center justify-center rounded-full border border-[#e0e4ef] bg-white text-[#fc3b32] transition hover:border-[#fc3b32]/40"
-            >
-              <ChevronRight className="size-5" />
-            </button>
-          </div>
-
-          <div className="relative mt-10 overflow-hidden rounded-[22px] border border-[#d9dfef]">
+          <div className="relative mt-12 overflow-hidden rounded-[22px] border border-[#d9dfef]">
             <Photo
               src="https://picsum.photos/seed/commitment-video/1770/680"
               alt="Blood donation process in action"
@@ -522,24 +527,30 @@ export function Hero() {
       </section>
 
       <section className="px-5 py-20 md:px-8 lg:px-10">
-        <div className="mx-auto max-w-[1170px] rounded-[24px] bg-gradient-to-b from-[#edf2ff] to-[#c4d2f8] px-8 py-14 text-center shadow-[0_24px_70px_-52px_rgba(0,0,0,0.5)] sm:px-12 sm:py-18">
-          <p className="text-sm leading-relaxed text-muted-foreground">
+        <div className="mx-auto max-w-[1170px] rounded-[30px] bg-gradient-to-b from-[#e8ebf6] to-[#c5d3f7] px-8 py-14 text-center shadow-[0_24px_70px_-52px_rgba(0,0,0,0.5)] sm:px-12 sm:py-18 lg:px-[100px] lg:py-[140px]">
+          <p className="font-heading text-[clamp(36px,4.5vw,76px)] leading-[1.1] text-[#0f1117]">
             Every drop you give becomes a lifeline, restoring health, sparking
             hope, and giving someone a second chance.
           </p>
-          <p className="mt-7 font-display text-5xl text-[#fc3b32] sm:text-7xl">
-            382,945+
+          <p className="mx-auto mt-10 max-w-[670px] text-base leading-relaxed text-[#666666]">
+            Your donation can help save a life. It&apos;s a powerful reminder
+            that even the smallest act of giving can create an extraordinary
+            impact.
           </p>
-          <p className="mt-4 text-sm uppercase tracking-[0.16em] text-muted-foreground">
-            Lives touched through donor support
+          <p className="mt-10 font-heading text-[clamp(78px,10vw,188px)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#fc3b32]">
+            382,945+
           </p>
 
           <Button
             asChild
-            className="mt-7 h-10 rounded-full bg-gradient-to-r from-[#1e1f23] to-black px-6 text-xs uppercase tracking-[0.16em] text-white"
+            className="mt-10 h-[50px] rounded-full bg-gradient-to-r from-[#1e1f23] to-black px-10 text-sm font-medium text-white"
           >
             <Link href="/auth">Join Us Today</Link>
           </Button>
+          <p className="mx-auto mt-10 max-w-[670px] text-base leading-5 text-[#666666]">
+            Your act of kindness today can become a miracle for someone
+            tomorrow.
+          </p>
         </div>
       </section>
 
