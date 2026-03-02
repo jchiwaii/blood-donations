@@ -370,11 +370,34 @@ body {
     letter-spacing: -0.01em;
   }
 
+  .type-heading-md {
+    font-family: var(--font-heading);
+    font-size: clamp(1.55rem, 1.28rem + 1vw, 2.5rem);
+    font-weight: 500;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+  }
+
   .type-title {
     font-family: var(--font-heading);
     font-size: clamp(1.25rem, 1.1rem + 0.65vw, 1.875rem);
     font-weight: 500;
     line-height: 1.22;
+  }
+
+  .type-section-name {
+    font-family: var(--font-sans);
+    font-size: clamp(0.72rem, 0.7rem + 0.08vw, 0.8rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .type-label {
+    font-size: clamp(1rem, 0.97rem + 0.16vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.25;
   }
 
   .type-body-lg {
@@ -411,11 +434,27 @@ body {
     letter-spacing: -0.015em;
   }
 
+  .type-rating {
+    font-family: var(--font-heading);
+    font-size: clamp(2.75rem, 2.45rem + 0.95vw, 3.5rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
   .type-metric {
     font-family: var(--font-heading);
     font-size: clamp(3.75rem, 3.1rem + 2.6vw, 6.25rem);
     font-weight: 600;
     line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+
+  .type-metric-sm {
+    font-family: var(--font-heading);
+    font-size: clamp(3.1rem, 2.5rem + 2vw, 5rem);
+    font-weight: 600;
+    line-height: 0.94;
     letter-spacing: -0.02em;
   }
 

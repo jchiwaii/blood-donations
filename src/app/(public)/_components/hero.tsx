@@ -2,8 +2,6 @@ import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   CirclePlay,
   Droplet,
   Facebook,
@@ -156,7 +154,7 @@ const tickerPhrases = [
 
 function SectionTag({ text }: { text: string }) {
   return (
-    <p className="type-kicker text-primary">
+    <p className="type-section-name text-primary">
       {text}
     </p>
   );
@@ -400,31 +398,31 @@ export function Hero() {
         </div>
       </section>
 
-      <section className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 py-20 md:px-8 lg:px-10">
+      <section className="bg-gradient-to-b from-[#ffffff] to-[#e9edf6] px-5 pb-20 pt-24 md:px-8 md:pt-28 lg:px-10 lg:pb-[140px] lg:pt-[140px]">
         <div className="mx-auto max-w-[1770px]">
           <div className="max-w-[1270px]">
             <SectionTag text="About Us" />
-            <h2 className="type-heading-xl mt-4">
+            <h2 className="type-heading-xl mt-5 max-w-[1270px]">
               Built on compassion, integrity, and commitment to public health,
               our mission is to ensure safe and reliable blood for hospitals and
               families.
             </h2>
             <Button
               asChild
-              className="mt-7 h-12 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-8 text-sm font-medium text-white"
+              className="mt-12 h-12 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-8 text-sm font-medium text-white"
             >
               <Link href="#our-programs">View Our Program</Link>
             </Button>
           </div>
 
-          <div className="mt-16 lg:mt-[100px] lg:grid lg:grid-cols-[minmax(0,1170px)_272px] lg:items-start lg:gap-[30px]">
-            <div className="grid gap-6 sm:grid-cols-2 lg:w-[1170px] lg:grid-cols-4 lg:gap-x-[30px] lg:gap-y-0">
+          <div className="mt-16 lg:mt-[92px] xl:grid xl:grid-cols-[minmax(0,1fr)_240px] xl:items-start xl:gap-14">
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4 xl:gap-0">
               {stats.map((item) => (
                 <article
                   key={item.label}
                   className="min-h-[170px] border-l border-black/15 pl-8 lg:min-h-[200px] lg:pl-10"
                 >
-                  <p className="type-body-lg max-w-[230px] text-black">
+                  <p className="type-label max-w-[230px] text-black">
                     {item.label}
                   </p>
                   <p className="type-stat mt-10 text-[#fc3b32]">
@@ -434,18 +432,18 @@ export function Hero() {
               ))}
             </div>
 
-            <article className="mt-8 lg:mt-12">
-              <div className="flex items-start gap-4">
-                <p className="type-stat lg:text-[64px]">
+            <article className="mt-10 max-w-[240px] xl:mt-0 xl:w-[240px] xl:justify-self-end xl:pt-8">
+              <div className="flex items-end gap-4">
+                <p className="type-rating text-black">
                   4.9/5
                 </p>
-                <p className="type-body-sm pt-2 text-muted-foreground">
+                <p className="type-body-sm w-[100px] pb-1 text-muted-foreground">
                   37K Happy
                   <br />
                   Donors
                 </p>
               </div>
-              <div className="mt-2 flex items-center gap-1 text-[#ff9f1a]">
+              <div className="mt-4 flex items-center gap-1 text-[#ff9f1a]">
                 {Array.from({ length: 5 }).map((_, index) => (
                   <Star key={`star-${index}`} className="size-5 fill-current" />
                 ))}
@@ -467,10 +465,16 @@ export function Hero() {
               ensuring reliable blood for those who need it most.
             </h2>
 
-            <div className="mt-14 grid gap-8 md:mt-18 md:grid-cols-3 md:items-start">
-              <p className="type-heading-xl order-2 text-center text-[#8a8b92] md:order-1 md:text-left">
-                Saving Lives
-              </p>
+            <div className="mt-14 grid gap-10 md:mt-18 md:grid-cols-3 md:items-start md:gap-8">
+              <div className="order-2 text-center md:order-1 md:text-left">
+                <p className="type-heading-xl text-[#8a8b92]">
+                  Saving Lives
+                </p>
+                <p className="type-body mt-6 max-w-[340px] text-muted-foreground md:mx-0">
+                  We build a dependable donor network so hospitals and emergency
+                  teams can reach life-saving blood when every minute matters.
+                </p>
+              </div>
 
               <div className="order-1 text-center md:order-2">
                 <p className="type-heading-xl text-black">
@@ -480,28 +484,17 @@ export function Hero() {
                   We follow strict standards to ensure every donation is
                   processed with the highest level of safety and care.
                 </p>
-
-                <div className="mt-8 flex items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    aria-label="Previous"
-                    className="flex size-[50px] items-center justify-center rounded-full bg-[#f6f6f7] text-[#fc3b32] transition hover:bg-[#efeff2]"
-                  >
-                    <ChevronLeft className="size-5" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Next"
-                    className="flex size-[50px] items-center justify-center rounded-full bg-[#f6f6f7] text-[#fc3b32] transition hover:bg-[#efeff2]"
-                  >
-                    <ChevronRight className="size-5" />
-                  </button>
-                </div>
               </div>
 
-              <p className="type-heading-xl order-3 text-center text-[#8a8b92] md:text-right">
-                Ensuring Safe
-              </p>
+              <div className="order-3 text-center md:text-right">
+                <p className="type-heading-xl text-[#8a8b92]">
+                  Ensuring Safe
+                </p>
+                <p className="type-body mt-6 max-w-[340px] text-muted-foreground md:ml-auto">
+                  Every step, from screening and collection to storage and
+                  delivery, is handled with careful protocols and accountability.
+                </p>
+              </div>
             </div>
           </div>
 

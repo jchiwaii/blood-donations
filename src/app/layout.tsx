@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import CustomLayout from "@/custom-layout";
+import SmoothScroll from "@/components/smooth-scroll";
 
 export const metadata: Metadata = {
   title: "Blood Donation App",
@@ -20,8 +21,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//res.cloudinary.com" />
       </head>
       <body className="font-sans antialiased">
-        <CustomLayout>{children}</CustomLayout>
-        <Toaster />
+        <SmoothScroll>
+          <CustomLayout>{children}</CustomLayout>
+          <Toaster />
+        </SmoothScroll>
       </body>
     </html>
   );
