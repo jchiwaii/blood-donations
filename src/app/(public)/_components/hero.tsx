@@ -154,11 +154,7 @@ const tickerPhrases = [
 ];
 
 function SectionTag({ text }: { text: string }) {
-  return (
-    <p className="type-section-name text-primary">
-      {text}
-    </p>
-  );
+  return <p className="type-section-name text-primary">{text}</p>;
 }
 
 function TickerSparkIcon() {
@@ -426,18 +422,14 @@ export function Hero() {
                   <p className="type-label max-w-[230px] text-black">
                     {item.label}
                   </p>
-                  <p className="type-stat mt-10 text-[#fc3b32]">
-                    {item.value}
-                  </p>
+                  <p className="type-stat mt-10 text-[#fc3b32]">{item.value}</p>
                 </article>
               ))}
             </div>
 
             <article className="mt-10 max-w-[240px] xl:mt-0 xl:w-[240px] xl:justify-self-end xl:pt-8">
               <div className="flex items-end gap-4">
-                <p className="type-rating text-black">
-                  4.9/5
-                </p>
+                <p className="type-rating text-black">4.9/5</p>
                 <p className="type-body-sm w-[100px] pb-1 text-muted-foreground">
                   37K Happy
                   <br />
@@ -468,9 +460,7 @@ export function Hero() {
 
             <div className="mt-14 grid gap-10 md:mt-18 md:grid-cols-3 md:items-start md:gap-8">
               <div className="order-2 text-center md:order-1">
-                <p className="type-heading-xl text-[#8a8b92]">
-                  Saving Lives
-                </p>
+                <p className="type-heading-xl text-[#8a8b92]">Saving Lives</p>
                 <p className="type-body mx-auto mt-6 max-w-[320px] text-center text-muted-foreground">
                   We keep donors connected so care teams can access blood when
                   time matters most.
@@ -478,9 +468,7 @@ export function Hero() {
               </div>
 
               <div className="order-1 text-center md:order-2">
-                <p className="type-heading-xl text-black">
-                  Delivering Hope
-                </p>
+                <p className="type-heading-xl text-black">Delivering Hope</p>
                 <p className="type-body mx-auto mt-6 max-w-[570px] text-muted-foreground">
                   We follow strict standards to ensure every donation is
                   processed with the highest level of safety and care.
@@ -488,9 +476,7 @@ export function Hero() {
               </div>
 
               <div className="order-3 text-center">
-                <p className="type-heading-xl text-[#8a8b92]">
-                  Ensuring Safe
-                </p>
+                <p className="type-heading-xl text-[#8a8b92]">Ensuring Safe</p>
                 <p className="type-body mx-auto mt-6 max-w-[320px] text-center text-muted-foreground">
                   Every donation is handled through clear screening, storage,
                   and delivery protocols.
@@ -531,9 +517,7 @@ export function Hero() {
             that even the smallest act of giving can create an extraordinary
             impact.
           </p>
-          <p className="type-metric-sm mt-8 text-[#fc3b32]">
-            382,945+
-          </p>
+          <p className="type-metric-sm mt-8 text-[#fc3b32]">382,945+</p>
 
           <Button
             asChild
