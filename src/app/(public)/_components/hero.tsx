@@ -76,13 +76,13 @@ const programs: ProgramCard[] = [
     title: "Community Blood Drives",
     description: "Bringing donation events directly into neighborhoods.",
     location: "River district",
-    src: "https://picsum.photos/seed/program-community/570/380",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436112/friends-partying-tailgate-event_kddyej.jpg",
   },
   {
     title: "Youth Engagement",
     description: "Encouraging students to build a habit of compassion early.",
     location: "North campus",
-    src: "https://picsum.photos/seed/program-youth/570/1220",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436123/woman-getting-support-breast-cancer_lwbvkl.jpg",
     tall: true,
     dark: true,
   },
@@ -90,7 +90,7 @@ const programs: ProgramCard[] = [
     title: "Mobile Donation Units",
     description: "Reaching remote and underserved communities on schedule.",
     location: "Harbor route",
-    src: "https://picsum.photos/seed/program-mobile/570/380",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436109/group-african-paramedic-ambulance-emergency-crew-doctors_e935k6.jpg",
   },
   {
     title: "Donor Education",
@@ -102,7 +102,7 @@ const programs: ProgramCard[] = [
     title: "Donor Care & Support",
     description: "Ensuring every donor feels informed, safe, and supported.",
     location: "Neighborhood clinic",
-    src: "https://picsum.photos/seed/program-support/570/380",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436109/african-american-doctor-giving-prescription-medicine-paper-parent-cabinet-checkup-visit-mother-little-girl-receiving-medical-treatment-cure-from-general-practitioner-clinic_dfzziv.jpg",
   },
 ];
 
@@ -110,34 +110,34 @@ const volunteers: Volunteer[] = [
   {
     name: "Andrew Leadon",
     role: "Community Outreach",
-    src: "https://picsum.photos/seed/volunteer-andrew/270/360",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436109/african-american-doctor-giving-prescription-medicine-paper-parent-cabinet-checkup-visit-mother-little-girl-receiving-medical-treatment-cure-from-general-practitioner-clinic_dfzziv.jpg",
   },
   {
     name: "Gillian Freeman",
     role: "Blood Drive Coordinator",
-    src: "https://picsum.photos/seed/volunteer-gillian/270/360",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436098/doctor-performing-medical-checkup-patient_xgccud.jpg",
     featured: true,
   },
   {
     name: "Amber Julia",
     role: "Registration & Donor Support",
-    src: "https://picsum.photos/seed/volunteer-amber/270/360",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436105/woman-medic-wearing-stethoscope-red-uniform_widdgc.jpg",
   },
   {
     name: "Barbara Michelle",
     role: "Logistics & Supply Aid",
-    src: "https://picsum.photos/seed/volunteer-barbara/270/360",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436101/professional-african-female-doctor-hospital-medical-healthcare-business-doctor-service-africa_jpdev0.jpg",
   },
 ];
 
 const valueCards = [
   {
-    src: "https://picsum.photos/seed/value-left/470/470",
-    alt: "Volunteer helping donor during intake",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436107/front-view-paramedic-checking-patient_fqlrxl.jpg",
+    alt: "Paramedic checking a patient during care",
   },
   {
-    src: "https://picsum.photos/seed/value-right/470/470",
-    alt: "Donor support team smiling",
+    src: "https://res.cloudinary.com/dgh4a1why/image/upload/v1772436097/africa-humanitarian-aid-doctor-taking-care-patient_ui5p7k.jpg",
+    alt: "Doctor providing humanitarian care to a patient",
   },
 ];
 
@@ -730,8 +730,8 @@ export function Hero() {
               <div className="mt-10 grid gap-4 sm:grid-cols-2">
                 <article className="overflow-hidden rounded-[18px]">
                   <Photo
-                    src="https://picsum.photos/seed/donation-left/370/260"
-                    alt="Blood bank technician preparing supplies"
+                    src="https://res.cloudinary.com/dgh4a1why/image/upload/v1772436112/portrait-sick-young-patient-lying-bed-medical-appointment-wearing-protective-face-mask-prevent-infection-with-coronavirus-recovering-after-surgery-hospital-ward-medicine-services_emwteb.jpg"
+                    alt="Young patient receiving care in a hospital ward"
                     width={370}
                     height={260}
                     sizes="(max-width: 1024px) 100vw, 370px"
@@ -740,8 +740,8 @@ export function Hero() {
                 </article>
                 <article className="overflow-hidden rounded-[18px]">
                   <Photo
-                    src="https://picsum.photos/seed/donation-right/370/260"
-                    alt="Donor being guided during registration"
+                    src="https://res.cloudinary.com/dgh4a1why/image/upload/v1772436111/child-having-medical-checkup_hvedzk.jpg"
+                    alt="Child having a medical checkup"
                     width={370}
                     height={260}
                     sizes="(max-width: 1024px) 100vw, 370px"
@@ -751,7 +751,7 @@ export function Hero() {
               </div>
             </div>
 
-            <form className="space-y-4 rounded-[22px] border border-[#e5e8f1] bg-white p-6 shadow-[0_20px_50px_-40px_rgba(0,0,0,0.35)] sm:p-8">
+            <form className="grid gap-[18px] rounded-[22px] border border-[#e5e8f1] bg-white p-6 shadow-[0_20px_50px_-40px_rgba(0,0,0,0.35)] sm:gap-5 sm:p-8">
               <label className="block">
                 <span className="sr-only">Name</span>
                 <input
