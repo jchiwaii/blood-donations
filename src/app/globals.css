@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-Light.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-Regular.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-Medium.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -28,7 +28,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-SemiBold.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -36,7 +36,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-Bold.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -44,7 +44,7 @@
 
 @font-face {
   font-family: "Standerd";
-  src: url("/fonts/Standerd/Font/Webfont/Standerd-ExtraBold.woff2") format("woff2");
+  src: url("/fonts/standerd/Standerd-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -52,7 +52,7 @@
 
 @font-face {
   font-family: "Eugene Sans";
-  src: url("/fonts/eugene-sans-modern-grotesque-sans-serif-font-2026-02-18-00-40-50-utc/WOFF/EugeneSans-Regular.woff")
+  src: url("/fonts/eugene-sans/EugeneSans-Regular.woff")
     format("woff");
   font-weight: 400;
   font-style: normal;
@@ -61,7 +61,7 @@
 
 @font-face {
   font-family: "Eugene Sans";
-  src: url("/fonts/eugene-sans-modern-grotesque-sans-serif-font-2026-02-18-00-40-50-utc/WOFF/EugeneSans-Medium.woff")
+  src: url("/fonts/eugene-sans/EugeneSans-Medium.woff")
     format("woff");
   font-weight: 500;
   font-style: normal;
@@ -70,7 +70,7 @@
 
 @font-face {
   font-family: "Eugene Sans";
-  src: url("/fonts/eugene-sans-modern-grotesque-sans-serif-font-2026-02-18-00-40-50-utc/WOFF/EugeneSans-Semibold.woff")
+  src: url("/fonts/eugene-sans/EugeneSans-Semibold.woff")
     format("woff");
   font-weight: 600;
   font-style: normal;
@@ -79,7 +79,7 @@
 
 @font-face {
   font-family: "Eugene Sans";
-  src: url("/fonts/eugene-sans-modern-grotesque-sans-serif-font-2026-02-18-00-40-50-utc/WOFF/EugeneSans-Bold.woff")
+  src: url("/fonts/eugene-sans/EugeneSans-Bold.woff")
     format("woff");
   font-weight: 700;
   font-style: normal;
@@ -88,7 +88,7 @@
 
 @font-face {
   font-family: "Eugene Sans";
-  src: url("/fonts/eugene-sans-modern-grotesque-sans-serif-font-2026-02-18-00-40-50-utc/WOFF/EugeneSans-ExtraBold.woff")
+  src: url("/fonts/eugene-sans/EugeneSans-ExtraBold.woff")
     format("woff");
   font-weight: 800;
   font-style: normal;
@@ -97,7 +97,7 @@
 
 @font-face {
   font-family: "MIROKLAV";
-  src: url("/fonts/MIROKLAV/MIROKLAV.otf") format("opentype");
+  src: url("/fonts/miroklav/miroklav.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -105,7 +105,7 @@
 
 @font-face {
   font-family: "Vogera";
-  src: url("/fonts/vogera-minimal-timeless-editorial-serif-2026-02-18-00-41-19-utc/Vogera.woff2")
+  src: url("/fonts/vogera/Vogera.woff2")
     format("woff2");
   font-weight: 400;
   font-style: normal;
@@ -114,7 +114,7 @@
 
 @font-face {
   font-family: "Vogera";
-  src: url("/fonts/vogera-minimal-timeless-editorial-serif-2026-02-18-00-41-19-utc/Vogera%20True%20Italic.woff2")
+  src: url("/fonts/vogera/Vogera True Italic.woff2")
     format("woff2");
   font-weight: 400;
   font-style: italic;

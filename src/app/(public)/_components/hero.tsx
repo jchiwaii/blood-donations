@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/ui/photo";
+import DonationForm from "./donation-form";
 
 type MissionCard = {
   title: string;
@@ -751,59 +752,7 @@ export function Hero() {
               </div>
             </div>
 
-            <form className="grid gap-[18px] rounded-[22px] border border-[#e5e8f1] bg-white p-6 shadow-[0_20px_50px_-40px_rgba(0,0,0,0.35)] sm:gap-5 sm:p-8">
-              <label className="block">
-                <span className="sr-only">Name</span>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
-                />
-              </label>
-
-              <label className="block">
-                <span className="sr-only">Email Address</span>
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
-                />
-              </label>
-
-              <label className="block">
-                <span className="sr-only">Phone</span>
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
-                />
-              </label>
-
-              <label className="block">
-                <span className="sr-only">Donation Amount</span>
-                <input
-                  type="text"
-                  placeholder="Donation Amount"
-                  className="h-14 w-full rounded-[999px] border border-[#ebeef7] bg-[#f9f9fb] px-6 text-sm outline-none transition focus:border-primary/40"
-                />
-              </label>
-
-              <label className="block">
-                <span className="sr-only">Your Message</span>
-                <textarea
-                  placeholder="Your Message"
-                  rows={5}
-                  className="w-full rounded-[28px] border border-[#ebeef7] bg-[#f9f9fb] px-6 py-4 text-sm outline-none transition focus:border-primary/40"
-                />
-              </label>
-
-              <Button
-                type="submit"
-                className="h-11 rounded-full bg-gradient-to-r from-[#fc605c] to-[#fc3b32] px-7 text-sm text-white"
-              >
-                Donate Now
-              </Button>
-            </form>
+            <DonationForm />
           </div>
         </div>
       </section>
