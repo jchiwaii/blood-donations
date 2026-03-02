@@ -64,9 +64,17 @@ const PublicFooter = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-2 py-5 text-xs text-white/75 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-3 py-5 text-xs text-white/75 md:flex-row md:items-center md:justify-between">
           <p>© Copyright 2026, Redflow. All rights reserved.</p>
-          <p>Built for donor-first community response.</p>
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-5">
+            <Link href="/terms" className="transition hover:text-white">
+              Terms
+            </Link>
+            <Link href="/privacy-policy" className="transition hover:text-white">
+              Privacy Policy
+            </Link>
+            <p>Built for donor-first community response.</p>
+          </div>
         </div>
       </div>
 

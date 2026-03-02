@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -290,19 +291,19 @@ const RegisterForm = ({ className }: RegisterFormProps) => {
 
         <p className="text-center text-xs pt-2 text-muted-foreground">
           By creating an account, you agree to our{" "}
-          <a
-            href="#"
+          <Link
+            href="/terms"
             className="font-medium hover:underline text-primary hover:text-primary/80"
           >
             Terms
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a
-            href="#"
+          <Link
+            href="/privacy-policy"
             className="font-medium hover:underline text-primary hover:text-primary/80"
           >
             Privacy Policy
-          </a>
+          </Link>
         </p>
       </form>
     </Form>

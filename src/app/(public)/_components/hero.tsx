@@ -466,13 +466,13 @@ export function Hero() {
             </h2>
 
             <div className="mt-14 grid gap-10 md:mt-18 md:grid-cols-3 md:items-start md:gap-8">
-              <div className="order-2 text-center md:order-1 md:text-left">
+              <div className="order-2 text-center md:order-1">
                 <p className="type-heading-xl text-[#8a8b92]">
                   Saving Lives
                 </p>
-                <p className="type-body mt-6 max-w-[340px] text-muted-foreground md:mx-0">
-                  We build a dependable donor network so hospitals and emergency
-                  teams can reach life-saving blood when every minute matters.
+                <p className="type-body mx-auto mt-6 max-w-[320px] text-center text-muted-foreground">
+                  We keep donors connected so care teams can access blood when
+                  time matters most.
                 </p>
               </div>
 
@@ -486,13 +486,13 @@ export function Hero() {
                 </p>
               </div>
 
-              <div className="order-3 text-center md:text-right">
+              <div className="order-3 text-center">
                 <p className="type-heading-xl text-[#8a8b92]">
                   Ensuring Safe
                 </p>
-                <p className="type-body mt-6 max-w-[340px] text-muted-foreground md:ml-auto">
-                  Every step, from screening and collection to storage and
-                  delivery, is handled with careful protocols and accountability.
+                <p className="type-body mx-auto mt-6 max-w-[320px] text-center text-muted-foreground">
+                  Every donation is handled through clear screening, storage,
+                  and delivery protocols.
                 </p>
               </div>
             </div>
@@ -521,7 +521,7 @@ export function Hero() {
 
       <section className="px-5 py-20 md:px-8 lg:px-10">
         <div className="mx-auto max-w-[1170px] rounded-[30px] bg-gradient-to-b from-[#e8ebf6] to-[#c5d3f7] px-8 py-14 text-center shadow-[0_24px_70px_-52px_rgba(0,0,0,0.5)] sm:px-12 sm:py-18 lg:px-[100px] lg:py-[140px]">
-          <p className="type-heading-xl text-[#0f1117]">
+          <p className="type-heading-md mx-auto max-w-[900px] text-[#0f1117]">
             Every drop you give becomes a lifeline, restoring health, sparking
             hope, and giving someone a second chance.
           </p>
@@ -530,17 +530,17 @@ export function Hero() {
             that even the smallest act of giving can create an extraordinary
             impact.
           </p>
-          <p className="type-metric mt-10 text-[#fc3b32]">
+          <p className="type-metric-sm mt-8 text-[#fc3b32]">
             382,945+
           </p>
 
           <Button
             asChild
-            className="mt-10 h-[50px] rounded-full bg-gradient-to-r from-[#1e1f23] to-black px-10 text-sm font-medium text-white"
+            className="mt-8 h-[50px] rounded-full bg-gradient-to-r from-[#1e1f23] to-black px-10 text-sm font-medium text-white"
           >
             <Link href="/auth">Join Us Today</Link>
           </Button>
-          <p className="type-body mx-auto mt-10 max-w-[670px] text-[#666666]">
+          <p className="type-body mx-auto mt-8 max-w-[670px] text-[#666666]">
             Your act of kindness today can become a miracle for someone
             tomorrow.
           </p>
