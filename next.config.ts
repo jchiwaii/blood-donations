@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
         hostname: "randomuser.me",
       },
     ],
+    qualities: [75, 80],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 2_678_400, // 31 days
     deviceSizes: [640, 750, 828, 1080, 1200, 1440, 1920, 2048, 2560],

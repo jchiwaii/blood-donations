@@ -156,7 +156,7 @@ const tickerPhrases = [
 
 function SectionTag({ text }: { text: string }) {
   return (
-    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+    <p className="type-kicker text-primary">
       {text}
     </p>
   );
@@ -200,14 +200,14 @@ export function Hero() {
             <div className="absolute inset-0 bg-[linear-gradient(102deg,rgba(17,17,19,0.82)_12%,rgba(17,17,19,0.3)_50%,rgba(17,17,19,0.55)_100%)]" />
 
             <div className="relative z-10 max-w-[760px] space-y-6 lg:pb-16">
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
+              <p className="type-caption inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-white/90 backdrop-blur-sm">
                 <span className="size-1.5 rounded-full bg-[#ff5c5c]" />
                 Lifeline network
               </p>
-              <h1 className="font-display text-4xl leading-tight text-white sm:text-5xl lg:text-7xl">
+              <h1 className="type-heading-hero text-white">
                 Every Drop Tells a Story of Hope.
               </h1>
-              <p className="max-w-[500px] text-base leading-relaxed text-white/80 sm:text-lg">
+              <p className="type-body-lg max-w-[500px] text-white/80">
                 Every drop you share becomes a lifeline for someone fighting for
                 another day.
               </p>
@@ -225,27 +225,27 @@ export function Hero() {
             <aside className="relative z-10 ml-auto w-full max-w-[470px] rounded-[20px] bg-white p-5 shadow-[0_28px_80px_-35px_rgba(0,0,0,0.55)] sm:p-6">
               <div className="rounded-[16px] border border-[#e5e7ef] bg-[#f5f6fb] p-4">
                 <div className="mb-4 flex items-start justify-between gap-3">
-                  <div className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#e8edf7] to-[#cad8f6] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-black">
+                  <div className="type-caption inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[#e8edf7] to-[#cad8f6] px-3.5 py-1 text-black">
                     <Droplet className="size-3 fill-current" />
                     Redflow
                   </div>
-                  <div className="inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-[#1f1f22] px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
+                  <div className="type-caption inline-flex items-center gap-1 whitespace-nowrap rounded-full bg-[#1f1f22] px-3.5 py-1 text-white">
                     <span className="size-1.5 rounded-full bg-[#62d563]" />
                     2026
                   </div>
                 </div>
 
-                <h3 className="font-heading text-2xl font-semibold leading-tight text-[#121317]">
+                <h3 className="type-title text-[#121317]">
                   Lifeline Heroes Initiative
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#5a6170]">
+                <p className="type-body-sm mt-3 text-[#5a6170]">
                   Every donor can help keep emergency care moving. Register now
                   and get matched to nearby drives.
                 </p>
 
                 <Button
                   asChild
-                  className="mt-5 h-10 rounded-full bg-gradient-to-r from-[#1f1f22] to-black px-5 text-xs uppercase tracking-[0.16em] text-white"
+                  className="type-caption mt-5 h-10 rounded-full bg-gradient-to-r from-[#1f1f22] to-black px-5 text-white"
                 >
                   <Link href="/auth">Register</Link>
                 </Button>
@@ -288,7 +288,7 @@ export function Hero() {
                   />
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="type-body text-muted-foreground">
                 10,000+ people smiling through every donation cycle.
               </p>
             </div>
@@ -315,12 +315,12 @@ export function Hero() {
                 <SectionTag text="Our Mission" />
               </div>
               <div>
-                <h2 className="max-w-[930px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+                <h2 className="type-heading-xl max-w-[930px]">
                   Our mission is to inspire a culture of compassion by making
                   blood donation accessible, meaningful, and impactful.
                 </h2>
                 <div className="mt-[53px] grid gap-6 md:grid-cols-[minmax(0,1fr)_180px] md:items-start">
-                  <p className="max-w-[670px] text-base leading-relaxed text-muted-foreground">
+                  <p className="type-body-lg max-w-[670px] text-muted-foreground">
                     We are committed to creating a healthier, more resilient
                     community where every person can access life-saving blood
                     when it matters most.
@@ -352,7 +352,7 @@ export function Hero() {
                   className="h-[300px] w-full object-cover transition-transform duration-500 group-hover:scale-105 md:h-[480px]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(16,17,20,0.72),rgba(16,17,20,0.12))]" />
-                <p className="absolute left-5 top-5 rounded-full bg-black/50 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm">
+                <p className="type-caption absolute left-5 top-5 rounded-full bg-black/50 px-3 py-1 text-white/90 backdrop-blur-sm">
                   {card.title}
                 </p>
               </article>
@@ -404,7 +404,7 @@ export function Hero() {
         <div className="mx-auto max-w-[1770px]">
           <div className="max-w-[1270px]">
             <SectionTag text="About Us" />
-            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+            <h2 className="type-heading-xl mt-4">
               Built on compassion, integrity, and commitment to public health,
               our mission is to ensure safe and reliable blood for hospitals and
               families.
@@ -424,10 +424,10 @@ export function Hero() {
                   key={item.label}
                   className="min-h-[170px] border-l border-black/15 pl-8 lg:min-h-[200px] lg:pl-10"
                 >
-                  <p className="max-w-[230px] text-lg leading-tight text-black">
+                  <p className="type-body-lg max-w-[230px] text-black">
                     {item.label}
                   </p>
-                  <p className="mt-10 font-heading text-[54px] leading-none text-[#fc3b32]">
+                  <p className="type-stat mt-10 text-[#fc3b32]">
                     {item.value}
                   </p>
                 </article>
@@ -436,10 +436,10 @@ export function Hero() {
 
             <article className="mt-8 lg:mt-12">
               <div className="flex items-start gap-4">
-                <p className="font-heading text-[56px] leading-none lg:text-[64px]">
+                <p className="type-stat lg:text-[64px]">
                   4.9/5
                 </p>
-                <p className="pt-2 text-sm leading-5 text-muted-foreground">
+                <p className="type-body-sm pt-2 text-muted-foreground">
                   37K Happy
                   <br />
                   Donors
@@ -462,21 +462,21 @@ export function Hero() {
         <div className="mx-auto max-w-[1770px]">
           <div className="mx-auto max-w-[1270px] text-center">
             <SectionTag text="Our Commitment" />
-            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl lg:text-[58px] lg:leading-[1.15]">
+            <h2 className="type-heading-xl mt-4">
               We are dedicated to building a healthier, stronger community by
               ensuring reliable blood for those who need it most.
             </h2>
 
             <div className="mt-14 grid gap-8 md:mt-18 md:grid-cols-3 md:items-start">
-              <p className="order-2 text-center font-heading text-[clamp(42px,4.4vw,72px)] leading-none text-[#8a8b92] md:order-1 md:text-left">
+              <p className="type-heading-xl order-2 text-center text-[#8a8b92] md:order-1 md:text-left">
                 Saving Lives
               </p>
 
               <div className="order-1 text-center md:order-2">
-                <p className="font-heading text-[clamp(48px,5.2vw,76px)] leading-none text-black">
+                <p className="type-heading-xl text-black">
                   Delivering Hope
                 </p>
-                <p className="mx-auto mt-6 max-w-[570px] text-base leading-relaxed text-muted-foreground">
+                <p className="type-body mx-auto mt-6 max-w-[570px] text-muted-foreground">
                   We follow strict standards to ensure every donation is
                   processed with the highest level of safety and care.
                 </p>
@@ -499,7 +499,7 @@ export function Hero() {
                 </div>
               </div>
 
-              <p className="order-3 text-center font-heading text-[clamp(42px,4.4vw,72px)] leading-none text-[#8a8b92] md:text-right">
+              <p className="type-heading-xl order-3 text-center text-[#8a8b92] md:text-right">
                 Ensuring Safe
               </p>
             </div>
@@ -528,16 +528,16 @@ export function Hero() {
 
       <section className="px-5 py-20 md:px-8 lg:px-10">
         <div className="mx-auto max-w-[1170px] rounded-[30px] bg-gradient-to-b from-[#e8ebf6] to-[#c5d3f7] px-8 py-14 text-center shadow-[0_24px_70px_-52px_rgba(0,0,0,0.5)] sm:px-12 sm:py-18 lg:px-[100px] lg:py-[140px]">
-          <p className="font-heading text-[clamp(36px,4.5vw,76px)] leading-[1.1] text-[#0f1117]">
+          <p className="type-heading-xl text-[#0f1117]">
             Every drop you give becomes a lifeline, restoring health, sparking
             hope, and giving someone a second chance.
           </p>
-          <p className="mx-auto mt-10 max-w-[670px] text-base leading-relaxed text-[#666666]">
+          <p className="type-body mx-auto mt-10 max-w-[670px] text-[#666666]">
             Your donation can help save a life. It&apos;s a powerful reminder
             that even the smallest act of giving can create an extraordinary
             impact.
           </p>
-          <p className="mt-10 font-heading text-[clamp(78px,10vw,188px)] font-semibold leading-[0.95] tracking-[-0.02em] text-[#fc3b32]">
+          <p className="type-metric mt-10 text-[#fc3b32]">
             382,945+
           </p>
 
@@ -547,7 +547,7 @@ export function Hero() {
           >
             <Link href="/auth">Join Us Today</Link>
           </Button>
-          <p className="mx-auto mt-10 max-w-[670px] text-base leading-5 text-[#666666]">
+          <p className="type-body mx-auto mt-10 max-w-[670px] text-[#666666]">
             Your act of kindness today can become a miracle for someone
             tomorrow.
           </p>
@@ -561,7 +561,7 @@ export function Hero() {
         <div className="mx-auto max-w-[1770px]">
           <div className="mx-auto max-w-[980px] text-center">
             <SectionTag text="Our Programs" />
-            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+            <h2 className="type-heading-lg mt-4">
               Discover the initiatives we built to support donors, empower
               communities, and secure life-saving blood where it is needed most.
             </h2>
@@ -580,12 +580,12 @@ export function Hero() {
                 />
               </div>
               <div className="px-6 pb-6">
-                <h3 className="font-heading text-3xl">{programs[0].title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <h3 className="type-title">{programs[0].title}</h3>
+                <p className="type-body-sm mt-3 text-muted-foreground">
                   {programs[0].description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="type-caption text-muted-foreground">
                     {programs[0].location}
                   </p>
                   <button
@@ -609,12 +609,12 @@ export function Hero() {
               />
               <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.85)_10%,rgba(0,0,0,0.2)_55%)]" />
               <div className="absolute inset-x-0 bottom-0 p-7">
-                <h3 className="font-heading text-3xl">{programs[1].title}</h3>
-                <p className="mt-3 text-sm text-white/80">
+                <h3 className="type-title">{programs[1].title}</h3>
+                <p className="type-body-sm mt-3 text-white/80">
                   {programs[1].description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <p className="text-xs uppercase tracking-[0.16em] text-white/70">
+                  <p className="type-caption text-white/70">
                     {programs[1].location}
                   </p>
                   <button
@@ -639,12 +639,12 @@ export function Hero() {
                 />
               </div>
               <div className="px-6 pb-6">
-                <h3 className="font-heading text-3xl">{programs[2].title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <h3 className="type-title">{programs[2].title}</h3>
+                <p className="type-body-sm mt-3 text-muted-foreground">
                   {programs[2].description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="type-caption text-muted-foreground">
                     {programs[2].location}
                   </p>
                   <button
@@ -669,12 +669,12 @@ export function Hero() {
                 />
               </div>
               <div className="px-6 pb-6">
-                <h3 className="font-heading text-3xl">{programs[3].title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <h3 className="type-title">{programs[3].title}</h3>
+                <p className="type-body-sm mt-3 text-muted-foreground">
                   {programs[3].description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="type-caption text-muted-foreground">
                     {programs[3].location}
                   </p>
                   <button
@@ -699,12 +699,12 @@ export function Hero() {
                 />
               </div>
               <div className="px-6 pb-6">
-                <h3 className="font-heading text-3xl">{programs[4].title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <h3 className="type-title">{programs[4].title}</h3>
+                <p className="type-body-sm mt-3 text-muted-foreground">
                   {programs[4].description}
                 </p>
                 <div className="mt-5 flex items-center justify-between">
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="type-caption text-muted-foreground">
                     {programs[4].location}
                   </p>
                   <button
@@ -725,11 +725,11 @@ export function Hero() {
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
               <SectionTag text="Donation" />
-              <h2 className="mt-4 max-w-[820px] font-heading text-3xl leading-tight sm:text-4xl md:text-5xl">
+              <h2 className="type-heading-xl mt-4 max-w-[820px]">
                 Every act of giving has the power to create a ripple of hope.
                 Your contribution can change lives.
               </h2>
-              <p className="mt-5 max-w-[680px] text-base leading-relaxed text-muted-foreground">
+              <p className="type-body-lg mt-5 max-w-[680px] text-muted-foreground">
                 Your contribution builds stronger donor communities, improves
                 emergency response speed, and keeps hospitals prepared.
               </p>
@@ -821,7 +821,7 @@ export function Hero() {
       >
         <div className="mx-auto max-w-[1770px] text-center">
           <SectionTag text="Volunteers" />
-          <h2 className="mx-auto mt-4 max-w-[1020px] font-heading text-3xl leading-tight sm:text-4xl">
+          <h2 className="type-heading-lg mx-auto mt-4 max-w-[1020px]">
             Get to know the everyday heroes who make our community stronger
             through kindness, teamwork, and unwavering commitment.
           </h2>
@@ -856,8 +856,8 @@ export function Hero() {
                     </div>
                   ) : null}
                 </div>
-                <h3 className="mt-4 font-heading text-2xl">{volunteer.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <h3 className="type-title mt-4">{volunteer.name}</h3>
+                <p className="type-body-sm mt-1 text-muted-foreground">
                   {volunteer.role}
                 </p>
               </article>
@@ -881,11 +881,11 @@ export function Hero() {
 
           <div className="mx-auto max-w-[700px] text-center">
             <SectionTag text="Our Values" />
-            <h2 className="mt-4 font-heading text-3xl leading-tight sm:text-4xl">
+            <h2 className="type-heading-lg mt-4">
               We are guided by principles that reflect who we are and what we
               stand for.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-[#1d1f29]/75">
+            <p className="type-body mt-4 text-[#1d1f29]/75">
               These values shape every action we take, every choice we make, and
               every life we support.
             </p>
