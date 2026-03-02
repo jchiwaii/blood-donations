@@ -7,7 +7,7 @@ export async function proxy(request: NextRequest) {
 
   // Define private routes
   const isPrivate = ["/donor", "/recipient", "/recepient", "/admin"].some(
-    (path) => pathname.startsWith(path)
+    (path) => pathname.startsWith(path),
   );
 
   // Define public routes (login/register pages)
@@ -24,7 +24,7 @@ export async function proxy(request: NextRequest) {
   if (authToken) {
     try {
       const secret = new TextEncoder().encode(
-        process.env.JWT_SECRET || "your-secret-key"
+        process.env.JWT_SECRET || "your-secret-key",
       );
       const { payload } = await jwtVerify(authToken, secret);
 
@@ -34,15 +34,15 @@ export async function proxy(request: NextRequest) {
       if (isPublicAuthPage) {
         if (userRole === "admin") {
           return NextResponse.redirect(
-            new URL("/admin/dashboard", request.url)
+            new URL("/admin/dashboard", request.url),
           );
         } else if (userRole === "donor") {
           return NextResponse.redirect(
-            new URL("/donor/dashboard", request.url)
+            new URL("/donor/dashboard", request.url),
           );
         } else if (userRole === "recipient") {
           return NextResponse.redirect(
-            new URL("/recipient/dashboard", request.url)
+            new URL("/recipient/dashboard", request.url),
           );
         }
       }
